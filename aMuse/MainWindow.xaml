@@ -1,13 +1,32 @@
-﻿<Window x:Class="aMuse.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:aMuse"
+        xmlns:Wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
+    xmlns:Wpf1="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms" x:Class="aMuse.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="HELLO" HorizontalAlignment="Left" Margin="345,171,0,0" VerticalAlignment="Top" Width="75"/>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" >
+            <Wpf:VlcControl x:Name="vlcPlayer" Height="200"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" VerticalAlignment="Center" Grid.Column="2" >
+            <Button x:Name="PlayPause" Width="80" Height="30" Background="AliceBlue" Content="Play/Pause" 
+                    Click="PlayPause_Click" Margin="5"/>
+        </StackPanel>
     </Grid>
 </Window>
