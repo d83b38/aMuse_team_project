@@ -24,28 +24,35 @@ namespace aMuse
     /// </summary>
     public partial class MainWindow : Window
     {
-
         private bool IsPaused { get; set; }
+        bool needToChangeIcon = false;
         public MainWindow()
         {
-            IsPaused = true;
             InitializeComponent();
             vlcPlayer.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             vlcPlayer.MediaPlayer.EndInit();
         }
 
         private void PlayPause_Click(object sender, RoutedEventArgs e) {
-            if (IsPaused == true) {
-                vlcPlayer.MediaPlayer.Play(new FileInfo("track.mp3"));
-                imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
-                IsPaused = false;
-            }
-            else
+            if (needToChangeIcon == true)
             {
                 vlcPlayer.MediaPlayer.VlcMediaPlayer.Pause();
-                IsPaused = true;
-                imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
+                imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
+                needToChangeIcon =false;
+                return;
             }
+
+            if (IsPaused == false )
+            {
+                imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
+                vlcPlayer.MediaPlayer.Play(new FileInfo("track.mp3"));
+                IsPaused = true;
+                return;
+            }
+            
+            vlcPlayer.MediaPlayer.VlcMediaPlayer.Pause();
+            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
+            needToChangeIcon = true;
 
         }
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -61,6 +68,20 @@ namespace aMuse
 
         private void Previous_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void Mute_Click(object sender, RoutedEventArgs e)
+        {
+            vlcPlayer.MediaPlayer.Audio.ToggleMute();
+        }
+
+        private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (vlcPlayer.MediaPlayer.Audio!=null)
+            {
+                vlcPlayer.MediaPlayer.Audio.Volume = (int)volumeSlider.Value;
+            }
 
         }
     }

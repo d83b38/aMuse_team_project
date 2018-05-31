@@ -13,7 +13,7 @@
     
     <Grid Background="#FF235543">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="180"/>
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -25,7 +25,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" >
-            <Wpf:VlcControl x:Name="vlcPlayer" Height="0"/>
+            <Wpf:VlcControl  x:Name="vlcPlayer" Height="0" >
+
+            </Wpf:VlcControl>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" 
                     Grid.ColumnSpan="3" RenderTransformOrigin="0.515,0.533" >
@@ -47,6 +49,14 @@
                      Click="Next_Click" Margin="15,0,0,0"  >
                 <Image Source="Icons/Fast Forward_52px.png" />
             </Button>
+            <Button  Name="MuteButton" Width="70" Height="30" HorizontalContentAlignment="Center"
+                     Click="Mute_Click" Margin="15,0,0,0"  >
+                <Image Source="Icons/Mute_52px.png" />
+            </Button>
+            <TextBlock Foreground="White" VerticalAlignment="Center" Margin="5"  >Volume</TextBlock>
+            <Slider  Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
+       Minimum="0" Maximum="100" Value="80" Width="70"/>
+
 
         </StackPanel>
         <Frame Name="MainFrame" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3"
