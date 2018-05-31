@@ -5,10 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:aMuse"
         xmlns:Wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
-    xmlns:Wpf1="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms" x:Class="aMuse.MainWindow"
+    
+        xmlns:Wpf1="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms" x:Class="aMuse.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    
+        Title="MainWindow" Height="550" Width="800">
+    
+    <Grid Background="#FF235543">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -22,11 +25,33 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" >
-            <Wpf:VlcControl x:Name="vlcPlayer" Height="200"/>
+            <Wpf:VlcControl x:Name="vlcPlayer" Height="0"/>
         </StackPanel>
-        <StackPanel Grid.Row="2" VerticalAlignment="Center" Grid.Column="2" >
-            <Button x:Name="PlayPause" Width="80" Height="30" Background="AliceBlue" Content="Play/Pause" 
-                    Click="PlayPause_Click" Margin="5"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" 
+                    Grid.ColumnSpan="3" RenderTransformOrigin="0.515,0.533" >
+            <Image  Margin="15" Width="auto" Height="auto"  
+                Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="1" 
+                Cursor="Hand"
+                   MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                 Source="testAlbumCover.jpg"/>
+            <Button  Name="Previous" Width="70" Height="30" 
+                     Click="Previous_Click" Margin="15,0,0,0" HorizontalContentAlignment="Center"  >
+                <Image Source="Icons/Rewind_52px.png" />
+            </Button>
+            <Button  Name="PlayPauseButton" Width="70" Height="30" HorizontalContentAlignment="Center"  
+                     Click="PlayPause_Click" Margin="15,0,0,0"  >
+                <Image Name="imageInside" Source="Icons/Play_52px.png"  />
+
+            </Button>
+            <Button  Name="Next" Width="70" Height="30" HorizontalContentAlignment="Center"
+                     Click="Next_Click" Margin="15,0,0,0"  >
+                <Image Source="Icons/Fast Forward_52px.png" />
+            </Button>
+
         </StackPanel>
+        <Frame Name="MainFrame" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3"
+                NavigationUIVisibility="Hidden"
+               Margin="0,0,0,0">
+        </Frame>
     </Grid>
 </Window>
