@@ -31,6 +31,7 @@ namespace aMuse
             InitializeComponent();
             vlcPlayer.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             vlcPlayer.MediaPlayer.EndInit();
+
         }
 
         private void PlayPause_Click(object sender, RoutedEventArgs e) {
@@ -44,8 +45,14 @@ namespace aMuse
 
             if (IsPaused == false )
             {
+                TagLib.File tagFile = TagLib.File.Create("track.mp3");
+                var title = tagFile.Tag.Title.ToString();
+                var artist = tagFile.Tag.Performers[0].ToString();
+
+                infoBox.Text = artist+" - " +title;
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                 vlcPlayer.MediaPlayer.Play(new FileInfo("track.mp3"));
+
                 IsPaused = true;
                 return;
             }
@@ -55,6 +62,7 @@ namespace aMuse
             needToChangeIcon = true;
 
         }
+
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             MainFrame.Content = new MainPage();
