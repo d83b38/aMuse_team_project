@@ -15,35 +15,34 @@ using System.Windows.Shapes;
 using Vlc.DotNet.Wpf;
 using Vlc.DotNet.Core;
 using System.IO;
-using aMuse.UI;
-
-namespace aMuse
+using aMuse.Core;
+namespace aMuse.UI
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         private bool IsPaused { get; set; }
-        bool needToChangeIcon = false;
+        public bool NeedToChangeIcon { get; set; }
         public MainWindow()
         {
             InitializeComponent();
             vlcPlayer.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             vlcPlayer.MediaPlayer.EndInit();
+            var lyrics = new GeniusInfoParse("Tool", "Schim").GetLyrics();
         }
 
         private void PlayPause_Click(object sender, RoutedEventArgs e) {
-            if (needToChangeIcon == true)
-            {
+            if (NeedToChangeIcon == true) {
                 vlcPlayer.MediaPlayer.VlcMediaPlayer.Pause();
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
-                needToChangeIcon =false;
+                NeedToChangeIcon = false;
                 return;
             }
 
-            if (IsPaused == false )
-            {
+            if (IsPaused == false ) {
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                 vlcPlayer.MediaPlayer.Play(new FileInfo("track.mp3"));
                 IsPaused = true;
@@ -52,13 +51,11 @@ namespace aMuse
             
             vlcPlayer.MediaPlayer.VlcMediaPlayer.Pause();
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
-            needToChangeIcon = true;
-
+            NeedToChangeIcon = true;
         }
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             MainFrame.Content = new MainPage();
-
         }
 
         private void Next_Click(object sender, RoutedEventArgs e)
@@ -82,7 +79,6 @@ namespace aMuse
             {
                 vlcPlayer.MediaPlayer.Audio.Volume = (int)volumeSlider.Value;
             }
-
         }
     }
 }

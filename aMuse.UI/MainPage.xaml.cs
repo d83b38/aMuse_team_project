@@ -24,7 +24,5 @@ namespace aMuse.UI
         {
             InitializeComponent();
         }
-
-
     }
 }

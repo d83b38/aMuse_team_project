@@ -5,5 +5,4 @@
                     
                     xmlns:system="clr-namespace:System;assembly=mscorlib" x:Name="Dictionary1">
     <Color x:Key="GreenBrush">#FF78C8A0</Color>
-
 </ResourceDictionary>
