@@ -42,9 +42,16 @@ namespace aMuse.UI
                 return;
             }
 
-            if (IsPaused == false ) {
+            if (IsPaused == false )
+            {
+                TagLib.File tagFile = TagLib.File.Create("track.mp3");
+                var title = tagFile.Tag.Title.ToString();
+                var artist = tagFile.Tag.Performers[0].ToString();
+
+                infoBox.Text = artist+" - " +title;
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                 vlcPlayer.MediaPlayer.Play(new FileInfo("track.mp3"));
+
                 IsPaused = true;
                 return;
             }
@@ -53,6 +60,7 @@ namespace aMuse.UI
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
             NeedToChangeIcon = true;
         }
+
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             MainFrame.Content = new MainPage();

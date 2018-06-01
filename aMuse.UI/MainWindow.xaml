@@ -10,10 +10,10 @@
         mc:Ignorable="d"
     
         Title="MainWindow" Height="550" Width="800">
-    
+
     <Grid Background="#FF235543">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="80"/>
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -31,30 +31,31 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" 
                     Grid.ColumnSpan="3" RenderTransformOrigin="0.515,0.533" >
-            <Image  Margin="15" Width="auto" Height="auto"  
+            <Image  Margin="0 5 10 5" Width="auto" Height="auto"  
                 Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="1" 
                 Cursor="Hand"
                    MouseLeftButtonDown="Image_MouseLeftButtonDown"
                  Source="testAlbumCover.jpg"/>
-            <Button  Name="Previous" Width="70" Height="30" 
+            <TextBlock Name="infoBox" TextWrapping="Wrap" Text="TextBlock" Height="23" Width="150" FontSize="14" FontWeight="Bold"/>
+            <Button  x:Name="Previous" Width="50" Height="30" 
                      Click="Previous_Click" Margin="15,0,0,0" HorizontalContentAlignment="Center"  >
                 <Image Source="Icons/Rewind_52px.png" />
             </Button>
-            <Button  Name="PlayPauseButton" Width="70" Height="30" HorizontalContentAlignment="Center"  
+            <Button  x:Name="PlayPauseButton" Width="50" Height="30" HorizontalContentAlignment="Center"  
                      Click="PlayPause_Click" Margin="15,0,0,0"  >
-                <Image Name="imageInside" Source="Icons/Play_52px.png"  />
+                <Image x:Name="imageInside" Source="Icons/Play_52px.png"  />
 
             </Button>
-            <Button  Name="Next" Width="70" Height="30" HorizontalContentAlignment="Center"
+            <Button  x:Name="Next" Width="50" Height="30" HorizontalContentAlignment="Center"
                      Click="Next_Click" Margin="15,0,0,0"  >
                 <Image Source="Icons/Fast Forward_52px.png" />
             </Button>
-            <Button  Name="MuteButton" Width="70" Height="30" HorizontalContentAlignment="Center"
+            <Button  x:Name="MuteButton" Width="50" Height="30" HorizontalContentAlignment="Center"
                      Click="Mute_Click" Margin="15,0,0,0"  >
                 <Image Source="Icons/Mute_52px.png" />
             </Button>
-            <TextBlock Foreground="White" VerticalAlignment="Center" Margin="5"  >Volume</TextBlock>
-            <Slider  Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
+            <TextBlock Foreground="White" VerticalAlignment="Center" Margin="5"  ><Run Text="Volume"/></TextBlock>
+            <Slider  x:Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
        Minimum="0" Maximum="100" Value="80" Width="70"/>
 
 
