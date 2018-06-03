@@ -7,6 +7,7 @@
         xmlns:Wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
         xmlns:Wpf1="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms" x:Class="aMuse.UI.MainWindow"
         mc:Ignorable="d"
+
         Title="MainWindow" Height="550" Width="800">
 
     <Grid Background="#FF235543">
@@ -36,7 +37,7 @@
                 <RowDefinition />
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
-            <Slider  Margin="20 10 20 0" Height="15" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"  BorderThickness="0"/>
+            <Slider  Margin="20 10 20 0" Height="15" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"  BorderThickness="0" />
             <Image  Margin="0 5 10 5" Height="110"   
                 Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"   
                 Cursor="Hand"
