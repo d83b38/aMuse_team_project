@@ -48,7 +48,8 @@ namespace aMuse.UI
                 var title = tagFile.Tag.Title.ToString();
                 var artist = tagFile.Tag.Performers[0].ToString();
 
-                infoBox.Text = artist+" - " +title;
+                infoBoxArtist.Text = artist;
+                infoBoxTrackName.Text = title;
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                 vlcPlayer.MediaPlayer.Play(new FileInfo("track.mp3"));
 
