@@ -47,8 +47,9 @@ namespace aMuse.UI
                 TagLib.File tagFile = TagLib.File.Create("track.mp3");
                 var title = tagFile.Tag.Title.ToString();
                 var artist = tagFile.Tag.Performers[0].ToString();
-
-                infoBox.Text = artist+" - " +title;
+                var lirics = tagFile.Tag.Lyrics;
+                infoBoxArtist.Text = artist;
+                infoBoxTrackName.Text = title;
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                 vlcPlayer.MediaPlayer.Play(new FileInfo("track.mp3"));
                 return;
@@ -61,7 +62,8 @@ namespace aMuse.UI
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MainFrame.Content = new MainPage();
+            MainFrame.Content = new MainPage(this);
+            //MainFrame.Content = new Page1();
         }
 
         private void Next_Click(object sender, RoutedEventArgs e)
