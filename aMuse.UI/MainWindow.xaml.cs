@@ -24,7 +24,7 @@ namespace aMuse.UI
     public partial class MainWindow : Window
     {
         
-        private bool IsPaused { get; set; }
+        //private bool IsPaused { get; set; }
         public bool NeedToChangeIcon { get; set; }
         public MainWindow()
         {
@@ -42,7 +42,7 @@ namespace aMuse.UI
                 return;
             }
 
-            if (IsPaused == false )
+            if (vlcPlayer.MediaPlayer.IsPlaying == false)
             {
                 TagLib.File tagFile = TagLib.File.Create("track.mp3");
                 var title = tagFile.Tag.Title.ToString();
@@ -51,8 +51,6 @@ namespace aMuse.UI
                 infoBox.Text = artist+" - " +title;
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                 vlcPlayer.MediaPlayer.Play(new FileInfo("track.mp3"));
-
-                IsPaused = true;
                 return;
             }
             
@@ -88,5 +86,6 @@ namespace aMuse.UI
                 vlcPlayer.MediaPlayer.Audio.Volume = (int)volumeSlider.Value;
             }
         }
+        
     }
 }
