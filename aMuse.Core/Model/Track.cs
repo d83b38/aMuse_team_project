@@ -10,5 +10,7 @@ namespace aMuse.Core.Model {
         public string Title { get; set; }
         public string LyricsUrl { get; set; }
         public Artist Artist { get; set; }
+        public string AlbumCoverUrl { get; set; }
+        public string AlbumCoverThumbnailUrl{ get; set; }
     }
 }

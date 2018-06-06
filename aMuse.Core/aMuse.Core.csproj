@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="DTO\ArtistInfo.cs" />
     <Compile Include="DTO\Hit.cs" />
+    <Compile Include="DTO\RequestStatus.cs" />
     <Compile Include="DTO\Response.cs" />
     <Compile Include="DTO\TrackInfo.cs" />
     <Compile Include="DTO\Data.cs" />

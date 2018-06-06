@@ -18,11 +18,10 @@ namespace aMuse.UI
     /// <summary>
     /// Логика взаимодействия для Page1.xaml
     /// </summary>
-    public partial class LiricsPage : Page
+    public partial class LyricsPage : Page
     {
-        public LiricsPage()
+        public LyricsPage()
         {
-
             InitializeComponent();
             TagLib.File tagFile = TagLib.File.Create("track.mp3");
             var lirics = tagFile.Tag.Lyrics;

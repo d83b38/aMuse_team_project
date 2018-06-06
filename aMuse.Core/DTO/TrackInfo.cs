@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -18,7 +19,10 @@ namespace aMuse.Core.DTO {
         public string FullLyricsUrl { get; set; }
         [JsonProperty("primary_artist")]
         public ArtistInfo ArtistInfo { get; set; }
-
+        [JsonProperty("header_image_url")]
+        public string AlbumImageUrl { get; set; }
+        [JsonProperty("header_image_thumbnail_url")]
+        public string AlbumSmallImageUrl { get; set; }
         public string GetLyrics() {
             var html = CQ.Create(new WebClient().DownloadString(FullLyricsUrl));
             var reg = new Regex(@"(\s{2,}.+\s{2,})|(\[.+\])| {2,}|");

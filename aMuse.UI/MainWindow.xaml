@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:aMuse"
         xmlns:Wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
+        xmlns:Forms ="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms"
         xmlns:Wpf1="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms" x:Class="aMuse.UI.MainWindow"
         mc:Ignorable="d"
 
@@ -24,8 +25,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" >
-            <Wpf:VlcControl  x:Name="vlcPlayer" Height="0" >
-            </Wpf:VlcControl>
+            <Wpf:VlcControl x:Name="vlcPlayer" Height="0"> </Wpf:VlcControl>
         </StackPanel>
         <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
@@ -37,24 +37,27 @@
                 <RowDefinition />
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
-            <Slider  Margin="20 10 20 0" Height="15" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"  BorderThickness="0" />
-            <Image  Margin="0 5 10 5" Height="110"   
+            
+            <Slider Margin="20 10 20 0" Height="15" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"  BorderThickness="0"
+                    Name="TrackBar" PreviewMouseLeftButtonDown="TrackBar_PreviewMouseLeftButtonDown"
+                    PreviewMouseLeftButtonUp="TrackBar_PreviewMouseLeftButtonUp"
+                    ValueChanged="TrackBar_ValueChanged" IsEnabled="False"/>
+            <Image Margin="0 5 10 5" Height="110"   
                 Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"   
-                Cursor="Hand"
-                   MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                 Source="testAlbumCover.jpg"/>
+                Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown" x:Name="Thumbnail"/>
             <StackPanel Margin="20 0 50 0" Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" Grid.Column="1" 
                     Grid.ColumnSpan="2"  >
                 <StackPanel Width="100">
-                    <TextBlock Grid.Column="1" Grid.Row="0" x:Name="infoBoxArtist" TextWrapping="Wrap" Text="TextBlock" Height="23" Width="150" FontSize="14" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="1" Grid.Row="0" x:Name="infoBoxTrackName" TextWrapping="Wrap" Text="TextBlock" Height="23" Width="150" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Name="textBlockTime" Text="Time" FontSize="15"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" x:Name="infoBoxArtist" TextWrapping="Wrap" Text="Artist" Height="23" Width="150" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" x:Name="infoBoxTrackName" TextWrapping="Wrap" Text="Song" Height="23" Width="150" FontSize="14" FontWeight="Bold"/>
                 </StackPanel>
-                <Button  x:Name="Previous" Width="50" Height="30" 
+                <Button x:Name="Previous" Width="50" Height="30" 
                      Click="Previous_Click" Margin="15 0 0 0" HorizontalContentAlignment="Center"  >
-                    <Image Source="Icons/Rewind_52px.png" />
+                    <Image Source="Icons/Rewind_52px.png"/>
                 </Button>
-                <Button  x:Name="PlayPauseButton" Width="50" Height="30" HorizontalContentAlignment="Center"  
-                     Click="PlayPause_Click" Margin="15 0 0 0"  >
+                <Button x:Name="PlayPauseButton" Width="50" Height="30" HorizontalContentAlignment="Center"  
+                     Click="PlayPause_Click" Margin="15 0 0 0" MouseLeave="PlayPauseButton_MouseLeave">
                     <Image x:Name="imageInside" Source="Icons/Play_52px.png"  />
                 </Button>
                 <Button  x:Name="Next" Width="50" Height="30" HorizontalContentAlignment="Center"
@@ -65,7 +68,7 @@
                      Click="Mute_Click" Margin="15 0 0 0"  >
                     <Image Source="Icons/Mute_52px.png" />
                 </Button>
-                <TextBlock Foreground="White" VerticalAlignment="Center" Margin="5"  ><Run Text="Volume"/></TextBlock>
+                <TextBlock Foreground="White" VerticalAlignment="Center" Margin="5" ><Run Text="Volume"/></TextBlock>
                 <Slider  x:Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
                             Minimum="0" Maximum="100" Value="80" Width="70"/>
             </StackPanel>
