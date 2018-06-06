@@ -25,20 +25,18 @@
             <RowDefinition Height="130"/>
         </Grid.RowDefinitions>
         <StackPanel Width="auto" Grid.RowSpan="4" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Background="#FF222222" >
-
             <Button  Margin="0 0 0 2" Height="40" >
                 <StackPanel Margin="5 0 5 0" MinWidth="120" Width="auto" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Image Margin="0 0 0 0" HorizontalAlignment="Left" Source="Icons/Music Folder_52px.png"/>
                     <TextBlock VerticalAlignment="Center" Margin="10 10 0 10"  Text="Music Folder" Foreground="#FFDCFAFA" FontSize="16"/>
                 </StackPanel>
-
             </Button>
             <Button  Margin="0 0 0 2" Height="40" />
             <Button Margin="0 0 0 2" Height="40" />
             <Button Margin="0 0 0 2" Height="40" />
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" >
-            <Wpf:VlcControl x:Name="vlcPlayer" Height="0"></Wpf:VlcControl>
+            <Wpf:VlcControl x:Name="Player" Height="0"></Wpf:VlcControl>
         </StackPanel>
         <Grid  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Background="#FF2C2C2C">
             <Grid.ColumnDefinitions>
@@ -54,8 +52,7 @@
             <Slider Style="{StaticResource Horizontal_Slider}" Margin="20 15 40 0" Height="15" 
                     Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3"  BorderThickness="0"
                     Name="TrackBar" PreviewMouseLeftButtonDown="TrackBar_PreviewMouseLeftButtonDown"
-                    PreviewMouseLeftButtonUp="TrackBar_PreviewMouseLeftButtonUp"
-                    ValueChanged="TrackBar_ValueChanged" IsEnabled="False"/>
+                    PreviewMouseLeftButtonUp="TrackBar_PreviewMouseLeftButtonUp" IsEnabled="False"/>
             <StackPanel Margin="15 10 0 0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" MaxWidth="200" MinWidth="100">
                 <TextBlock Name="textBlockTime" Text="Time" FontSize="15" Foreground="#FFDCFAFA"/>
                 <TextBlock TextTrimming="WordEllipsis" Grid.Column="1" Grid.Row="0" x:Name="infoBoxArtist" TextWrapping="Wrap" Text="Artist4444444444444" Height="23" MaxWidth="110"  Width="auto" FontSize="14" FontWeight="Bold" Foreground="#FFDCFAFA"/>
@@ -73,7 +70,7 @@
                     <Image Source="Icons/Rewind_52px.png"/>
                 </Button>
                 <Button HorizontalAlignment="Left" x:Name="PlayPauseButton" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"  
-                     Click="PlayPause_Click" Margin="15 0 0 0" MouseLeave="PlayPauseButton_MouseLeave">
+                     Click="PlayPause_Click" Margin="15 0 0 0">
                     <Image x:Name="imageInside" Source="Icons/Play_52px.png"  />
                 </Button>
                 <Button HorizontalAlignment="Left"  x:Name="Next" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"

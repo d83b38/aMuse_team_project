@@ -27,41 +27,31 @@ namespace aMuse.UI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public bool NeedToChangeIcon { get; set; }
         List<BitmapImage> Covers { get; set; }
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        public bool TrackBarValueChangedByMouse { get; set; }
+        DispatcherTimer PlayerTimer = new DispatcherTimer();
+        DispatcherTimer TrackTimeTimer = new DispatcherTimer();
+        public Action SettingMaximun;
         public MainWindow()
         {
             InitializeComponent();
             MainFrame.Content = new WelcomePage();
-            vlcPlayer.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
-            vlcPlayer.MediaPlayer.EndInit();
-            /// <summary>
-            ///  How it should work, but it doesn't
-            /// </summary>
-            //OpenFileDialog dialog = new OpenFileDialog();
-            //dialog.ShowDialog(); --> window to select a file to play 
-            //var vlcMediaInstance = vlcPlayer.MediaPlayer.VlcMediaPlayer.Manager.CreateNewMediaFromPath(dialog.FileName);
-            //vlcPlayer.MediaPlayer.VlcMediaPlayer.Manager.ParseMedia(vlcMediaInstance);
-            //TrackBar.Maximum = vlcPlayer.MediaPlayer.GetCurrentMedia().Duration.TotalMilliseconds;
-            vlcPlayer.MediaPlayer.SetMedia(new FileInfo("track.mp3"));
-            var Genius = new GeniusInfoParse("Madonna", "Frozen");
+            Player.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
+            Player.MediaPlayer.EndInit();
+            SettingMaximun += OnSettingMaximum;
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.ShowDialog();
+            Player.MediaPlayer.SetMedia(new Uri(dialog.FileName));
+            EnableTimer();
+            var Genius = new GeniusInfoParse("Tame Impala", "Elephant");
             var lyrics = Genius.GetLyrics();
             Covers = Genius.GetAlbumCovers();
             Thumbnail.Source = Covers[1];
         }
         
         private void PlayPause_Click(object sender, RoutedEventArgs e) {
-            if (NeedToChangeIcon == true) {  
-                vlcPlayer.MediaPlayer.VlcMediaPlayer.Pause();
-                imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
-                NeedToChangeIcon = false;
-                return;
-            }
-            if (vlcPlayer.MediaPlayer.IsPlaying == false)
+            if (Player.MediaPlayer.IsPlaying == false)
             {
-                vlcPlayer.MediaPlayer.Play();
+                Player.MediaPlayer.Play();
                 TagLib.File tagFile = TagLib.File.Create("track.mp3");
                 var title = tagFile.Tag.Title.ToString();
                 var artist = tagFile.Tag.Performers[0].ToString();
@@ -70,12 +60,13 @@ namespace aMuse.UI
                 infoBoxTrackName.Text = title;
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                 TrackBar.IsEnabled = true;
-                StartTimer();
+                StartTimers();
+                SettingMaximun?.Invoke();
                 return;
             }
-            vlcPlayer.MediaPlayer.Pause();
+            Player.MediaPlayer.Pause();
+            StopTimers();
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
-            NeedToChangeIcon = true;
         }
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -95,51 +86,69 @@ namespace aMuse.UI
 
         private void Mute_Click(object sender, RoutedEventArgs e)
         {
-            vlcPlayer.MediaPlayer.Audio.ToggleMute();
+            Player.MediaPlayer.Audio.ToggleMute();
         }
 
         private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            if (vlcPlayer.MediaPlayer.Audio != null )
-                vlcPlayer.MediaPlayer.Audio.Volume = (int)volumeSlider.Value;
+            if (Player.MediaPlayer.Audio != null )
+                Player.MediaPlayer.Audio.Volume = (int)volumeSlider.Value;
         }
-
-        private void TrackBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            if(TrackBarValueChangedByMouse == true) {
-                vlcPlayer.MediaPlayer.Time = (long)TrackBar.Value;
-            }
-        }
-
+ 
         private void TrackBar_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            vlcPlayer.MediaPlayer.Pause();
-            TrackBarValueChangedByMouse = true;
+            PlayerTimer.Stop();
         }
 
         private void TrackBar_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-            TrackBarValueChangedByMouse = false;
-            vlcPlayer.MediaPlayer.Play();
+            PlayerTimer.Start();
+            Player.MediaPlayer.Time = (long)TrackBar.Value;
         }
 
-        private void StartTimer() {
-            dispatcherTimer.Tick += DispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 650);
-            dispatcherTimer.Start();
+        private void EnableTimer() {
+            PlayerTimer.Tick += DispatcherTimer_Tick;
+            PlayerTimer.Interval = new TimeSpan(0, 0, 0, 0, 400);
+            TrackTimeTimer.Tick += TrackTimeTimer_Tick;
+            TrackTimeTimer.Interval = new TimeSpan(0, 0, 1);
+            
+        }
+
+        private void TrackTimeTimer_Tick(object sender, EventArgs e) {
+            var seconds = (int)Player.MediaPlayer.Time / 1000;
+            int minutes = seconds / 60;
+            seconds = seconds - minutes * 60;
+            if (minutes < 10 && seconds < 10)
+                textBlockTime.Text = $"0{minutes}:0{seconds}";
+            else if (minutes >= 10 && seconds < 10)
+                textBlockTime.Text = $"{minutes}:0{seconds}";
+            else if (minutes < 10)
+                textBlockTime.Text = $"0{minutes}:{seconds}";
+            else
+                textBlockTime.Text = $"{minutes}:{seconds}";
+            CommandManager.InvalidateRequerySuggested();
+        }
+
+        private void StartTimers() {
+            PlayerTimer.Start();
+            TrackTimeTimer.Start();
+        }
+
+        private void StopTimers() {
+            PlayerTimer.Stop();
+            TrackTimeTimer.Stop();
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e) {
-            TrackBar.Value = vlcPlayer.MediaPlayer.Time;
+            TrackBar.Value = Player.MediaPlayer.Time;
+            if ((int)(Player.MediaPlayer.Time / 1000) == (int)(Player.MediaPlayer.GetCurrentMedia().Duration.TotalSeconds - 1)) {
+                Player.MediaPlayer.Stop();
+                imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
+            }
             CommandManager.InvalidateRequerySuggested();
         }
-        private void PlayPauseButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-            TrackBar.Maximum = vlcPlayer.MediaPlayer.GetCurrentMedia().Duration.TotalMilliseconds;
+
+        private void OnSettingMaximum() {
+            TrackBar.Maximum = Player.MediaPlayer.GetCurrentMedia().Duration.TotalMilliseconds;
         }
-        /// <summary>
-        /// Only thing i was able to come up with to get track length for
-        /// rewinding to work properly (or kind of)
-        /// </summary>
-        /// 
-        private void PlayPauseButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e) {
-            TrackBar.Maximum = vlcPlayer.MediaPlayer.GetCurrentMedia().Duration.TotalMilliseconds;
-        }
+
     }
 }
 
