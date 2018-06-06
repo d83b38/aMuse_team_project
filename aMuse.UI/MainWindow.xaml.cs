@@ -34,6 +34,7 @@ namespace aMuse.UI
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Content = new WelcomePage();
             vlcPlayer.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             vlcPlayer.MediaPlayer.EndInit();
             /// <summary>

@@ -10,7 +10,7 @@
 
     <Grid>
         <Grid.Background>
-            <SolidColorBrush Color="{DynamicResource GreenBrush}"/>
+            <SolidColorBrush Color="#FF363636"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -25,11 +25,15 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button  Click="Button_ClickToLirics" Grid.Row="1" Grid.RowSpan="2"  Grid.Column="3"/>
+        <Button Width="50" Height="50" Click="Button_ClickToLirics" Grid.Row="1" Grid.RowSpan="2"  Grid.Column="3">
+            <Image x:Name="imageInside" Source="Icons/Lirics.png"  />
+        </Button>
         <Button  Visibility="Hidden" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
         <Image  Width="350" Height="350"  
-                Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Source="testAlbumCover.jpg"
-                />
+                Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Source="testAlbumCover.jpg"/>
+        
+        
+       
 
     </Grid>
 </Page>

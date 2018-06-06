@@ -36,7 +36,7 @@ namespace aMuse.UI
         {
 
             _mainWindow.MainFrame.Content = null;
-            _mainWindow.MainFrame.Content = new LyricsPage();
+            _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow);
         }
     }
 }
