@@ -30,6 +30,8 @@ namespace aMuse.UI
         List<BitmapImage> Covers { get; set; }
         DispatcherTimer PlayerTimer = new DispatcherTimer();
         DispatcherTimer TrackTimeTimer = new DispatcherTimer();
+        Core.Library.AudioFile currentAudio { get; set; }
+
         public Action SettingMaximun;
         public MainWindow()
         {
@@ -41,23 +43,27 @@ namespace aMuse.UI
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.ShowDialog();
             Player.MediaPlayer.SetMedia(new Uri(dialog.FileName));
+            currentAudio = new Core.Library.AudioFile(dialog.FileName);
+            currentAudio.NowPlaying = true;
+            infoBoxArtist.Text = currentAudio.Artist;
+            infoBoxTrackName.Text = currentAudio.Track;
             EnableTimer();
-            var Genius = new GeniusInfoParse("Tame Impala", "Elephant");
-            var lyrics = Genius.GetLyrics();
-            Covers = Genius.GetAlbumCovers();
-            Thumbnail.Source = Covers[1];
+            //var Genius = new GeniusInfoParse("Tame Impala", "Elephant");
+            //var lyrics = Genius.GetLyrics();
+            //Covers = Genius.GetAlbumCovers();
+            //Thumbnail.Source = Covers[1];
         }
         
         private void PlayPause_Click(object sender, RoutedEventArgs e) {
             if (Player.MediaPlayer.IsPlaying == false)
             {
                 Player.MediaPlayer.Play();
-                TagLib.File tagFile = TagLib.File.Create("track.mp3");
-                var title = tagFile.Tag.Title.ToString();
-                var artist = tagFile.Tag.Performers[0].ToString();
-                var lyrics = tagFile.Tag.Lyrics;
-                infoBoxArtist.Text = artist;
-                infoBoxTrackName.Text = title;
+                //TagLib.File tagFile = TagLib.File.Create("track.mp3");
+                //var title = tagFile.Tag.Title.ToString();
+                //var artist = tagFile.Tag.Performers[0].ToString();
+                //var lyrics = tagFile.Tag.Lyrics;
+                //infoBoxArtist.Text = artist;
+                //infoBoxTrackName.Text = title;
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                 TrackBar.IsEnabled = true;
                 StartTimers();

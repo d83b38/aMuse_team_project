@@ -77,9 +77,10 @@
     <Compile Include="DTO\Response.cs" />
     <Compile Include="DTO\TrackInfo.cs" />
     <Compile Include="DTO\Data.cs" />
-    <Compile Include="GeniusInfoParse.cs" />
     <Compile Include="Library\AudioFile.cs" />
     <Compile Include="Library\Library.cs" />
+    <Compile Include="Library\Playlist.cs" />
+    <Compile Include="Library\PlaylistLibrary.cs" />
     <Compile Include="Model\Artist.cs" />
     <Compile Include="Model\Track.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
