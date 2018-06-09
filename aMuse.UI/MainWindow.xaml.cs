@@ -17,8 +17,11 @@ using Vlc.DotNet.Core;
 using System.Drawing;
 using System.IO;
 using aMuse.Core;
+using aMuse.Core.Library;
 using System.Windows.Threading;
 using System.Windows.Forms;
+using aMuse.Core.Interfaces;
+using System.Threading;
 
 namespace aMuse.UI
 {
@@ -30,8 +33,7 @@ namespace aMuse.UI
         List<BitmapImage> Covers { get; set; }
         DispatcherTimer PlayerTimer = new DispatcherTimer();
         DispatcherTimer TrackTimeTimer = new DispatcherTimer();
-        Core.Library.AudioFile currentAudio { get; set; }
-
+        IAudio currentAudio;
         public Action SettingMaximun;
         public MainWindow()
         {
@@ -42,31 +44,28 @@ namespace aMuse.UI
             SettingMaximun += OnSettingMaximum;
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.ShowDialog();
-            Player.MediaPlayer.SetMedia(new Uri(dialog.FileName));
-            currentAudio = new Core.Library.AudioFile(dialog.FileName);
-            currentAudio.NowPlaying = true;
+            if(dialog.FileName != "") {
+                Player.MediaPlayer.SetMedia(new Uri(dialog.FileName));
+                currentAudio = new AudioFileTrack(dialog.FileName);
+                currentAudio.NowPlaying = true;
+            }
+            else {
+                Close();
+            }
+            
             infoBoxArtist.Text = currentAudio.Artist;
             infoBoxTrackName.Text = currentAudio.Track;
             EnableTimer();
-            //var Genius = new GeniusInfoParse("Tame Impala", "Elephant");
-            //var lyrics = Genius.GetLyrics();
-            //Covers = Genius.GetAlbumCovers();
-            //Thumbnail.Source = Covers[1];
         }
         
         private void PlayPause_Click(object sender, RoutedEventArgs e) {
             if (Player.MediaPlayer.IsPlaying == false)
             {
                 Player.MediaPlayer.Play();
-                //TagLib.File tagFile = TagLib.File.Create("track.mp3");
-                //var title = tagFile.Tag.Title.ToString();
-                //var artist = tagFile.Tag.Performers[0].ToString();
-                //var lyrics = tagFile.Tag.Lyrics;
-                //infoBoxArtist.Text = artist;
-                //infoBoxTrackName.Text = title;
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                 TrackBar.IsEnabled = true;
                 StartTimers();
+                Thread.Sleep(300);//that is wrong -- need to find a solution for that
                 SettingMaximun?.Invoke();
                 return;
             }
@@ -144,7 +143,7 @@ namespace aMuse.UI
 
         private void DispatcherTimer_Tick(object sender, EventArgs e) {
             TrackBar.Value = Player.MediaPlayer.Time;
-            if ((int)(Player.MediaPlayer.Time / 1000) == (int)(Player.MediaPlayer.GetCurrentMedia().Duration.TotalSeconds - 1)) {
+            if ((Player.MediaPlayer.Time / 1000) == (currentAudio.Duration.TotalSeconds - 1)) {
                 Player.MediaPlayer.Stop();
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
             }
@@ -152,7 +151,7 @@ namespace aMuse.UI
         }
 
         private void OnSettingMaximum() {
-            TrackBar.Maximum = Player.MediaPlayer.GetCurrentMedia().Duration.TotalMilliseconds;
+            TrackBar.Maximum = currentAudio.Duration.TotalMilliseconds;
         }
 
     }

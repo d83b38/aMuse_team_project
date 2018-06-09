@@ -11,12 +11,12 @@ namespace aMuse.Core.Library
     {
         private string path; // sample path "C:\\Users\\heathen\\Downloads"
 
-        private List<AudioFile> files;
+        private List<AudioFileTrack> files;
 
         public Library(string path)
         {
             this.path = path;
-            files = new List<AudioFile>();
+            files = new List<AudioFileTrack>();
         }
 
         public void searchAudioFiles()
@@ -26,7 +26,7 @@ namespace aMuse.Core.Library
 
             foreach (string f in audios)
             {
-                files.Add(new AudioFile(f));
+                files.Add(new AudioFileTrack(f));
             }
         }
     }

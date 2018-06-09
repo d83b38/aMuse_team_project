@@ -15,6 +15,8 @@ namespace aMuse.Core.DTO {
         public int Id { get; set; }
         [JsonProperty("title")]
         public string TrackTitle { get; set; }
+        [JsonProperty("title_with_featured")]
+        public string TrackTitleWithFeatured { get; set; }
         [JsonProperty("url")]
         public string FullLyricsUrl { get; set; }
         [JsonProperty("primary_artist")]
