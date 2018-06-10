@@ -28,17 +28,34 @@ namespace aMuse.UI
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
+    /// 
     public partial class MainWindow : Window
     {
         List<BitmapImage> Covers { get; set; }
         DispatcherTimer PlayerTimer = new DispatcherTimer();
         DispatcherTimer TrackTimeTimer = new DispatcherTimer();
-        IAudio currentAudio;
+        IAudio _currentAudio;       // field with _ ? ok?
         public Action SettingMaximun;
+
         public MainWindow()
         {
+            //posible solution for byte[] --> BitmapImage (transfer to kokoy-to klass)
+            BitmapImage ToImage(byte[] array) 
+            {
+                using (var ms = new System.IO.MemoryStream(array))
+                {
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad; 
+                    image.StreamSource = ms;
+                    image.EndInit();
+                    return image;
+                }
+            }
+            //vremenno 
+
             InitializeComponent();
-            MainFrame.Content = new WelcomePage();
+            //MainFrame.Content = new MainPage(this,null); 
             Player.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             Player.MediaPlayer.EndInit();
             SettingMaximun += OnSettingMaximum;
@@ -46,15 +63,19 @@ namespace aMuse.UI
             dialog.ShowDialog();
             if(dialog.FileName != "") {
                 Player.MediaPlayer.SetMedia(new Uri(dialog.FileName));
-                currentAudio = new AudioFileTrack(dialog.FileName);
-                currentAudio.NowPlaying = true;
+                _currentAudio = new AudioFileTrack(dialog.FileName);
+
+                _currentAudio.NowPlaying = true;
+                //vremenno ?
+                Thumbnail.Source=ToImage(_currentAudio.Covers[0]);
+                //vremenno
             }
             else {
                 Close();
             }
             
-            infoBoxArtist.Text = currentAudio.Artist;
-            infoBoxTrackName.Text = currentAudio.Track;
+            infoBoxArtist.Text = _currentAudio.Artist;
+            infoBoxTrackName.Text = _currentAudio.Track;
             EnableTimer();
         }
         
@@ -76,7 +97,7 @@ namespace aMuse.UI
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MainFrame.Content = new MainPage(this);
+            MainFrame.Content = new MainPage(this, _currentAudio);
         }
 
         private void Next_Click(object sender, RoutedEventArgs e)
@@ -95,8 +116,10 @@ namespace aMuse.UI
         }
 
         private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            if (Player.MediaPlayer.Audio != null )
+            if (Player.MediaPlayer.Audio != null)
+            {
                 Player.MediaPlayer.Audio.Volume = (int)volumeSlider.Value;
+            }
         }
  
         private void TrackBar_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
@@ -143,7 +166,7 @@ namespace aMuse.UI
 
         private void DispatcherTimer_Tick(object sender, EventArgs e) {
             TrackBar.Value = Player.MediaPlayer.Time;
-            if ((Player.MediaPlayer.Time / 1000) == (currentAudio.Duration.TotalSeconds - 1)) {
+            if ((Player.MediaPlayer.Time / 1000) == (_currentAudio.Duration.TotalSeconds - 1)) {
                 Player.MediaPlayer.Stop();
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
             }
@@ -151,9 +174,39 @@ namespace aMuse.UI
         }
 
         private void OnSettingMaximum() {
-            TrackBar.Maximum = currentAudio.Duration.TotalMilliseconds;
+            TrackBar.Maximum = _currentAudio.Duration.TotalMilliseconds;
         }
 
+        private void ToolTipArtist_Opened(object sender, RoutedEventArgs e)
+        {
+            object item = LayoutRoot.FindName(infoBoxArtist.Name);
+            toolTipArtist.Content = infoBoxArtist.Text;
+        }
+
+        private void ToolTipTrack_Opened(object sender, RoutedEventArgs e)
+        {
+            object item = LayoutRoot.FindName(infoBoxTrackName.Name);
+            toolTipTrack.Content = infoBoxTrackName.Text;
+        }
+
+        private void VolumeChanger_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Player.MediaPlayer.Audio.IsMute==true)
+            {
+                volumeSlider.Value = 80;
+                volumeSlider.IsEnabled = true;
+                volumeChanger.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Speaker_52px.png"));
+                Player.MediaPlayer.Audio.IsMute = false;
+            }
+            else
+            {
+                Player.MediaPlayer.Audio.IsMute = true;
+                volumeSlider.Value = 0;
+                volumeSlider.IsEnabled = false;
+                volumeChanger.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Mute_52px.png"));
+            }
+
+        }
     }
 }
 

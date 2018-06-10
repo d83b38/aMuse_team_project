@@ -29,11 +29,7 @@
             <Image x:Name="imageInside" Source="Icons/Lirics.png"  />
         </Button>
         <Button  Visibility="Hidden" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
-        <Image  Width="350" Height="350"  
-                Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Source="testAlbumCover.jpg"/>
-        
-        
-       
-
+        <Image  Width="350" Height="350"  x:Name="AlbumCover"
+                Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Source="Icons/music-record-big.png"/>
     </Grid>
 </Page>
