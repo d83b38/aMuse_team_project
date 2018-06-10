@@ -2,7 +2,8 @@
 using System.Windows.Media.Imaging;
 
 namespace aMuse.Core.Interfaces {
-    public interface IAudio : IFileManagement {
+    public interface IAudio
+    {
         TimeSpan Duration { get; set; }
         bool NowPlaying { get; set; }
         string Artist { get; set; }

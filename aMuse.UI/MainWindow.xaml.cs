@@ -21,7 +21,7 @@ namespace aMuse.UI
         List<BitmapImage> Covers { get; set; }
         DispatcherTimer PlayerTimer = new DispatcherTimer();
         DispatcherTimer TrackTimeTimer = new DispatcherTimer();
-        IAudio _currentAudio;
+        AudioFileTrack _currentAudio;
         public Action SettingMaximun;
 
         public MainWindow()
@@ -40,18 +40,25 @@ namespace aMuse.UI
                 Player.MediaPlayer.SetMedia(new Uri(dialog.FileName));
                 _currentAudio = new AudioFileTrack(dialog.FileName);
                 _currentAudio.NowPlaying = true;
-                Thumbnail.Source=_currentAudio.CoverImages[1];
+
+                if (_currentAudio.ParsingSuccessful() && _currentAudio.CoverImages[1] != null)
+                {
+                    Thumbnail.Source = _currentAudio.CoverImages[1];
+                }
+
+                infoBoxArtist.Text = _currentAudio.Artist;
+                infoBoxTrackName.Text = _currentAudio.Track;
             }
-            else {
+            else
+            {
                 Close();
             }
             
-            infoBoxArtist.Text = _currentAudio.Artist;
-            infoBoxTrackName.Text = _currentAudio.Track;
             EnableTimer();
         }
         
-        private void PlayPause_Click(object sender, RoutedEventArgs e) {
+        private void PlayPause_Click(object sender, RoutedEventArgs e)
+        {
             if (Player.MediaPlayer.IsPlaying == false)
             {
                 Player.MediaPlayer.Play();

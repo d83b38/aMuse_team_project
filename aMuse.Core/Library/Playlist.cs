@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace aMuse.Core.Library
 {
-    public class Playlist : IFileManagement
+    public class Playlist
     {
         public string Name { get; set; }
 
@@ -16,11 +16,6 @@ namespace aMuse.Core.Library
         public void GetFile()
         {
             paths = new HashSet<string>();
-        }
-
-        public void SaveFile()
-        {
-            
         }
 
         public void AddTrack(string path)

@@ -1,7 +1,6 @@
-﻿using aMuse.Core.Interfaces;
+﻿using aMuse.Core.Library;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace aMuse.UI
 {
@@ -10,25 +9,11 @@ namespace aMuse.UI
     /// </summary>
     public partial class MainPage : Page
     {
-        IAudio _currentAudio;
+        AudioFileTrack _currentAudio;
         MainWindow _mainWindow;
-        public MainPage(MainWindow mainWindow, IAudio currentAudio)
-        {
-            //posible solution for byte[] --> BitmapImage (transfer to kokoy-to klass)
-            BitmapImage ToImage(byte[] array)
-            {
-                using (var ms = new System.IO.MemoryStream(array))
-                {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.StreamSource = ms;
-                    image.EndInit();
-                    return image;
-                }
-            }
-            //vremenno
 
+        public MainPage(MainWindow mainWindow, AudioFileTrack currentAudio)
+        {
             /*(мне лень писать на англ.) 
              * так вот, мб придумаете способ получше "знать о текущем треке"
              * чем передавать его как связку поле-параметр 
@@ -40,9 +25,10 @@ namespace aMuse.UI
             _mainWindow = mainWindow;
             InitializeComponent();
 
-            if (_currentAudio!=null) //if track not selected cover=default cover
+            if (_currentAudio != null && _currentAudio.ParsingSuccessful() && _currentAudio.CoverImages[0] != null) 
+            //if track not selected cover=default cover
             {
-                AlbumCover.Source = ToImage(_currentAudio.Covers[0]);
+                AlbumCover.Source = _currentAudio.CoverImages[0];
             }
 
         }
@@ -54,7 +40,14 @@ namespace aMuse.UI
 
         private void Button_ClickToLirics(object sender, RoutedEventArgs e)
         {
-            _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, _currentAudio.Lyrics);
+            if (_currentAudio.ParsingSuccessful() && !string.IsNullOrWhiteSpace(_currentAudio.Lyrics))
+            {
+                _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, _currentAudio.Lyrics);
+            }
+            else
+            {
+                _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, "Couldn't find lyrics for this song.");
+            }
         }
     }
 }
