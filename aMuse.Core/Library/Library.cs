@@ -20,7 +20,7 @@ namespace aMuse.Core.Library
         public void SearchAudioFiles()
         {
             var audios = Directory.EnumerateFiles(_path, "*.*", SearchOption.AllDirectories)
-            .Where(s => s.EndsWith(".mp3") || s.EndsWith(".flac") || s.EndsWith("wav"));
+            .Where(s => s.EndsWith(".mp3") || s.EndsWith(".flac") || s.EndsWith(".wav"));
 
             foreach (string f in audios)
             {

@@ -19,6 +19,7 @@ namespace aMuse.Core.Library
         public BitmapImage[] CoverImages { get; set; }
 
         private TagLib.File File { get; set; }
+
         ITrackDataParsing DataParsing;
 
         private bool nowPlaying;
@@ -36,8 +37,11 @@ namespace aMuse.Core.Library
 
                 if (nowPlaying && !hasInfo)
                 {
-                    GetInfo();
-                    hasInfo = true;
+                    if (DataParsing.ParsingSuccessful)
+                    {
+                        GetInfo();
+                        hasInfo = true;
+                    }
                 }
             }
         }
@@ -46,17 +50,19 @@ namespace aMuse.Core.Library
         {
             CoverImages = new BitmapImage[2];
             _path = path;
+            Covers = new byte[2][];
+            CoverImages = new BitmapImage[2];
+            NowPlaying = false;
             GetFile();
         }
 
-       public void GetFile()
+       private void GetFile()
        {
-            Covers = new byte[2][];
-            NowPlaying = false;
-
             File = TagLib.File.Create(_path);
+
             Duration = File.Properties.Duration;
-            bool hasInfo = true;
+
+            hasInfo = true;
 
             if (File.Tag.Performers.Length > 0 && !String.IsNullOrWhiteSpace(File.Tag.Performers[0]))
             {
@@ -79,42 +85,46 @@ namespace aMuse.Core.Library
             if (!hasInfo)
             {
                 string[] info = (Path.GetFileNameWithoutExtension(_path)).Split('-');
-                Artist = info[0];
-                File.Tag.AlbumArtists = new string[1] { info[0] };
+
+                Artist = info[0].Trim();
+                File.Tag.Performers = new string[1] { info[0] };
+
                 if (info.Length > 1)
                 {
-                    Track = info[1];
+                    Track = info[1].Trim();
                     File.Tag.Title = info[1];
                 }
-                SaveFile();
+
+                File.Save();
             }
+
             DataParsing = new GeniusData(Artist, Track);
         }
 
-        public void SaveFile()
+        private void GetInfo()
         {
-            File.Save();
-        }
-        
-        public void GetInfo()
-        {
-            if ( Artist != DataParsing.GetArtist())
+            if (Artist != DataParsing.GetArtist())
             {
                Artist = DataParsing.GetArtist();
+            }
+
+            if (Track != DataParsing.GetTitle()[0] && Track != DataParsing.GetTitle()[1])
+            {
+                Track = DataParsing.GetTitle()[0];
             }
 
             Lyrics = DataParsing.GetLyrics();
 
             Covers = DataParsing.GetAlbumCovers();
 
-            File.Tag.AlbumArtists = new string[1] { Artist };
+            File.Tag.Performers = new string[1] { Artist };
             File.Tag.Title = Track;
             File.Tag.Lyrics = Lyrics;
 
-             // TODO: check if both pictures are not null
+            // TODO: check if both pictures are not null
             File.Tag.Pictures = new IPicture[2] { new Picture(new ByteVector(Covers[0])),
                                                   new Picture(new ByteVector(Covers[1]))};
-            SaveFile();
+            File.Save();
 
             if (Covers[0] != null)
             {
@@ -139,9 +149,14 @@ namespace aMuse.Core.Library
             }
         }
 
+        public bool ParsingSuccessful()
+        {
+            return DataParsing.ParsingSuccessful;
+        }
+
         private string CleanText(string uncleaned)
         {
-            var eraseAfter = "";
+            string eraseAfter = "";
             if (uncleaned.Contains("ft"))
             {
                 eraseAfter = "ft";
