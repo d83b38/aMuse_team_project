@@ -10,7 +10,7 @@
 
     <Grid  Background="#FF363636">
         <ScrollViewer Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
-            <ListBox Selected="ListTracks_TrackSelected" Margin="15 0 15 0" x:Name="listTracks" HorizontalContentAlignment="Stretch" Background="#FF363636" BorderBrush="#FF363636">
+            <ListBox MouseDoubleClick="ListTracks_MouseDoubleClick" Margin="15 0 15 0" x:Name="ListTracks" HorizontalContentAlignment="Stretch" Background="#FF363636" BorderBrush="#FF363636">
                 <ListBox.ItemTemplate >
                     <DataTemplate >
                         <Grid  HorizontalAlignment="Stretch" Background="#FF363636">

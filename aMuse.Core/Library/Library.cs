@@ -7,14 +7,14 @@ namespace aMuse.Core.Library
 {
     public class Library
     {
-        private readonly string _path; // sample path "C:\\Users\\heathen\\Downloads"
-        public List<AudioFileTrack> files;
+        private readonly string _path;
+        public List<AudioFileTrack> Files { get; set; }
 
         public Library(string path)
         {
             this._path = path;
             SystemState.Instance.LibraryPath = path;
-            files = new List<AudioFileTrack>();
+            Files = new List<AudioFileTrack>();
         }
 
         public void SearchAudioFiles()
@@ -24,7 +24,7 @@ namespace aMuse.Core.Library
 
             foreach (string f in audios)
             {
-                files.Add(new AudioFileTrack(f));
+                Files.Add(new AudioFileTrack(f));
             }
         }
     }

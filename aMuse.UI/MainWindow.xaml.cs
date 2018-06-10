@@ -37,17 +37,7 @@ namespace aMuse.UI
             dialog.ShowDialog();
             if (dialog.FileName != "")
             {
-                Player.MediaPlayer.SetMedia(new Uri(dialog.FileName));
-                _currentAudio = new AudioFileTrack(dialog.FileName);
-                _currentAudio.NowPlaying = true;
-
-                if (_currentAudio.ParsingSuccessful() && _currentAudio.CoverImages[1] != null)
-                {
-                    Thumbnail.Source = _currentAudio.CoverImages[1];
-                }
-
-                infoBoxArtist.Text = _currentAudio.Artist;
-                infoBoxTrackName.Text = _currentAudio.Track;
+                SetAudio(new AudioFileTrack(dialog.FileName));
             }
             else
             {
@@ -55,6 +45,24 @@ namespace aMuse.UI
             }
             
             EnableTimer();
+        }
+
+        public void SetAudio(AudioFileTrack audio)
+        {
+            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
+
+            Player.MediaPlayer.SetMedia(new Uri(audio._path));
+            
+            _currentAudio = audio;
+            _currentAudio.NowPlaying = true;
+
+            if (_currentAudio.ParsingSuccessful() && _currentAudio.CoverImages[1] != null)
+            {
+                Thumbnail.Source = _currentAudio.CoverImages[1];
+            }
+
+            infoBoxArtist.Text = _currentAudio.Artist;
+            infoBoxTrackName.Text = _currentAudio.Track;
         }
         
         private void PlayPause_Click(object sender, RoutedEventArgs e)
@@ -110,15 +118,16 @@ namespace aMuse.UI
             Player.MediaPlayer.Time = (long)TrackBar.Value;
         }
 
-        private void EnableTimer() {
+        private void EnableTimer()
+        {
             PlayerTimer.Tick += DispatcherTimer_Tick;
             PlayerTimer.Interval = new TimeSpan(0, 0, 0, 0, 400);
             TrackTimeTimer.Tick += TrackTimeTimer_Tick;
             TrackTimeTimer.Interval = new TimeSpan(0, 0, 1);
-            
         }
 
-        private void TrackTimeTimer_Tick(object sender, EventArgs e) {
+        private void TrackTimeTimer_Tick(object sender, EventArgs e)
+        {
             var seconds = (int)Player.MediaPlayer.Time / 1000;
             int minutes = seconds / 60;
             seconds = seconds - minutes * 60;
@@ -133,17 +142,20 @@ namespace aMuse.UI
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private void StartTimers() {
+        private void StartTimers()
+        {
             PlayerTimer.Start();
             TrackTimeTimer.Start();
         }
 
-        private void StopTimers() {
+        private void StopTimers()
+        {
             PlayerTimer.Stop();
             TrackTimeTimer.Stop();
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e) {
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
             TrackBar.Value = Player.MediaPlayer.Time;
             if ((Player.MediaPlayer.Time / 1000) == (_currentAudio.Duration.TotalSeconds - 1)) {
                 Player.MediaPlayer.Stop();
@@ -187,11 +199,9 @@ namespace aMuse.UI
 
         }
 
-
-
         private void Button_ClickToLibrary(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new MusicLibrary();
+            MainFrame.Content = new MusicLibrary(this);
         }
     }
 }

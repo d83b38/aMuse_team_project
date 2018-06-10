@@ -9,7 +9,7 @@ namespace aMuse.Core.Library
 {
     public class AudioFileTrack : IAudio
     {
-        private readonly string _path;
+        public readonly string _path;
 
         public TimeSpan Duration { get; set; }
         public string Artist { get; set; }
@@ -37,11 +37,14 @@ namespace aMuse.Core.Library
 
                 if (nowPlaying && !hasInfo)
                 {
+                    DataParsing = new GeniusData(Artist, Track);
+
                     if (DataParsing.ParsingSuccessful)
                     {
                         GetInfo();
-                        hasInfo = true;
                     }
+
+                    hasInfo = true;
                 }
             }
         }
@@ -62,7 +65,7 @@ namespace aMuse.Core.Library
 
             Duration = File.Properties.Duration;
 
-            hasInfo = true;
+            bool hasTags = true;
 
             if (File.Tag.Performers.Length > 0 && !String.IsNullOrWhiteSpace(File.Tag.Performers[0]))
             {
@@ -70,7 +73,7 @@ namespace aMuse.Core.Library
             }
             else
             {
-                hasInfo = false;
+                hasTags = false;
             }
 
             if (!String.IsNullOrWhiteSpace(File.Tag.Title))
@@ -79,10 +82,10 @@ namespace aMuse.Core.Library
             }
             else
             {
-                hasInfo = false;
+                hasTags = false;
             }
 
-            if (!hasInfo)
+            if (!hasTags)
             {
                 string[] info = (Path.GetFileNameWithoutExtension(_path)).Split('-');
 
@@ -97,8 +100,6 @@ namespace aMuse.Core.Library
 
                 File.Save();
             }
-
-            DataParsing = new GeniusData(Artist, Track);
         }
 
         private void GetInfo()
