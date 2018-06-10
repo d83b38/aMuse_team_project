@@ -1,22 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Vlc.DotNet.Wpf;
-using Vlc.DotNet.Core;
-using System.Drawing;
 using System.IO;
-using aMuse.Core;
 using aMuse.Core.Library;
 using System.Windows.Threading;
 using System.Windows.Forms;
@@ -34,41 +21,26 @@ namespace aMuse.UI
         List<BitmapImage> Covers { get; set; }
         DispatcherTimer PlayerTimer = new DispatcherTimer();
         DispatcherTimer TrackTimeTimer = new DispatcherTimer();
-        IAudio _currentAudio;       // field with _ ? ok?
+        IAudio _currentAudio;
         public Action SettingMaximun;
 
         public MainWindow()
         {
-            //posible solution for byte[] --> BitmapImage (transfer to kokoy-to klass)
-            BitmapImage ToImage(byte[] array) 
-            {
-                using (var ms = new System.IO.MemoryStream(array))
-                {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad; 
-                    image.StreamSource = ms;
-                    image.EndInit();
-                    return image;
-                }
-            }
-            //vremenno 
-
             InitializeComponent();
-            //MainFrame.Content = new MainPage(this,null); 
+            //MainFrame.Content = new MainPage(this,null);
+
             Player.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             Player.MediaPlayer.EndInit();
             SettingMaximun += OnSettingMaximum;
+
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.ShowDialog();
-            if(dialog.FileName != "") {
+            if (dialog.FileName != "")
+            {
                 Player.MediaPlayer.SetMedia(new Uri(dialog.FileName));
                 _currentAudio = new AudioFileTrack(dialog.FileName);
-
                 _currentAudio.NowPlaying = true;
-                //vremenno ?
-                Thumbnail.Source=ToImage(_currentAudio.Covers[0]);
-                //vremenno
+                Thumbnail.Source=_currentAudio.CoverImages[1];
             }
             else {
                 Close();

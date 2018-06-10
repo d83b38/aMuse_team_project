@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /aMuse.UI/playlists.json
+/aMuse.UI/options.json

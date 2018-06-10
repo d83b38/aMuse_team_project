@@ -6,12 +6,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace aMuse.Core.APIData {
@@ -79,19 +77,15 @@ namespace aMuse.Core.APIData {
             return reg.Replace(uncleanedLyrics, "");
         }
 
-        public List<byte[]> GetAlbumCovers() {
-            List<byte[]> Covers = new List<byte[]>();
+        public byte[][] GetAlbumCovers() {
+            byte[][] covers = new byte[2][];
             using (var client = new HttpClient()) {
                 var FullCoverStream = client.GetByteArrayAsync(TrackData.AlbumCoverUrl).Result;
                 var ThumbnailStream = client.GetByteArrayAsync(TrackData.AlbumCoverThumbnailUrl).Result;
-                Covers.Add(FullCoverStream);
-                Covers.Add(ThumbnailStream);
-                //var cover = Image.FromStream(FullCoverStream);
-                //var thumbnail = Image.FromStream(ThumbnailStream);
-                //Covers.Add(ConvertBytesToImage(FullCoverStream));
-                //Covers.Add(ConvertBytesToImage(ThumbnailStream));
+                covers[0] = FullCoverStream;
+                covers[1] = ThumbnailStream;
             }
-            return Covers;
+            return covers;
         }
 
         public string GetArtist() {

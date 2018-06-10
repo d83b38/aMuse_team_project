@@ -9,14 +9,17 @@ namespace aMuse.Core.Library
 
         public HashSet<string> paths { get; set; }
 
-        public Playlist(string name) {
+        public Playlist(string name)
+        {
             Name = name;
         }
-        public void GetFile() {
+        public void GetFile()
+        {
             paths = new HashSet<string>();
         }
 
-        public void SaveFile() {
+        public void SaveFile()
+        {
             
         }
 

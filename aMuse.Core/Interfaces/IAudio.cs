@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace aMuse.Core.Interfaces {
@@ -12,6 +8,7 @@ namespace aMuse.Core.Interfaces {
         string Artist { get; set; }
         string Track { get; set; }
         string Lyrics { get; set; }
-        List<byte[]> Covers { get; set; }
+        byte[][] Covers { get; set; }
+        BitmapImage[] CoverImages { get; set; }
     }
 }
