@@ -43,7 +43,8 @@ namespace aMuse.Core.Library
         }
        
         public AudioFileTrack(string path)
-        { 
+        {
+            CoverImages = new BitmapImage[2];
             _path = path;
             GetFile();
         }

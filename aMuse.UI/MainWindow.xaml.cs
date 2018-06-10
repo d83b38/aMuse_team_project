@@ -46,6 +46,8 @@ namespace aMuse.UI
                 Close();
             }
             
+
+            //тут была ошибка при закрытии папки без выбора трека хз чо было уже лень смотреть
             infoBoxArtist.Text = _currentAudio.Artist;
             infoBoxTrackName.Text = _currentAudio.Track;
             EnableTimer();
@@ -178,6 +180,13 @@ namespace aMuse.UI
                 volumeChanger.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Mute_52px.png"));
             }
 
+        }
+
+
+
+        private void Button_ClickToLibrary(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new MusicLibrary();
         }
     }
 }

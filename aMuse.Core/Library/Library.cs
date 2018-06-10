@@ -5,11 +5,10 @@ using aMuse.Core.Utils;
 
 namespace aMuse.Core.Library
 {
-    class Library
+    public class Library
     {
         private readonly string _path; // sample path "C:\\Users\\heathen\\Downloads"
-
-        private List<AudioFileTrack> files;
+        public List<AudioFileTrack> files;
 
         public Library(string path)
         {
@@ -18,7 +17,7 @@ namespace aMuse.Core.Library
             files = new List<AudioFileTrack>();
         }
 
-        public void searchAudioFiles()
+        public void SearchAudioFiles()
         {
             var audios = Directory.EnumerateFiles(_path, "*.*", SearchOption.AllDirectories)
             .Where(s => s.EndsWith(".mp3") || s.EndsWith(".flac") || s.EndsWith("wav"));
