@@ -11,7 +11,7 @@ namespace aMuse.UI
     {
         AudioFileTrack _currentAudio;
         MainWindow _mainWindow;
-
+        string Lyrics { get; set; }
         public MainPage(MainWindow mainWindow, AudioFileTrack currentAudio)
         {
             /*(мне лень писать на англ.) 
@@ -20,33 +20,33 @@ namespace aMuse.UI
              * пока так, я гуист я так вижу.
              * (мне надо чтоб работало прост, иначе беда)
              */
+             //я ничего лучше не придумал пока что -Илья
+             //   надеюсь, мы не забудем это удалить
             _currentAudio = currentAudio;
 
             _mainWindow = mainWindow;
             InitializeComponent();
-
-            if (_currentAudio != null && _currentAudio.ParsingSuccessful() && _currentAudio.CoverImages[0] != null) 
-            //if track not selected cover=default cover
-            {
-                AlbumCover.Source = _currentAudio.CoverImages[0];
-            }
-
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        
+        private void Button_ClickToLyrics(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void Button_ClickToLirics(object sender, RoutedEventArgs e)
-        {
-            if (_currentAudio.ParsingSuccessful() && !string.IsNullOrWhiteSpace(_currentAudio.Lyrics))
+            if (_currentAudio.IsParsingSuccessful() && !string.IsNullOrWhiteSpace(Lyrics))
             {
-                _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, _currentAudio.Lyrics);
+                _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, Lyrics);
             }
             else
             {
                 _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, "Couldn't find lyrics for this song.");
+            }
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            Lyrics = await _currentAudio.SetLyricsAsync();
+            if (_currentAudio != null && _currentAudio.CoverImages[0] != null)
+            //if track not selected cover=default cover
+            {
+                var covers = await _currentAudio.SetCoversAsync();
+                AlbumCover.Source = covers[0];
             }
         }
     }

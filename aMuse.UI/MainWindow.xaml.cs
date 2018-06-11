@@ -43,28 +43,29 @@ namespace aMuse.UI
             {
                 Close();
             }
-            
             EnableTimer();
         }
 
-        public void SetAudio(AudioFileTrack audio)
+        public async void SetAudio(AudioFileTrack audio)
         {
-            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
+            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
 
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
-            
             _currentAudio = audio;
             _currentAudio.NowPlaying = true;
-
-            if (_currentAudio.ParsingSuccessful() && _currentAudio.CoverImages[1] != null)
-            {
-                Thumbnail.Source = _currentAudio.CoverImages[1];
-            }
-
-            infoBoxArtist.Text = _currentAudio.Artist;
-            infoBoxTrackName.Text = _currentAudio.Track;
+            TrackBar.IsEnabled = true;
+            var artist = await _currentAudio.SetArtistAsync();
+            var titles = await _currentAudio.SetTitlesAsync();
+            Player.MediaPlayer.Play();
+            var cov = await _currentAudio.SetCoversAsync();
+            infoBoxArtist.Text = artist;
+            infoBoxTrackName.Text = titles[0];
+            Thumbnail.Source = cov[1];
+            StartTimers();
+            //Thread.Sleep(300);
+            SettingMaximun?.Invoke();
         }
-        
+
         private void PlayPause_Click(object sender, RoutedEventArgs e)
         {
             if (Player.MediaPlayer.IsPlaying == false)
@@ -73,8 +74,8 @@ namespace aMuse.UI
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                 TrackBar.IsEnabled = true;
                 StartTimers();
-                Thread.Sleep(300);//that is wrong -- need to find a solution for that
-                SettingMaximun?.Invoke();
+                //Thread.Sleep(300);//that is wrong -- need to find a solution for that
+                //SettingMaximun?.Invoke();
                 return;
             }
             Player.MediaPlayer.Pause();
@@ -96,7 +97,7 @@ namespace aMuse.UI
         {
 
         }
-
+         
         private void Mute_Click(object sender, RoutedEventArgs e)
         {
             Player.MediaPlayer.Audio.ToggleMute();
@@ -202,6 +203,13 @@ namespace aMuse.UI
         private void Button_ClickToLibrary(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new MusicLibrary(this);
+        }
+
+        private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e) {
+            if(e.Key == Key.Space) {
+                PlayPause_Click(sender, e);
+                e.Handled = true;
+            }
         }
     }
 }

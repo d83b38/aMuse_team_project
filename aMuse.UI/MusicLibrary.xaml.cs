@@ -17,7 +17,8 @@ namespace aMuse.UI
         {
             this._mainWindow = mainWindow;
             //CurrentLibrary = new Library("C:\\Users\\Даниил\\Desktop\\testedLib" ); //my folder yopta
-            CurrentLibrary = new Library("C:\\Users\\heathen\\Downloads\\1"); //nope, my!
+            //CurrentLibrary = new Library("C:\\Users\\heathen\\Downloads\\1"); //nope, my!
+            CurrentLibrary = new Library("C:\\Users\\Илья\\Desktop\\music"); //gtfo beaches))))0
             CurrentLibrary.SearchAudioFiles();
             InitializeComponent();
             ListTracks.ItemsSource = CurrentLibrary.Files;

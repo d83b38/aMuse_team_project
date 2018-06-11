@@ -1,11 +1,13 @@
-﻿namespace aMuse.Core.Interfaces
+﻿using aMuse.Core.Model;
+using System.Threading.Tasks;
+
+namespace aMuse.Core.Interfaces
 {
-    interface ITrackDataParsing
-    {
-        bool ParsingSuccessful { get; }
-        string GetArtist();
-        string[] GetTitle();
-        byte[][] GetAlbumCovers();
-        string GetLyrics();
+    interface ITrackDataParsing {
+        bool IsParsingSuccessful { get; }
+        Task<string> GetArtistTaskAsync();
+        Task<string[]> GetTitleTaskAsync();
+        Task<byte[][]> GetAlbumCoversTaskAsync();
+        Task<string> GetLyricsTaskAsync();
     }
 }
