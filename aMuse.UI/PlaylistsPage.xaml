@@ -10,21 +10,13 @@
 
     <Grid  Background="#FF363636">
         <ScrollViewer Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
-            <ListBox Margin="15 0 15 0" x:Name="listTracks" HorizontalContentAlignment="Stretch" Background="#FF363636" BorderBrush="#FF363636">
+            <ListBox MouseDoubleClick="ListTracks_MouseDoubleClick" Margin="15 0 15 0" x:Name="listTracks" HorizontalContentAlignment="Stretch" Background="#FF363636" BorderBrush="#FF363636">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid HorizontalAlignment="Stretch" Background="#FF363636">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition MinWidth="200" Width="Auto"/>
-                                <ColumnDefinition MinWidth="200" Width="Auto" />
-                                <ColumnDefinition MinWidth="200" Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock TextTrimming="WordEllipsis"   Margin="0 0 15 0" Grid.Column="0" VerticalAlignment="Center" 
-                                   FontSize="20" MaxWidth="220" Text="{Binding Track}" FontWeight="Bold" Foreground="#FFDCFAFA"/>
-                            <TextBlock TextTrimming="WordEllipsis"  Margin="0 0 15 0" Grid.Column="1" VerticalAlignment="Center" 
-                                   FontSize="20" MaxWidth="220" Text="ALBUM NAME MuSt Be HeRe" FontWeight="Bold" Foreground="#FFDCFAFA"/>
-                            <TextBlock TextTrimming="WordEllipsis"  Margin="0 0 15 0" Grid.Column="2" VerticalAlignment="Center" 
-                                   FontSize="20" MaxWidth="220" Text="{Binding Artist}" FontWeight="Bold" Foreground="#FFDCFAFA"/>
+                            
+                            <TextBlock   Margin="0 15 0 0"  VerticalAlignment="Center" 
+                                   FontSize="20" Text="{Binding Playlist.Name}" FontWeight="Bold" Foreground="#FFDCFAFA"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

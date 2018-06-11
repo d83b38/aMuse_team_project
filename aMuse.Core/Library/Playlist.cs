@@ -7,7 +7,7 @@ namespace aMuse.Core.Library
     {
         public string Name { get; set; }
 
-        public HashSet<string> paths { get; set; }
+        public HashSet<string> Paths { get; set; }
 
         public Playlist(string name)
         {
@@ -15,17 +15,17 @@ namespace aMuse.Core.Library
         }
         public void GetFile()
         {
-            paths = new HashSet<string>();
+            Paths = new HashSet<string>();
         }
 
         public void AddTrack(string path)
         {
-            paths.Add(path);
+            Paths.Add(path);
         }
 
         private void RemoveTrack(string path)
         {
-            paths.Remove(path);
+            Paths.Remove(path);
         }
     }
 }
