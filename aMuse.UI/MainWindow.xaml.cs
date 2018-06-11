@@ -225,6 +225,16 @@ namespace aMuse.UI
         {
             MainFrame.Content = new MusicLibrary(this);
         }
+
+        private void Button_ClickPlaylists(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new PlaylistsPage(this);
+        }
+
+        private void favorite_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
 
