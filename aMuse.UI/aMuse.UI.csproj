@@ -168,11 +168,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="testAlbumCover.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\Fast Forward_52px.png" />
     <Resource Include="Icons\Music Folder_52px.png" />
     <Resource Include="Icons\Mute_52px.png" />
@@ -189,9 +184,6 @@
     <Resource Include="Icons\Heart_52px.png" />
     <Resource Include="Icons\Cross_52px.png" />
     <Resource Include="Icons\Stop.png" />
-    <Content Include="track.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -211,6 +211,10 @@ namespace aMuse.UI
                 e.Handled = true;
             }
         }
+
+        private void Button_ClickPlaylists(object sender, RoutedEventArgs e) {
+
+        }
     }
 }
 
