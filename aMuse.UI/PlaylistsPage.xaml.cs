@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using aMuse.Core.Library;
+using aMuse.Core.Model;
+using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace aMuse.UI
 {
@@ -7,9 +10,22 @@ namespace aMuse.UI
     /// </summary>
     public partial class PlaylistsPage : Page
     {
-        public PlaylistsPage()
+        private MainWindow _mainWindow;
+
+        public PlaylistsPage(MainWindow mainWindow)
         {
+            _mainWindow = mainWindow;
+            PlaylistLibrary AllPlaylists = new PlaylistLibrary();
+            AllPlaylists.AddList("lol");
+
             InitializeComponent();
+            listPlaylists.ItemsSource = AllPlaylists.Playlists;
+        }
+
+        private void ListTracks_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Playlist list = (Playlist)(listPlaylists.SelectedItem);
+            _mainWindow.MainFrame.Content = new PlaylistPage(list);
         }
     }
 }

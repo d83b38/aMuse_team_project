@@ -94,6 +94,9 @@
     <Compile Include="MusicLibrary.xaml.cs">
       <DependentUpon>MusicLibrary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlaylistPage.xaml.cs">
+      <DependentUpon>PlaylistPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlaylistsPage.xaml.cs">
       <DependentUpon>PlaylistsPage.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MusicLibrary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlaylistPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,6 +168,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="testAlbumCover.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Icons\Fast Forward_52px.png" />
     <Resource Include="Icons\Music Folder_52px.png" />
     <Resource Include="Icons\Mute_52px.png" />
@@ -168,10 +180,18 @@
     <Resource Include="Icons\Play_52px.png" />
     <Resource Include="Icons\Rewind_52px.png" />
     <Resource Include="Icons\Speaker_52px.png" />
-    <Resource Include="Icons\Lyrics.png" />
+    <Resource Include="Icons\Lirics.png" />
     <Resource Include="Icons\Undo_52px.png" />
     <Resource Include="Icons\music-record-big.png" />
     <Resource Include="Icons\music-record-small.png" />
+    <Resource Include="Icons\Playlist_96px.png" />
+    <Resource Include="Icons\Heart Outline_52px.png" />
+    <Resource Include="Icons\Heart_52px.png" />
+    <Resource Include="Icons\Cross_52px.png" />
+    <Resource Include="Icons\Stop.png" />
+    <Content Include="track.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

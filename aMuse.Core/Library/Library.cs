@@ -7,25 +7,35 @@ namespace aMuse.Core.Library
 {
     public class Library
     {
-        private readonly string _path;
-        public List<AudioFileTrack> Files { get; set; }
+        private static List<AudioFileTrack> _files;
 
-        public Library(string path)
+        public static List<AudioFileTrack> Files
         {
-            this._path = path;
-            SystemState.Instance.LibraryPath = path;
-            Files = new List<AudioFileTrack>();
+            get
+            {
+                return _files;
+            }
         }
 
-        public void SearchAudioFiles()
+        private static void SearchAudioFiles()
         {
-            var audios = Directory.EnumerateFiles(_path, "*.*", SearchOption.AllDirectories)
+            _files = new List<AudioFileTrack>();
+            var audios = Directory.EnumerateFiles((SystemState.Instance.LibraryPath), "*.*", SearchOption.AllDirectories)
             .Where(s => s.EndsWith(".mp3") || s.EndsWith(".flac") || s.EndsWith(".wav"));
 
             foreach (string f in audios)
             {
+
                 Files.Add(new AudioFileTrack(f));
             }
+            System.Console.WriteLine("lol" + Files.Count);
+
+        }
+
+        public static void Update(string path)
+        {
+            SystemState.Instance.LibraryPath = path;
+            SearchAudioFiles();
         }
     }
 }

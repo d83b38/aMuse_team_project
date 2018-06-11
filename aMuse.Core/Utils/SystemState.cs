@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace aMuse.Core.Utils
 {
@@ -24,9 +25,15 @@ namespace aMuse.Core.Utils
 
         public static void Deserialize()
         {
-            string json = System.IO.File.ReadAllText(@"..\..\options.json");
+            try
+            {
+                string json = System.IO.File.ReadAllText(@"..\..\options.json");
+                _instance = JsonConvert.DeserializeObject<SystemState>(json);
+            }
+            catch (Exception ex)
+            {
 
-            _instance = JsonConvert.DeserializeObject<SystemState>(json);
+            }
         }
     }
 }
