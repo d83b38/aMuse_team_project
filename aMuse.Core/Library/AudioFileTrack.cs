@@ -22,41 +22,30 @@ namespace aMuse.Core.Library
 
         ITrackDataParsing DataParsing;
 
-        private bool nowPlaying;
         private bool hasInfo;
 
-        public bool NowPlaying
-        { 
-            get
-            {
-                return nowPlaying;
-            }
-            set
-            {
-                nowPlaying = value;
-
-                if (nowPlaying && !hasInfo)
-                {
-                    DataParsing = new GeniusData(Artist, Track);
-
-                    if (DataParsing.ParsingSuccessful)
-                    {
-                        GetInfo();
-                    }
-
-                    hasInfo = true;
-                }
-            }
-        }
-       
         public AudioFileTrack(string path)
         {
             CoverImages = new BitmapImage[2];
             _path = path;
             Covers = new byte[2][];
             CoverImages = new BitmapImage[2];
-            NowPlaying = false;
             GetFile();
+        }
+
+        public void GetGeniusData()
+        {
+            if (!hasInfo)
+            {
+                DataParsing = new GeniusData(Artist, Track);
+
+                if (DataParsing.ParsingSuccessful)
+                {
+                    GetInfo();
+                }
+
+                hasInfo = true;
+            }
         }
 
        private void GetFile()

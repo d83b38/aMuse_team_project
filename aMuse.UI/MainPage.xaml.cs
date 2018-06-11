@@ -40,7 +40,7 @@ namespace aMuse.UI
 
         private void Button_ClickToLirics(object sender, RoutedEventArgs e)
         {
-            if (_currentAudio.ParsingSuccessful() && !string.IsNullOrWhiteSpace(_currentAudio.Lyrics))
+            if (_currentAudio != null && _currentAudio.ParsingSuccessful() && !string.IsNullOrWhiteSpace(_currentAudio.Lyrics))
             {
                 _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, _currentAudio.Lyrics);
             }

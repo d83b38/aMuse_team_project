@@ -5,7 +5,6 @@ namespace aMuse.Core.Interfaces {
     public interface IAudio
     {
         TimeSpan Duration { get; set; }
-        bool NowPlaying { get; set; }
         string Artist { get; set; }
         string Track { get; set; }
         string Lyrics { get; set; }

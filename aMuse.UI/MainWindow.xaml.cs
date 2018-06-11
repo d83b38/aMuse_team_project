@@ -7,7 +7,6 @@ using System.IO;
 using aMuse.Core.Library;
 using System.Windows.Threading;
 using System.Windows.Forms;
-using aMuse.Core.Interfaces;
 using System.Threading;
 
 namespace aMuse.UI
@@ -27,24 +26,46 @@ namespace aMuse.UI
         public MainWindow()
         {
             InitializeComponent();
-            //MainFrame.Content = new MainPage(this,null);
+
+            InitializeSystem();
 
             Player.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             Player.MediaPlayer.EndInit();
             SettingMaximun += OnSettingMaximum;
+            
+            EnableTimer();
+        }
 
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.ShowDialog();
-            if (dialog.FileName != "")
+        private void InitializeSystem()
+        {
+            Core.Utils.SystemState.Deserialize();
+            string path = Core.Utils.SystemState.Instance.LibraryPath;
+            if (!string.IsNullOrWhiteSpace(path))
             {
-                SetAudio(new AudioFileTrack(dialog.FileName));
+                Library.Update(Core.Utils.SystemState.Instance.LibraryPath);
             }
             else
             {
-                Close();
+                using (var fbd = new FolderBrowserDialog())
+                {
+                    fbd.ShowDialog();
+
+                    if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                    {
+                        Library.Update(fbd.SelectedPath);
+                    }
+                    else
+                    {
+                        Close();
+                    }
+                }
             }
-            
-            EnableTimer();
+        }
+
+        // onClose handler!!! TODO:
+        private void SaveSystemState()
+        {
+            Core.Utils.SystemState.Serialize();
         }
 
         public void SetAudio(AudioFileTrack audio)
@@ -54,7 +75,7 @@ namespace aMuse.UI
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
             
             _currentAudio = audio;
-            _currentAudio.NowPlaying = true;
+            _currentAudio.GetGeniusData();
 
             if (_currentAudio.ParsingSuccessful() && _currentAudio.CoverImages[1] != null)
             {
@@ -164,7 +185,8 @@ namespace aMuse.UI
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private void OnSettingMaximum() {
+        private void OnSettingMaximum()
+        {
             TrackBar.Maximum = _currentAudio.Duration.TotalMilliseconds;
         }
 
