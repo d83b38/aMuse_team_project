@@ -35,7 +35,7 @@
                     <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin=" 8 0 8 0"  Text="Music Folder" Foreground="#FFDCFAFA" FontSize="16" FontWeight="Bold"/>
                 </Grid>
             </Button>
-            <Button Click="Button_ClickPlaylists" Margin="0 0 0 2" Height="40" >
+            <Button Click="Button_ClickToPlaylists" Margin="0 0 0 2" Height="40" >
                 <Grid MinWidth="150">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>

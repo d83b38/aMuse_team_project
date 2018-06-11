@@ -10,7 +10,7 @@
 
     <Grid  Background="#FF363636">
         <ScrollViewer Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
-            <ListBox Margin="15 0 15 0" x:Name="listTracks" HorizontalContentAlignment="Stretch"
+            <ListBox Margin="15 0 15 0" x:Name="listPlaylists" HorizontalContentAlignment="Stretch"
                      Background="#FF363636" BorderBrush="#FF363636">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
