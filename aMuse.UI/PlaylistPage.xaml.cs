@@ -36,5 +36,10 @@ namespace aMuse.UI
         {
 
         }
+
+        private void ListTracks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

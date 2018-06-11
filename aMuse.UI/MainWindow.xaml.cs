@@ -235,6 +235,13 @@ namespace aMuse.UI
         {
             Player.MediaPlayer.Stop();
         }
+
+        private void Favorite_Add(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+
     }
 }
 

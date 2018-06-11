@@ -16,6 +16,8 @@ namespace aMuse.UI
             //CurrentLibrary = new Library("C:\\Users\\Даниил\\Desktop\\testedLib" ); //my folder yopta
             InitializeComponent();
             ListTracks.ItemsSource = Library.Files;
+
+            
         }
 
         private void ListTracks_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
