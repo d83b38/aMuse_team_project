@@ -231,9 +231,9 @@ namespace aMuse.UI
             MainFrame.Content = new PlaylistsPage(this);
         }
 
-        private void favorite_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Player.MediaPlayer.Stop();
         }
     }
 }

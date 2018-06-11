@@ -188,6 +188,7 @@
     <Resource Include="Icons\Heart Outline_52px.png" />
     <Resource Include="Icons\Heart_52px.png" />
     <Resource Include="Icons\Cross_52px.png" />
+    <Resource Include="Icons\Stop.png" />
     <Content Include="track.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

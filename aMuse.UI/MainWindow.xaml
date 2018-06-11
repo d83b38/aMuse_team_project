@@ -85,7 +85,7 @@
             <Image Margin="0 0 0 0"  Height="130"   VerticalAlignment="Bottom"
                 Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"   
                 Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"  Source="Icons/music-record-small.png" x:Name="Thumbnail"/>
-            <StackPanel   Margin="50 0 0 0" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" 
+            <StackPanel   Margin="70 0 0 0" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" 
                           VerticalAlignment="Stretch" Grid.Column="1" 
                             Grid.ColumnSpan="3" Width="auto"  >
 
@@ -93,10 +93,15 @@
                      Click="Previous_Click" Margin="15 0 0 0" HorizontalContentAlignment="Center"  >
                     <Image Source="Icons/Rewind_52px.png"/>
                 </Button>
+                <Button HorizontalAlignment="Left" x:Name="StopButton" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"  
+                     Click="StopButton_Click" Margin="15 0 0 0">
+                    <Image  Source="Icons/Stop.png"  />
+                </Button>
                 <Button HorizontalAlignment="Left" x:Name="PlayPauseButton" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"  
                      Click="PlayPause_Click" Margin="15 0 0 0">
                     <Image x:Name="imageInside" Source="Icons/Play_52px.png"  />
                 </Button>
+
                 <Button HorizontalAlignment="Left"  x:Name="Next" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"
                      Click="Next_Click" Margin="15 0 0 0"  >
                     <Image Source="Icons/Fast Forward_52px.png" />
