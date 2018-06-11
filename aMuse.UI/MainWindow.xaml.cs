@@ -211,6 +211,21 @@ namespace aMuse.UI
                 e.Handled = true;
             }
         }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            Player.MediaPlayer.Stop();
+        }
+
+        private void Favorite_Add(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void Button_ClickToPlaylists(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new PlaylistsPage(this);
+        }
     }
 }
 
