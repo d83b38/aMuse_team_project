@@ -25,27 +25,18 @@ namespace aMuse.Core.Library
 
         ITrackDataParsing DataParsing;
 
-        private bool nowPlaying;
         private bool hasInfo;
 
-        public bool NowPlaying
-        { 
-            get
+        public void GetData()
+        {
+            if (!hasInfo)
             {
-                return nowPlaying;
-            }
-            set
-            {
-                nowPlaying = value;
-
-                if (nowPlaying && !hasInfo)
+                DataParsing = new GeniusData(Artist, Track);
+                if (DataParsing.IsParsingSuccessful)
                 {
-                    DataParsing = new GeniusData(Artist, Track);
-                    if (DataParsing.IsParsingSuccessful) {
-                        GetInfo();
-                    }
-                    hasInfo = true;
+                    GetInfo();
                 }
+                hasInfo = true;
             }
         }
        
@@ -54,7 +45,6 @@ namespace aMuse.Core.Library
             Covers = new byte[2][];
             CoverImages = new BitmapImage[2];
             Titles = new string[2];
-            NowPlaying = false;
             GetFile();
         }
 
@@ -67,6 +57,7 @@ namespace aMuse.Core.Library
             File = TagLib.File.Create(_path);
             Duration = File.Properties.Duration;
 
+            // try getting artist and title from file tags
             bool hasTags = true;
 
             if (File.Tag.Performers.Length > 0 && !String.IsNullOrWhiteSpace(File.Tag.Performers[0]))
@@ -87,6 +78,7 @@ namespace aMuse.Core.Library
                 hasTags = false;
             }
 
+            // if no artist or title tag is present, then set them based on file name
             if (!hasTags)
             {
                 string[] info = (Path.GetFileNameWithoutExtension(_path)).Split('-');
@@ -104,13 +96,13 @@ namespace aMuse.Core.Library
         }
 
         public async Task<string> SetArtistAsync() {
-            var artist = await DataParsing.GetArtistTaskAsync();
+            string artist = await DataParsing.GetArtistTaskAsync();
             Artist = artist;
             return artist;
         }
 
         public async Task<string> SetLyricsAsync() {
-            var lyrics = await DataParsing.GetLyricsTaskAsync();
+            string lyrics = await DataParsing.GetLyricsTaskAsync();
             Lyrics = lyrics;
             return lyrics;
         }
@@ -139,17 +131,15 @@ namespace aMuse.Core.Library
                 File.Tag.Performers = new string[1] { Artist };
                 tagsChanged = true;
             }
-            else if (!File.Tag.Title.Equals(Titles[0])) {
+            if (!File.Tag.Title.Equals(Titles[0])) {
                 File.Tag.Title = Titles[0];
                 tagsChanged = true;
-
             }
-            else if (!File.Tag.Lyrics.Equals(Lyrics)) {
+            if (!File.Tag.Lyrics.Equals(Lyrics)) {
                 File.Tag.Lyrics = Lyrics;
                 tagsChanged = true;
-
             }
-            else if(Covers[0] != null && Covers[1] != null) { //TODO: check if both pictures are not null -- done (?)
+            if(Covers[0] != null && Covers[1] != null) { //TODO: check if both pictures are not null -- done (?)
                 if (File.Tag.Pictures == new IPicture[2] { new Picture(new ByteVector(Covers[0])),
                                                   new Picture(new ByteVector(Covers[1]))}) {
                     return;
@@ -160,7 +150,6 @@ namespace aMuse.Core.Library
                     tagsChanged = true;
                 }
             }
-
             if(tagsChanged == true) {
                 File.Save();
             }

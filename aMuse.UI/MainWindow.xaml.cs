@@ -81,7 +81,7 @@ namespace aMuse.UI
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
             _currentAudio = audio;
-            _currentAudio.NowPlaying = true;
+            _currentAudio.GetData();
             TrackBar.IsEnabled = true;
             try {
                 var artist = await _currentAudio.SetArtistAsync();
@@ -271,6 +271,7 @@ namespace aMuse.UI
                 {
                     PlaylistLibrary.CurrentPlaylist.RemoveTrack(_currentAudio);
                 }
+                _addedToFavs = !_addedToFavs;
             }
         }
     }
