@@ -1,9 +1,8 @@
-﻿using aMuse.Core.Library;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace aMuse.Core.Utils
 {
-    class AudioDistionary
+    public class AudioDictionary
     {
         private static readonly Dictionary<string, AudioFileTrack> _audios = new Dictionary<string, AudioFileTrack>();
 

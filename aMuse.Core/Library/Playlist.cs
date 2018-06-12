@@ -10,14 +10,14 @@ namespace aMuse.Core.Library
         public string Name { get; }
 
         [JsonIgnore]
-        public AudioCollection Tracks { get; private set; }
+        public ObservableList<AudioFileTrack> Tracks { get; private set; }
 
         public List<string> Paths { get; private set; }
 
         public Playlist(string name)
         {
             Name = name;
-            Tracks = new AudioCollection();
+            Tracks = new ObservableList<AudioFileTrack>();
             Paths = new List<string>();
         }
 
@@ -27,7 +27,7 @@ namespace aMuse.Core.Library
 
             foreach (string path in Paths)
             {
-                Tracks.Add(AudioDistionary.GetAudio(path));
+                Tracks.Add(AudioDictionary.GetAudio(path));
             }
         }
 

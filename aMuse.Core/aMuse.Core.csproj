@@ -81,16 +81,15 @@
     <Compile Include="Interfaces\IAudio.cs" />
     <Compile Include="Interfaces\IFileManagement.cs" />
     <Compile Include="Interfaces\ITrackDataParsing.cs" />
-    <Compile Include="Library\AudioCollection.cs" />
-    <Compile Include="Library\AudioFileTrack.cs" />
+    <Compile Include="Utils\AudioFileTrack.cs" />
     <Compile Include="Library\Library.cs" />
     <Compile Include="Library\Playlist.cs" />
-    <Compile Include="Library\PlaylistCollection.cs" />
     <Compile Include="Library\PlaylistLibrary.cs" />
     <Compile Include="Model\Artist.cs" />
     <Compile Include="Model\Track.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\AudioDistionary.cs" />
+    <Compile Include="Utils\AudioDictionary.cs" />
+    <Compile Include="Utils\ObservableList.cs" />
     <Compile Include="Utils\SystemState.cs" />
   </ItemGroup>
   <ItemGroup>

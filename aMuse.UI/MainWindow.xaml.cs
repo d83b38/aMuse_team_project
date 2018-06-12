@@ -7,9 +7,7 @@ using System.IO;
 using aMuse.Core.Library;
 using System.Windows.Threading;
 using System.Windows.Forms;
-using aMuse.Core.Interfaces;
-using System.Threading;
-using System.Collections.ObjectModel;
+using aMuse.Core.Utils;
 
 namespace aMuse.UI
 {
@@ -25,6 +23,8 @@ namespace aMuse.UI
         AudioFileTrack _currentAudio;
         public Action SettingMaximun;
 
+        private ObservableList<AudioFileTrack> _tracks;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,13 +37,31 @@ namespace aMuse.UI
             EnableTimer();
         }
 
+        internal void SetProperFavState(AudioFileTrack removedTrack)
+        {
+            if (removedTrack == _currentAudio)
+            {
+                addToFavs.IsChecked = false;
+                _tracks = null;
+            }
+        }
+
+        internal void SetProperFavState(Playlist removedPlaylist)
+        {
+            if (removedPlaylist.Tracks.Contains(_currentAudio))
+            {
+                addToFavs.IsChecked = false;
+                _tracks = null;
+            }
+        }
+
         private void InitializeSystem()
         {
-            Core.Utils.SystemState.Deserialize();
-            string path = Core.Utils.SystemState.Instance.LibraryPath;
+            SystemState.Deserialize();
+            string path = SystemState.Instance.LibraryPath;
             if (!string.IsNullOrWhiteSpace(path))
             {
-                Library.Update(Core.Utils.SystemState.Instance.LibraryPath);
+                Library.Update(SystemState.Instance.LibraryPath);
             }
             else
             {
@@ -71,10 +89,11 @@ namespace aMuse.UI
             PlaylistLibrary.Serialize();
         }
 
-        public async void SetAudio(AudioFileTrack audio)
+        public async void SetAudio(AudioFileTrack audio, ObservableList<AudioFileTrack> tracks)
         {
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
+            _tracks = tracks;
             _currentAudio = audio;
             _currentAudio.GetData();
             TrackBar.IsEnabled = true;
@@ -132,12 +151,26 @@ namespace aMuse.UI
 
         private void Next_Click(object sender, RoutedEventArgs e)
         {
-
+            if (_tracks != null)
+            {
+                AudioFileTrack audio = _tracks.GetNext(_currentAudio);
+                if (audio != null)
+                {
+                    SetAudio(audio, _tracks);
+                }
+            }
         }
 
         private void Previous_Click(object sender, RoutedEventArgs e)
         {
-
+            if (_tracks != null)
+            {
+                AudioFileTrack audio = _tracks.GetPrev(_currentAudio);
+                if (audio != null)
+                {
+                    SetAudio(audio, _tracks);
+                }
+            }
         }
          
         private void Mute_Click(object sender, RoutedEventArgs e)
@@ -279,23 +312,6 @@ namespace aMuse.UI
         private void Button_ClickToPlaylists(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new PlaylistsPage(this);
-        }
-
-        private void Favorite_Add(object sender, MouseButtonEventArgs e)
-        {
-            if (PlaylistLibrary.CurrentPlaylist != null && _currentAudio != null)
-            {
-                //if (!_addedToFavs)
-                {
-                    PlaylistLibrary.CurrentPlaylist.AddTrack(_currentAudio);
-                }
-               // else
-                {
-                    PlaylistLibrary.CurrentPlaylist.RemoveTrack(_currentAudio);
-                }
-                //_addedToFavs = !_addedToFavs;
-            }
-
         }
 
         private void AddToFavs_Click(object sender, RoutedEventArgs e)
