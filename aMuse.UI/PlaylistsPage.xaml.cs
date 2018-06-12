@@ -31,9 +31,16 @@ namespace aMuse.UI
                 }
                 else
                 {
-                    // popup window
+                    AddPlaylist addPlaylist = new AddPlaylist();
+                    addPlaylist.Show();
                 }
             }
+        }
+
+
+        private void DeleteIcon_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
         }
     }
 }

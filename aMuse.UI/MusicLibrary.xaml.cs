@@ -1,5 +1,4 @@
 ﻿using aMuse.Core.Library;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace aMuse.UI
@@ -9,8 +8,6 @@ namespace aMuse.UI
     /// </summary>
     public partial class MusicLibrary : Page
     {
-        public Library CurrentLibrary { get; set; }
-
         private MainWindow _mainWindow;
 
         public MusicLibrary(MainWindow mainWindow)

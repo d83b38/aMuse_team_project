@@ -9,23 +9,40 @@
       Title="PlaylistsPage">
 
     <Grid  Background="#FF363636">
-        <ScrollViewer Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
+        <ScrollViewer Margin="0 0 0 0" Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
+            <ListBox  Margin="0 0 7 -1" x:Name="listPlaylists" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"  SharedSizeGroup="Column1"/>
+                                <ColumnDefinition  />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock TextTrimming="WordEllipsis"  HorizontalAlignment="Left"  Margin="0 0 15 0" Grid.Column="0" VerticalAlignment="Center" 
+                                   FontSize="20" MaxWidth="500" Text="{Binding Name}" FontWeight="ExtraLight" Foreground="#FFDCFAFA"/>
+                            <Image Margin="0 0 0 0"  Height="20" VerticalAlignment="Center"  Width="20" HorizontalAlignment="Right"  MouseLeftButtonDown="DeleteIcon_MouseLeftButtonDown" Grid.Column="1" Source="Icons/Cross_52px.png" x:Name="deleteIcon"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+        <!--<ScrollViewer Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
             <ListBox MouseDoubleClick="ListTracks_MouseDoubleClick" Margin="15 0 15 0" x:Name="listPlaylists" HorizontalContentAlignment="Stretch"
                      Background="#FF363636" BorderBrush="#FF363636">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid HorizontalAlignment="Stretch" Background="#FF363636">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition MinWidth="200" Width="Auto"/>
-                                <ColumnDefinition MinWidth="200" Width="Auto" />
-                                <ColumnDefinition MinWidth="200" Width="Auto"/>
+                                <ColumnDefinition Width="Auto"  SharedSizeGroup="Column1"/>
+                                <ColumnDefinition Width="Auto"  SharedSizeGroup="Column2"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock TextTrimming="WordEllipsis"   Margin="0 0 15 0" Grid.Column="0" VerticalAlignment="Center" 
-                                   FontSize="20" MaxWidth="220" Text="{Binding Name}" FontWeight="ExtraLight" Foreground="#FFDCFAFA"/>
+                            <TextBlock TextTrimming="WordEllipsis"  HorizontalAlignment="Left"  Margin="0 0 15 0" Grid.Column="0" VerticalAlignment="Center" 
+                                   FontSize="20" MaxWidth="300" Text="{Binding Name}" FontWeight="ExtraLight" Foreground="#FFDCFAFA"/>
+                            <Image Margin="0 0 0 0"  Height="36"  Width="36"   MouseLeftButtonDown="DeleteIcon_MouseLeftButtonDown"  Source="Icons/Cross_52px.png" x:Name="deleteIcon"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </ScrollViewer>
+        </ScrollViewer>-->
     </Grid>
 </Page>
