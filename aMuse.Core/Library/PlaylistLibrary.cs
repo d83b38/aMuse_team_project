@@ -6,7 +6,7 @@ namespace aMuse.Core.Library
 {
     public class PlaylistLibrary
     {
-        public static PlaylistCollection Playlists { get; set; } = new PlaylistCollection(){new Playlist("Add new playlist..."), new Playlist("lol")};
+        public static PlaylistCollection Playlists { get; set; }
 
         public static Playlist CurrentPlaylist { get; set; }
 
@@ -15,9 +15,9 @@ namespace aMuse.Core.Library
             Playlists.Add(new Playlist(name));
         }
 
-        public static void RemoveList(string name)
+        public static void RemoveList(Playlist playlist)
         {
-            Playlists.RemoveWhere(x => x.Name == name);
+            Playlists.Remove(playlist);
         }
 
         public static void Serialize()

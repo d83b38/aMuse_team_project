@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using System.Windows.Forms;
 using aMuse.Core.Interfaces;
 using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace aMuse.UI
 {
@@ -23,8 +24,6 @@ namespace aMuse.UI
         DispatcherTimer TrackTimeTimer = new DispatcherTimer();
         AudioFileTrack _currentAudio;
         public Action SettingMaximun;
-
-        private bool _addedToFavs;
 
         public MainWindow()
         {
@@ -74,13 +73,23 @@ namespace aMuse.UI
 
         public async void SetAudio(AudioFileTrack audio)
         {
-            _addedToFavs = false;
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
             _currentAudio = audio;
             _currentAudio.GetData();
             TrackBar.IsEnabled = true;
             Player.MediaPlayer.Play();
+            if (PlaylistLibrary.CurrentPlaylist != null)
+            {
+                if (PlaylistLibrary.CurrentPlaylist.Tracks.Contains(audio))
+                {
+                    addToFavs.IsChecked = true;
+                }
+                else
+                {
+                    addToFavs.IsChecked = false;
+                }
+            }
             try {
                 var artist = await _currentAudio.SetArtistAsync();
                 var titles = await _currentAudio.SetTitlesAsync();
@@ -276,16 +285,41 @@ namespace aMuse.UI
         {
             if (PlaylistLibrary.CurrentPlaylist != null && _currentAudio != null)
             {
-                if (!_addedToFavs)
+                //if (!_addedToFavs)
                 {
                     PlaylistLibrary.CurrentPlaylist.AddTrack(_currentAudio);
                 }
-                else
+               // else
                 {
                     PlaylistLibrary.CurrentPlaylist.RemoveTrack(_currentAudio);
                 }
-                _addedToFavs = !_addedToFavs;
+                //_addedToFavs = !_addedToFavs;
             }
+
+        }
+
+        private void AddToFavs_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentAudio == null || PlaylistLibrary.CurrentPlaylist == null)
+            {
+                addToFavs.IsChecked = false;
+            }
+            else
+            {
+                if (addToFavs.IsChecked == false)
+                {
+                    PlaylistLibrary.CurrentPlaylist.RemoveTrack(_currentAudio);
+                }
+                else
+                {
+                    PlaylistLibrary.CurrentPlaylist.AddTrack(_currentAudio);
+                }
+            }
+        }
+
+        private void AddToFavs_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

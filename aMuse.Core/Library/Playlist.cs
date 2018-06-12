@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using aMuse.Core.Utils;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 
@@ -6,7 +7,7 @@ namespace aMuse.Core.Library
 {
     public class Playlist
     {
-        public string Name { get; set; }
+        public string Name { get; }
 
         [JsonIgnore]
         public AudioCollection Tracks { get; private set; }
@@ -26,7 +27,7 @@ namespace aMuse.Core.Library
 
             foreach (string path in Paths)
             {
-                Tracks.Add(new AudioFileTrack(path));
+                Tracks.Add(AudioDistionary.GetAudio(path));
             }
         }
 

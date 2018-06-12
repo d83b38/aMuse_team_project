@@ -23,29 +23,22 @@ namespace aMuse.UI
         {
             if (listPlaylists.SelectedItem != null)
             {
-                if (listPlaylists.SelectedIndex != 0)
-                {
-                    Playlist list = (Playlist)(listPlaylists.SelectedItem);
-                    PlaylistLibrary.CurrentPlaylist = list;
-                    _mainWindow.MainFrame.Content = new PlaylistPage(_mainWindow);
-                }
-                else
-                {
-                    AddPlaylist addPlaylist = new AddPlaylist();
-                    addPlaylist.Show();
-                }
+                Playlist list = (Playlist)(listPlaylists.SelectedItem);
+                PlaylistLibrary.CurrentPlaylist = list;
+                _mainWindow.MainFrame.Content = new PlaylistPage(_mainWindow);
             }
         }
 
 
         private void DeletePlaylist(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            PlaylistLibrary.RemoveList((Playlist)(listPlaylists.SelectedItem));
         }
 
         private void AddNewPlaylist(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            AddPlaylist addPlaylist = new AddPlaylist();
+            addPlaylist.Show();
         }
     }
 }

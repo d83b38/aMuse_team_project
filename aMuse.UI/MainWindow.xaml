@@ -117,7 +117,7 @@
                          Style="{StaticResource Horizontal_Slider}"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0 0 0 25">
                     <TextBlock Name="textBlockDuration" Text="00:00" FontSize="15" Foreground="#FFDCFAFA" Margin="0 0 0 7"/>
-                    <ToggleButton Margin="5 0 0 0" Height="26" Width="26" Content="I'm " Foreground="Black">
+                    <ToggleButton x:Name="addToFavs" Click ="AddToFavs_Click" Checked ="AddToFavs_Checked"  Margin="5 0 0 0" Height="26" Width="26" Content="I'm " Foreground="Black">
                         <ToggleButton.Template>
                             <ControlTemplate TargetType="{x:Type ToggleButton}">
                                 <StackPanel Orientation="Horizontal">

@@ -28,8 +28,7 @@ namespace aMuse.Core.Library
 
             foreach (string f in audios)
             {
-
-                Files.Add(new AudioFileTrack(f));
+                Files.Add(AudioDistionary.GetAudio(f));
             }
             System.Console.WriteLine("lol" + Files.Count);
         }
