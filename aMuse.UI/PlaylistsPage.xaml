@@ -9,36 +9,40 @@
       Title="PlaylistsPage">
 
     <Grid  Background="#FF363636">
-        <ScrollViewer Margin="0 0 0 0" Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
-            <StackPanel HorizontalAlignment="Stretch">
-                <Button HorizontalAlignment="Left" Click="AddNewPlaylist" Margin="0 0 0 2" Width="130" Height="30" >
-                    <Grid >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Image Height="24" Grid.Column="0" Margin="0 0 0 0" HorizontalAlignment="Left" Source="Icons/Plus.png"/>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin=" 0 0 5 0"  Text="Add playlist" Foreground="#FFDCFAFA" FontSize="14" FontWeight="Normal" />
-                    </Grid>
-                </Button>
-                <ListBox  Margin="0 0 7 -1" x:Name="listPlaylists" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"  SharedSizeGroup="Column1"/>
-                                    <ColumnDefinition  SharedSizeGroup="Column2"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock TextTrimming="WordEllipsis"  HorizontalAlignment="Left"  Margin="0 0 15 0" Grid.Column="0" VerticalAlignment="Center" 
-                                   FontSize="20" MaxWidth="500" Text="{Binding Name}" FontWeight="ExtraLight" Foreground="#FFDCFAFA"/>
-                                <Image Margin="0 0 0 0"  Height="20" VerticalAlignment="Center"  Width="20" HorizontalAlignment="Right"  MouseLeftButtonDown="DeletePlaylist" Grid.Column="1" Source="Icons/Cross_52px.png" x:Name="deleteIcon"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition  Height="auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" Margin="0 0 0 0" Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
+            <ListBox  Margin="0 0 7 -1" x:Name="listPlaylists" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"  SharedSizeGroup="Column1"/>
+                                <ColumnDefinition  />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock TextTrimming="WordEllipsis"  HorizontalAlignment="Left"  Margin="0 0 15 0" Grid.Column="0" VerticalAlignment="Center" 
+                                   FontSize="20" MaxWidth="600" Text="{Binding Name}"  Foreground="#FFDCFAFA"/>
+                            <Image Margin="0 0 0 0"  Height="20" VerticalAlignment="Center"  Width="20" 
+                                       HorizontalAlignment="Right"  MouseLeftButtonDown="DeletePlaylist" Grid.Column="1" Source="Icons/Cross_52px.png" x:Name="deleteIcon"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </ScrollViewer>
+
+        <Button Grid.Row="1" HorizontalAlignment="Stretch" Click="AddNewPlaylist" Margin="0 0 0 2"  Height="30" >
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Image Height="24" Grid.Column="0" Margin="0 0 0 0" HorizontalAlignment="Left" Source="Icons/Plus.png"/>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin=" 0 0 5 0"  Text="Add playlist" Foreground="#FFDCFAFA" FontSize="16" FontWeight="ExtraLight" />
+            </Grid>
+        </Button>
+
         <!--<ScrollViewer Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
             <ListBox MouseDoubleClick="ListTracks_MouseDoubleClick" Margin="15 0 15 0" x:Name="listPlaylists" HorizontalContentAlignment="Stretch"
                      Background="#FF363636" BorderBrush="#FF363636">
