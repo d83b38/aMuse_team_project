@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -23,16 +24,21 @@ namespace aMuse.Core.Library
         public static void Serialize()
         {
             string json = JsonConvert.SerializeObject(Playlists);
-            System.IO.File.WriteAllText(@"..\..\playlists.json", json);
+            File.WriteAllText(@"..\..\playlists.json", json);
         }
 
         public static void Deserialize()
         {
             try
             {
-                string json = System.IO.File.ReadAllText(@"..\..\playlists.json");
+                string json = File.ReadAllText(@"..\..\playlists.json");
 
                 Playlists = JsonConvert.DeserializeObject<HashSet<Playlist>>(json);
+
+                foreach (Playlist p in Playlists)
+                {
+                    p.Recover();
+                }
             }
             catch (Exception ex)
             {
