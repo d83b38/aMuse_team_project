@@ -3,29 +3,16 @@ using System.Collections.Generic;
 
 namespace aMuse.Core.Library
 {
-    public class Playlist : INotifyCollectionChanged
+    public class Playlist
     {
         public string Name { get; set; }
 
-        public HashSet<AudioFileTrack> Tracks { get; set; }
+        public AudioCollection Tracks { get; set; }
 
         public Playlist(string name)
         {
             Name = name;
-            Tracks = new HashSet<AudioFileTrack>();
-        }
-
-        event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
-        {
-            add
-            {
-                // raise poperty changed event
-            }
-
-            remove
-            {
-                // raise poperty changed event
-            }
+            Tracks = new AudioCollection();
         }
 
         public void GetFile()
