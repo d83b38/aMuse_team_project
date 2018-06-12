@@ -38,7 +38,12 @@ namespace aMuse.UI
         }
 
 
-        private void DeleteIcon_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void DeletePlaylist(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void AddNewPlaylist(object sender, System.Windows.RoutedEventArgs e)
         {
 
         }

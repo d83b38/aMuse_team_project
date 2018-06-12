@@ -1,5 +1,6 @@
 ﻿using aMuse.Core.Library;
 using System.Windows.Controls;
+using System.Linq;
 
 namespace aMuse.UI
 {
@@ -23,6 +24,20 @@ namespace aMuse.UI
             {
                 _mainWindow.SetAudio((AudioFileTrack)(ListTracks.SelectedItem));
             }
+        }
+
+        //private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    var newSelectedItem = e.AddedItems.FirstOrDefault();
+        //    if (newSelectedItem != null)
+        //    {
+        //        (sender as ListBox).ScrollIntoView(newSelectedItem);
+        //    }
+        //}
+
+        private void OpenNewDirectory(object sender, System.Windows.RoutedEventArgs e)
+        {
+
         }
     }
 }
