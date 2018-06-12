@@ -23,6 +23,8 @@ namespace aMuse.UI
         AudioFileTrack _currentAudio;
         public Action SettingMaximun;
 
+        private bool _addedToFavs;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -60,16 +62,21 @@ namespace aMuse.UI
                     }
                 }
             }
+
+            //PlaylistLibrary.Deserialize();
         }
 
         // onClose handler!!! TODO:
         private void SaveSystemState()
         {
             Core.Utils.SystemState.Serialize();
+            PlaylistLibrary.Serialize();
         }
 
         public void SetAudio(AudioFileTrack audio)
         {
+            _addedToFavs = false;
+
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
 
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
@@ -229,11 +236,21 @@ namespace aMuse.UI
         private void Button_ClickPlaylists(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new PlaylistsPage(this);
-        }
+         }
 
-        private void favorite_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Favorite_Add(object sender, MouseButtonEventArgs e)
         {
-
+            if (PlaylistLibrary.CurrentPlaylist != null && _currentAudio != null)
+            {
+                if (!_addedToFavs)
+                {
+                    PlaylistLibrary.CurrentPlaylist.AddTrack(_currentAudio);
+                }
+                else
+                {
+                    PlaylistLibrary.CurrentPlaylist.RemoveTrack(_currentAudio);
+                }
+            }
         }
     }
 }

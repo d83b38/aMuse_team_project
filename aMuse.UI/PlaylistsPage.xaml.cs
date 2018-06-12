@@ -15,14 +15,18 @@ namespace aMuse.UI
         public PlaylistsPage(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
-            HashSet<Playlist> AllPlaylists = new HashSet<Playlist>();
             InitializeComponent();
+            listTracks.ItemsSource = PlaylistLibrary.Playlists;
         }
 
         private void ListTracks_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Playlist list = (Playlist)(listTracks.SelectedItem);
-            _mainWindow.MainFrame.Content = new PlaylistPage(list);
+            if (listTracks.SelectedItem != null)
+            {
+                Playlist list = (Playlist)(listTracks.SelectedItem);
+                PlaylistLibrary.CurrentPlaylist = list;
+                _mainWindow.MainFrame.Content = new PlaylistPage(_mainWindow);
+            }
         }
     }
 }
