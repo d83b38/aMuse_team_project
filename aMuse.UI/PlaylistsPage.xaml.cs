@@ -36,5 +36,11 @@ namespace aMuse.UI
                 }
             }
         }
+
+
+        private void DeleteIcon_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

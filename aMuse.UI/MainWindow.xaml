@@ -116,32 +116,34 @@
                 <Slider HorizontalAlignment="Left"  x:Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
                             Minimum="0" Maximum="100" Value="80" Width="70"
                          Style="{StaticResource Horizontal_Slider}"/>
-                <ToggleButton Margin="5 0 0 0" Height="26" Width="26" Content="I'm " Foreground="Black">
-                    <ToggleButton.Template>
-                        <ControlTemplate TargetType="{x:Type ToggleButton}">
-                            <StackPanel Orientation="Horizontal">
-                                <Image>
-                                    <Image.Style>
-                                        <Style>
-                                            <Setter Property="Image.Source" 
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0 0 0 25">
+                    <TextBlock Name="textBlockDuration" Text="00:00" FontSize="15" Foreground="#FFDCFAFA" Margin="0 0 0 7"/>
+                    <ToggleButton Margin="5 0 0 0" Height="26" Width="26" Content="I'm " Foreground="Black">
+                        <ToggleButton.Template>
+                            <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image>
+                                        <Image.Style>
+                                            <Style>
+                                                <Setter Property="Image.Source" 
                                 Value="Icons/Heart_52px.png" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsChecked, 
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsChecked, 
                                     RelativeSource={RelativeSource AncestorType=
                                     {x:Type ToggleButton}}}" Value="True">
-                                                    <Setter Property="Image.Source" 
+                                                        <Setter Property="Image.Source" 
                                         Value="Icons/Heart Outline_52px.png" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Image.Style>
-                                </Image>
-                                <ContentPresenter Content="{TemplateBinding Content}" 
-                     />
-                            </StackPanel>
-                        </ControlTemplate>
-                    </ToggleButton.Template>
-                </ToggleButton>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                </StackPanel>
+                            </ControlTemplate>
+                        </ToggleButton.Template>
+                    </ToggleButton>
+                </StackPanel>
             </StackPanel>
         </Grid>
         <Frame Name="MainFrame" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3"
