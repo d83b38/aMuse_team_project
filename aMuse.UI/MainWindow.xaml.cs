@@ -32,11 +32,9 @@ namespace aMuse.UI
 
             InitializeSystem();
             //MainFrame.Content = new MainPage(this,null);
-
             Player.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             Player.MediaPlayer.EndInit();
             SettingMaximun += OnSettingMaximum;
-
             EnableTimer();
         }
 
@@ -83,6 +81,7 @@ namespace aMuse.UI
             _currentAudio = audio;
             _currentAudio.GetData();
             TrackBar.IsEnabled = true;
+            Player.MediaPlayer.Play();
             try {
                 var artist = await _currentAudio.SetArtistAsync();
                 var titles = await _currentAudio.SetTitlesAsync();
@@ -95,23 +94,23 @@ namespace aMuse.UI
                 System.Windows.MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
                     "You won't be getting any data without it", ex.Message);
             }
-            Player.MediaPlayer.Play();
             StartTimers();
-            //Thread.Sleep(300);
             SettingMaximun?.Invoke();
         }
 
         private void PlayPause_Click(object sender, RoutedEventArgs e)
         {
-            if (Player.MediaPlayer.IsPlaying == false)
+            if (!Player.MediaPlayer.IsPlaying)
             {
-                Player.MediaPlayer.Play();
-                imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
-                TrackBar.IsEnabled = true;
-                StartTimers();
-                //Thread.Sleep(300);//that is wrong -- need to find a solution for that
-                //SettingMaximun?.Invoke();
-                return;
+                if (_currentAudio != null) {
+                    Player.MediaPlayer.Play();
+                    imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
+                    TrackBar.IsEnabled = true;
+                    StartTimers();
+                    return;
+                }
+                else
+                    return;
             }
             Player.MediaPlayer.Pause();
             StopTimers();
@@ -157,7 +156,7 @@ namespace aMuse.UI
         private void EnableTimer()
         {
             PlayerTimer.Tick += DispatcherTimer_Tick;
-            PlayerTimer.Interval = new TimeSpan(0, 0, 0, 0, 400);
+            PlayerTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             TrackTimeTimer.Tick += TrackTimeTimer_Tick;
             TrackTimeTimer.Interval = new TimeSpan(0, 0, 1);
         }
@@ -193,7 +192,12 @@ namespace aMuse.UI
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             TrackBar.Value = Player.MediaPlayer.Time;
-            if ((Player.MediaPlayer.Time / 1000) == (_currentAudio.Duration.TotalSeconds - 1)) {
+            //if ((Player.MediaPlayer.Time / 1000) == ((int)_currentAudio.Duration.TotalSeconds)) {
+            //    Player.MediaPlayer.Stop();
+            //    imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
+            //}
+            if (!Player.MediaPlayer.IsPlaying &&
+                (Player.MediaPlayer.Time / 1000) >= ((int)_currentAudio.Duration.TotalSeconds - 2)) {
                 Player.MediaPlayer.Stop();
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
             }
@@ -202,6 +206,16 @@ namespace aMuse.UI
 
         private void OnSettingMaximum() {
             TrackBar.Maximum = _currentAudio.Duration.TotalMilliseconds;
+            double minutes = _currentAudio.Duration.Minutes;
+            double seconds = _currentAudio.Duration.Seconds;
+            if (minutes < 10 && seconds < 10)
+                textBlockDuration.Text = $"0{minutes}:0{seconds}";
+            else if(minutes > 10 && seconds < 10)
+                textBlockDuration.Text = $"{minutes}:0{seconds}";
+            else if(minutes < 10 && seconds > 10)
+                textBlockDuration.Text = $"0{minutes}:{seconds}";
+            else
+                textBlockDuration.Text = $"{minutes}:{seconds}";
         }
 
         private void ToolTipArtist_Opened(object sender, RoutedEventArgs e)

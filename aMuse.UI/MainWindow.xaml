@@ -80,7 +80,6 @@
                         <ToolTip x:Name="toolTipArtist" ToolTip.Opened="ToolTipArtist_Opened" Background="#FF767676" Foreground="#FFDCFAFA" HasDropShadow="False"  FontSize="14" Placement="Relative" HorizontalOffset="25" VerticalOffset="10" BorderBrush="{x:Null}" />
                     </TextBlock.ToolTip>
                 </TextBlock>
-
             </StackPanel>
             <Image Margin="0 0 0 0"  Height="130"  Width="130"  VerticalAlignment="Bottom"
                 Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"   
@@ -110,14 +109,19 @@
                      Click="Mute_Click" Margin="15 0 0 0"  >
                     <Image Source="Icons/Mute_52px.png" />
                 </Button>-->
+                
                 <Image x:Name="volumeChanger"  MouseLeftButtonDown="VolumeChanger_MouseLeftButtonDown"  Margin="15 0 5 0" 
                        Height="18" Width="18" Source="Icons/Speaker_52px.png" />
                 <!--<TextBlock HorizontalAlignment="Left"  Foreground="White" VerticalAlignment="Center" Margin="5" ><Run Text="Volume"/></TextBlock>-->
                 <Slider HorizontalAlignment="Left"  x:Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
                             Minimum="0" Maximum="100" Value="80" Width="70"
                          Style="{StaticResource Horizontal_Slider}"/>
-                <Image x:Name="favorite"  MouseLeftButtonDown="Favorite_Add"  Margin="15 0 5 0" 
-                       Height="26" Width="26" Source="Icons/Heart_52px.png" />
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0 0 5 25 ">
+                    <TextBlock Name="textBlockDuration" Text="00:00" FontSize="15" Foreground="#FFDCFAFA" HorizontalAlignment="Right" 
+                              Margin="0 0 0 7"/>
+                    <Image x:Name="favorite"  MouseLeftButtonDown="Favorite_Add"  Margin="15 0 5 0" 
+                       Height="26" Width="26" Source="Icons/Heart_52px.png"/>
+                </StackPanel>
             </StackPanel>
         </Grid>
         <Frame Name="MainFrame" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3"
