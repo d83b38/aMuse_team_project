@@ -7,14 +7,19 @@ namespace aMuse.Core.Library
 {
     public class Library
     {
-        private static List<AudioFileTrack> _files;
 
+
+        private static List<AudioFileTrack> _files;
         public static List<AudioFileTrack> Files
         {
             get
             {
                 return _files;
             }
+        }
+
+        public Library(string Path) {
+            Update(Path);
         }
 
         private static void SearchAudioFiles()
@@ -29,7 +34,6 @@ namespace aMuse.Core.Library
                 Files.Add(new AudioFileTrack(f));
             }
             System.Console.WriteLine("lol" + Files.Count);
-
         }
 
         public static void Update(string path)

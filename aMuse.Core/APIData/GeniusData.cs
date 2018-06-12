@@ -9,17 +9,14 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace aMuse.Core.APIData {
     internal class GeniusData : ITrackDataParsing
     {
         readonly string AccessToken = "ht8qQUrmTslR1YPPGMM_d-EnKOx9Byf4IYtsg8hssPLP8Xb2b5ck7K0hRKIKmP4C";
 
-        private bool _parsingSuccessful;
-        public bool ParsingSuccessful
-        {
-            get { return _parsingSuccessful; }
-        }
+        public bool IsParsingSuccessful { get; private set; }
 
         private string Artist { get; set; }
         private string Track { get; set; }
@@ -45,84 +42,77 @@ namespace aMuse.Core.APIData {
         {
             this.Artist = Artist;
             this.Track = Track;
-            TrackData = GetTrackData();
         }
 
-        //will make this async any time soom
-        Track/*async Task<Track>*/ GetTrackData()
-        {
+        private async Task<Track> GetTrackTaskAsync() {
             var url = BuildUrl("https://api.genius.com/search",
                                 new Dictionary<string, string>()
                                 {
                                     {"access_token", AccessToken },
                                     {"q", Artist + " " + Track},
                                 });
-
-            using (var client = new HttpClient())
-            {
-                try
-                {
-                    string strRresult = /*await*/ client.GetStringAsync(url).Result;
-                    Data result = JsonConvert.DeserializeObject<Data>(strRresult);
-
-                    _parsingSuccessful = (result.Response.Hits.Count != 0);
-                    if (_parsingSuccessful)
-                    {
-                        return new Track()
-                        {
-                            Title = result.Response.Hits[0].TrackInfo.TrackTitle,
-                            TitleWithFeatured = result.Response.Hits[0].TrackInfo.TrackTitleWithFeatured,
-                            LyricsUrl = result.Response.Hits[0].TrackInfo.FullLyricsUrl,
-                            Artist = new Artist()
-                            {
-                                Name = result.Response.Hits[0].TrackInfo.ArtistInfo.Name,
-                            },
-                            AlbumCoverUrl = result.Response.Hits[0].TrackInfo.AlbumImageUrl,
-                            AlbumCoverThumbnailUrl = result.Response.Hits[0].TrackInfo.AlbumSmallImageUrl
-                        };
+            using (var client = new HttpClient()) {
+                try {
+                    string strResult;
+                    if ((strResult = await client.GetStringAsync(url)) != null) {
+                        Data result = JsonConvert.DeserializeObject<Data>(strResult);
+                        IsParsingSuccessful = (result.Response.Hits.Count != 0);
+                        if (IsParsingSuccessful) {
+                            return new Track {
+                                Title = result.Response.Hits[0].TrackInfo.TrackTitle,
+                                TitleWithFeatured = result.Response.Hits[0].TrackInfo.TrackTitleWithFeatured,
+                                LyricsUrl = result.Response.Hits[0].TrackInfo.FullLyricsUrl,
+                                Artist = new Artist() {
+                                    Name = result.Response.Hits[0].TrackInfo.ArtistInfo.Name,
+                                },
+                                AlbumCoverUrl = result.Response.Hits[0].TrackInfo.AlbumImageUrl,
+                                AlbumCoverThumbnailUrl = result.Response.Hits[0].TrackInfo.AlbumSmallImageUrl
+                            };
+                        }
+                        else 
+                            return null;
                     }
                     else
-                    {
                         return null;
-                    }
                 }
-                catch (Exception ex)
-                {
+                catch (Exception ex) {
                     throw ex;
                 }
             }
         }
 
-        public string/*async Task<string>*/ GetLyrics()
-        {
-            var html = CQ.Create(new WebClient().DownloadString(TrackData.LyricsUrl));
+        public async Task<string> GetLyricsTaskAsync() {
+            TrackData = await GetTrackTaskAsync();
+            var webClient = new WebClient();
+            webClient.Encoding = Encoding.UTF8;
+            var client = webClient.DownloadString(TrackData.LyricsUrl);
+            var html = CQ.Create(client);
             var uncleanedLyrics = html.Find(".lyrics").Text();
             var reg = new Regex(@"(\s{2,}.+\s{2,})|(\[.+\])| {2,}|");
             return reg.Replace(uncleanedLyrics, "");
         }
 
-        public byte[][] GetAlbumCovers()
-        {
+        public async Task<byte[][]> GetAlbumCoversTaskAsync() {
+            TrackData = await GetTrackTaskAsync();
             byte[][] covers = new byte[2][];
 
             using (var client = new HttpClient())
             {
-                var FullCoverStream = client.GetByteArrayAsync(TrackData.AlbumCoverUrl).Result;
-                var ThumbnailStream = client.GetByteArrayAsync(TrackData.AlbumCoverThumbnailUrl).Result;
+                var FullCoverStream =  client.GetByteArrayAsync(TrackData.AlbumCoverUrl).Result;
+                var ThumbnailStream =  client.GetByteArrayAsync(TrackData.AlbumCoverThumbnailUrl).Result;
                 covers[0] = FullCoverStream;
                 covers[1] = ThumbnailStream;
             }
-
             return covers;
         }
 
-        public string GetArtist()
-        {
+        public async Task<string> GetArtistTaskAsync() { 
+            TrackData = await GetTrackTaskAsync();
             return TrackData.Artist.Name;
         }
 
-        public string[] GetTitle()
-        {
+        public async Task<string[]> GetTitleTaskAsync() {
+            TrackData = await GetTrackTaskAsync();
             var titles = new string[2];
             titles[0] = TrackData.Title;
             titles[1] = TrackData.TitleWithFeatured;

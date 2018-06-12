@@ -7,6 +7,7 @@ using System.IO;
 using aMuse.Core.Library;
 using System.Windows.Threading;
 using System.Windows.Forms;
+using aMuse.Core.Interfaces;
 using System.Threading;
 
 namespace aMuse.UI
@@ -23,76 +24,53 @@ namespace aMuse.UI
         AudioFileTrack _currentAudio;
         public Action SettingMaximun;
 
-        private bool _addedToFavs;
-
         public MainWindow()
         {
             InitializeComponent();
-
-            InitializeSystem();
+            //MainFrame.Content = new MainPage(this,null);
 
             Player.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             Player.MediaPlayer.EndInit();
             SettingMaximun += OnSettingMaximum;
-            
-            EnableTimer();
-        }
 
-        private void InitializeSystem()
-        {
-            Core.Utils.SystemState.Deserialize();
-            string path = Core.Utils.SystemState.Instance.LibraryPath;
-            if (!string.IsNullOrWhiteSpace(path))
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.ShowDialog();
+            if (dialog.FileName != "")
             {
-                Library.Update(Core.Utils.SystemState.Instance.LibraryPath);
+                SetAudio(new AudioFileTrack(dialog.FileName));
             }
             else
             {
-                using (var fbd = new FolderBrowserDialog())
-                {
-                    fbd.ShowDialog();
-
-                    if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                    {
-                        Library.Update(fbd.SelectedPath);
-                    }
-                    else
-                    {
-                        Close();
-                    }
-                }
+                Close();
             }
-
-            //PlaylistLibrary.Deserialize();
+            EnableTimer();
         }
 
-        // onClose handler!!! TODO:
-        private void SaveSystemState()
+        public async void SetAudio(AudioFileTrack audio)
         {
-            Core.Utils.SystemState.Serialize();
-            PlaylistLibrary.Serialize();
-        }
-
-        public void SetAudio(AudioFileTrack audio)
-        {
-            _addedToFavs = false;
-
-            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
-
+            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
-            
             _currentAudio = audio;
-            _currentAudio.GetGeniusData();
-
-            if (_currentAudio.ParsingSuccessful() && _currentAudio.CoverImages[1] != null)
-            {
-                Thumbnail.Source = _currentAudio.CoverImages[1];
+            _currentAudio.NowPlaying = true;
+            TrackBar.IsEnabled = true;
+            try {
+                var artist = await _currentAudio.SetArtistAsync();
+                var titles = await _currentAudio.SetTitlesAsync();
+                var cov = await _currentAudio.SetCoversAsync();
+                infoBoxArtist.Text = artist;
+                infoBoxTrackName.Text = titles[0];
+                Thumbnail.Source = cov[1];
             }
-
-            infoBoxArtist.Text = _currentAudio.Artist;
-            infoBoxTrackName.Text = _currentAudio.Track;
+            catch (Exception ex) {
+                System.Windows.MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
+                    "You won't be getting any data without it", ex.Message);
+            }
+            Player.MediaPlayer.Play();
+            StartTimers();
+            //Thread.Sleep(300);
+            SettingMaximun?.Invoke();
         }
-        
+
         private void PlayPause_Click(object sender, RoutedEventArgs e)
         {
             if (Player.MediaPlayer.IsPlaying == false)
@@ -101,8 +79,8 @@ namespace aMuse.UI
                 imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                 TrackBar.IsEnabled = true;
                 StartTimers();
-                Thread.Sleep(300);//that is wrong -- need to find a solution for that
-                SettingMaximun?.Invoke();
+                //Thread.Sleep(300);//that is wrong -- need to find a solution for that
+                //SettingMaximun?.Invoke();
                 return;
             }
             Player.MediaPlayer.Pause();
@@ -124,7 +102,7 @@ namespace aMuse.UI
         {
 
         }
-
+         
         private void Mute_Click(object sender, RoutedEventArgs e)
         {
             Player.MediaPlayer.Audio.ToggleMute();
@@ -192,8 +170,7 @@ namespace aMuse.UI
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private void OnSettingMaximum()
-        {
+        private void OnSettingMaximum() {
             TrackBar.Maximum = _currentAudio.Duration.TotalMilliseconds;
         }
 
@@ -233,24 +210,27 @@ namespace aMuse.UI
             MainFrame.Content = new MusicLibrary(this);
         }
 
-        private void Button_ClickPlaylists(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Content = new PlaylistsPage(this);
-         }
-
-        private void Favorite_Add(object sender, MouseButtonEventArgs e)
-        {
-            if (PlaylistLibrary.CurrentPlaylist != null && _currentAudio != null)
-            {
-                if (!_addedToFavs)
-                {
-                    PlaylistLibrary.CurrentPlaylist.AddTrack(_currentAudio);
-                }
-                else
-                {
-                    PlaylistLibrary.CurrentPlaylist.RemoveTrack(_currentAudio);
-                }
+        private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e) {
+            if(e.Key == Key.Space) {
+                PlayPause_Click(sender, e);
+                e.Handled = true;
             }
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e) {
+            StopTimers();
+            Player.MediaPlayer.Stop();
+            TrackBar.Value = 0;
+            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
+        }
+
+        private void Button_ClickToPlaylists(object sender, RoutedEventArgs e) {
+            //сори, я криво смерджил, некоторая часть кода пропала
+        }
+
+        private void Favorite_Add(object sender, MouseButtonEventArgs e) {
+            //сори, я криво смерджил, некоторая часть кода пропала
+
         }
     }
 }

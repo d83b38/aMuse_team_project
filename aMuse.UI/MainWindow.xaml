@@ -9,7 +9,7 @@
         xmlns:Wpf1="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms" x:Class="aMuse.UI.MainWindow"
         mc:Ignorable="d"
 
-        Title="MainWindow" MinHeight="500" MinWidth="850" Height="550" Width="850">
+        Title="MainWindow" MinHeight="500" MinWidth="850" Height="550" Width="850" PreviewKeyDown="Window_PreviewKeyDown">
 
     <Grid Background="#FF2C2C2C">
         <Grid.ColumnDefinitions>
@@ -35,7 +35,7 @@
                     <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin=" 8 0 8 0"  Text="Music Folder" Foreground="#FFDCFAFA" FontSize="16" FontWeight="Bold"/>
                 </Grid>
             </Button>
-            <Button Click="Button_Click" Margin="0 0 0 2" Height="40" >
+            <Button Click="Button_ClickToPlaylists" Margin="0 0 0 2" Height="40" >
                 <Grid MinWidth="150">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
@@ -82,10 +82,10 @@
                 </TextBlock>
 
             </StackPanel>
-            <Image Margin="0 0 0 0"  Height="130"   VerticalAlignment="Bottom"
+            <Image Margin="0 0 0 0"  Height="130"  Width="130"  VerticalAlignment="Bottom"
                 Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"   
                 Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"  Source="Icons/music-record-small.png" x:Name="Thumbnail"/>
-            <StackPanel   Margin="50 0 0 0" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" 
+            <StackPanel   Margin="70 0 0 0" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" 
                           VerticalAlignment="Stretch" Grid.Column="1" 
                             Grid.ColumnSpan="3" Width="auto"  >
 
@@ -93,10 +93,15 @@
                      Click="Previous_Click" Margin="15 0 0 0" HorizontalContentAlignment="Center"  >
                     <Image Source="Icons/Rewind_52px.png"/>
                 </Button>
+                <Button HorizontalAlignment="Left" x:Name="StopButton" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"  
+                     Click="StopButton_Click" Margin="15 0 0 0">
+                    <Image  Source="Icons/Stop.png"  />
+                </Button>
                 <Button HorizontalAlignment="Left" x:Name="PlayPauseButton" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"  
                      Click="PlayPause_Click" Margin="15 0 0 0">
                     <Image x:Name="imageInside" Source="Icons/Play_52px.png"  />
                 </Button>
+
                 <Button HorizontalAlignment="Left"  x:Name="Next" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"
                      Click="Next_Click" Margin="15 0 0 0"  >
                     <Image Source="Icons/Fast Forward_52px.png" />
@@ -111,7 +116,7 @@
                 <Slider HorizontalAlignment="Left"  x:Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
                             Minimum="0" Maximum="100" Value="80" Width="70"
                          Style="{StaticResource Horizontal_Slider}"/>
-                <Image x:Name="favorite"  MouseLeftButtonDown="favorite_Add"  Margin="15 0 5 0" 
+                <Image x:Name="favorite"  MouseLeftButtonDown="Favorite_Add"  Margin="15 0 5 0" 
                        Height="26" Width="26" Source="Icons/Heart_52px.png" />
             </StackPanel>
         </Grid>

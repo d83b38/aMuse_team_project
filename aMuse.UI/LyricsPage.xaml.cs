@@ -13,7 +13,7 @@ namespace aMuse.UI
         {
             _mainWindow= mainWindow;
             InitializeComponent();
-            liricsBox.Text = lyrics;
+            lyricsBox.Text = lyrics;
             /* if smth wrong use this to test lyrics
            TagLib.File tagFile = TagLib.File.Create("track.mp3");
            var lyrics = tagFile.Tag.Lyrics;

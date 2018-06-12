@@ -10,8 +10,8 @@
 
     <Grid  Background="#FF363636">
         <ScrollViewer Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
-            <ListBox Style="{StaticResource {x:Type ListBox}}" MouseDoubleClick="ListTracks_MouseDoubleClick" Margin="15 0 15 0" x:Name="ListTracks" HorizontalContentAlignment="Stretch" Background="#FF363636" BorderBrush="#FF363636">
-                <ListBox.ItemTemplate  >
+            <ListBox MouseDoubleClick="ListTracks_MouseDoubleClick" Margin="15 0 15 0" x:Name="ListTracks" HorizontalContentAlignment="Stretch" Background="#FF363636" BorderBrush="#FF363636">
+                <ListBox.ItemTemplate >
                     <DataTemplate >
                         <Grid  HorizontalAlignment="Stretch" Background="#FF363636">
                             <Grid.ColumnDefinitions>
@@ -20,11 +20,11 @@
                                 <ColumnDefinition MinWidth="200" Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock TextTrimming="WordEllipsis"   Margin="0 0 15 0" Grid.Column="0" VerticalAlignment="Center" 
-                                   FontSize="20" MaxWidth="220" Text="{Binding Track}" FontWeight="Bold" Foreground="#FFDCFAFA"/>
+                                   FontSize="20" MaxWidth="220" Text="{Binding Track}" FontWeight="Light" Foreground="#FFDCFAFA"/>
                             <TextBlock TextTrimming="WordEllipsis"  Margin="0 0 15 0" Grid.Column="1" VerticalAlignment="Center" 
-                                   FontSize="20" MaxWidth="220" Text="ALBUM NAME MuSt Be HeRe" FontWeight="Bold" Foreground="#FFDCFAFA"/>
+                                   FontSize="20" MaxWidth="220" Text="ALBUM NAME MuSt Be HeRe" FontWeight="Light" Foreground="#FFDCFAFA"/>
                             <TextBlock TextTrimming="WordEllipsis"  Margin="0 0 15 0" Grid.Column="2" VerticalAlignment="Center" 
-                                   FontSize="20" MaxWidth="220" Text="{Binding Artist}" FontWeight="Bold" Foreground="#FFDCFAFA"/>
+                                   FontSize="20" MaxWidth="220" Text="{Binding Artist}" FontWeight="Light" Foreground="#FFDCFAFA"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

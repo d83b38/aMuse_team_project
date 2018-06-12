@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:aMuse.UI"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="700"
-      Title="MainPage">
+      Title="MainPage" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.Background>
@@ -25,10 +25,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button Width="50" Height="50" Click="Button_ClickToLirics" Grid.Row="1" Grid.RowSpan="2"  Grid.Column="3">
-            <Image x:Name="imageInside" Source="Icons/Lirics.png"  />
+        <Button Width="50" Height="50" Click="Button_ClickToLyrics" Grid.Row="1" Grid.RowSpan="2"  Grid.Column="3">
+            <Image x:Name="imageInside" Source="Icons/Lyrics.png"  />
         </Button>
-        <Button  Visibility="Hidden" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
+        <Button Visibility="Hidden" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
         <Image  Width="350" Height="350"  x:Name="AlbumCover"
                 Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Source="Icons/music-record-big.png"/>
     </Grid>
