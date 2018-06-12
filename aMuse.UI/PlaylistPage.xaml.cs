@@ -29,10 +29,5 @@ namespace aMuse.UI
                 _mainWindow.SetAudio((AudioFileTrack)(ListTracks.SelectedItem));
             }
         }
-
-        private void ListTracks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
     }
 }

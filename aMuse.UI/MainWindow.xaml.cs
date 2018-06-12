@@ -24,30 +24,60 @@ namespace aMuse.UI
         AudioFileTrack _currentAudio;
         public Action SettingMaximun;
 
+        private bool _addedToFavs;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            InitializeSystem();
             //MainFrame.Content = new MainPage(this,null);
 
             Player.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             Player.MediaPlayer.EndInit();
             SettingMaximun += OnSettingMaximum;
 
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.ShowDialog();
-            if (dialog.FileName != "")
+            EnableTimer();
+        }
+
+        private void InitializeSystem()
+        {
+            Core.Utils.SystemState.Deserialize();
+            string path = Core.Utils.SystemState.Instance.LibraryPath;
+            if (!string.IsNullOrWhiteSpace(path))
             {
-                SetAudio(new AudioFileTrack(dialog.FileName));
+                Library.Update(Core.Utils.SystemState.Instance.LibraryPath);
             }
             else
             {
-                Close();
+                using (var fbd = new FolderBrowserDialog())
+                {
+                    fbd.ShowDialog();
+
+                    if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                    {
+                        Library.Update(fbd.SelectedPath);
+                    }
+                    else
+                    {
+                        Close();
+                    }
+                }
             }
-            EnableTimer();
+
+            //PlaylistLibrary.Deserialize();
+        }
+
+        // onClose handler!!! TODO:
+        private void SaveSystemState()
+        {
+            Core.Utils.SystemState.Serialize();
+            PlaylistLibrary.Serialize();
         }
 
         public async void SetAudio(AudioFileTrack audio)
         {
+            _addedToFavs = false;
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
             _currentAudio = audio;
@@ -224,13 +254,24 @@ namespace aMuse.UI
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
         }
 
-        private void Button_ClickToPlaylists(object sender, RoutedEventArgs e) {
-            //сори, я криво смерджил, некоторая часть кода пропала
+        private void Button_ClickToPlaylists(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new PlaylistsPage(this);
         }
 
-        private void Favorite_Add(object sender, MouseButtonEventArgs e) {
-            //сори, я криво смерджил, некоторая часть кода пропала
-
+        private void Favorite_Add(object sender, MouseButtonEventArgs e)
+        {
+            if (PlaylistLibrary.CurrentPlaylist != null && _currentAudio != null)
+            {
+                if (!_addedToFavs)
+                {
+                    PlaylistLibrary.CurrentPlaylist.AddTrack(_currentAudio);
+                }
+                else
+                {
+                    PlaylistLibrary.CurrentPlaylist.RemoveTrack(_currentAudio);
+                }
+            }
         }
     }
 }

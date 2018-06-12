@@ -16,14 +16,14 @@ namespace aMuse.UI
         {
             _mainWindow = mainWindow;
             InitializeComponent();
-            listTracks.ItemsSource = PlaylistLibrary.Playlists;
+            listPlaylists.ItemsSource = PlaylistLibrary.Playlists;
         }
 
         private void ListTracks_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (listTracks.SelectedItem != null)
+            if (listPlaylists.SelectedItem != null)
             {
-                Playlist list = (Playlist)(listTracks.SelectedItem);
+                Playlist list = (Playlist)(listPlaylists.SelectedItem);
                 PlaylistLibrary.CurrentPlaylist = list;
                 _mainWindow.MainFrame.Content = new PlaylistPage(_mainWindow);
             }
