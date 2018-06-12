@@ -1,30 +1,32 @@
-﻿using System.Collections.Specialized;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 
 namespace aMuse.Core.Library
 {
-    public class Playlist : INotifyCollectionChanged
+    public class Playlist
     {
         public string Name { get; set; }
 
-        public HashSet<AudioFileTrack> Tracks { get; set; }
+        [JsonIgnore]
+        public AudioCollection Tracks { get; private set; }
+
+        public List<string> Paths { get; private set; }
 
         public Playlist(string name)
         {
             Name = name;
-            Tracks = new HashSet<AudioFileTrack>();
+            Tracks = new AudioCollection();
+            Paths = new List<string>();
         }
 
-        event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
+        public void Recover()
         {
-            add
-            {
-                // raise poperty changed event
-            }
+            Paths.RemoveAll(path => !File.Exists(path));
 
-            remove
+            foreach (string path in Paths)
             {
-                // raise poperty changed event
+                Tracks.Add(new AudioFileTrack(path));
             }
         }
 
@@ -35,11 +37,13 @@ namespace aMuse.Core.Library
         public void AddTrack(AudioFileTrack track)
         {
             Tracks.Add(track);
+            Paths.Add(track._path);
         }
 
         public void RemoveTrack(AudioFileTrack track)
         {
             Tracks.Remove(track);
+            Paths.Remove(track._path);
         }
     }
 }

@@ -63,11 +63,10 @@ namespace aMuse.UI
                 }
             }
 
-            //PlaylistLibrary.Deserialize();
+            PlaylistLibrary.Deserialize();
         }
 
-        // onClose handler!!! TODO:
-        private void SaveSystemState()
+        private void Window_Closed(object sender, EventArgs e)
         {
             Core.Utils.SystemState.Serialize();
             PlaylistLibrary.Serialize();

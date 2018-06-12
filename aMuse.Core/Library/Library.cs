@@ -7,8 +7,6 @@ namespace aMuse.Core.Library
 {
     public class Library
     {
-
-
         private static List<AudioFileTrack> _files;
         public static List<AudioFileTrack> Files
         {

@@ -4,8 +4,6 @@ using System.Windows.Media.Imaging;
 using aMuse.Core.Interfaces;
 using aMuse.Core.APIData;
 using TagLib;
-using System.Threading;
-using aMuse.Core.Model;
 using System.Threading.Tasks;
 
 namespace aMuse.Core.Library
