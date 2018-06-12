@@ -81,6 +81,7 @@
     <Compile Include="Interfaces\IAudio.cs" />
     <Compile Include="Interfaces\IFileManagement.cs" />
     <Compile Include="Interfaces\ITrackDataParsing.cs" />
+    <Compile Include="Library\AudioCollection.cs" />
     <Compile Include="Library\AudioFileTrack.cs" />
     <Compile Include="Library\Library.cs" />
     <Compile Include="Library\Playlist.cs" />

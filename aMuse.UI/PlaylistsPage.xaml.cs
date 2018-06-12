@@ -23,9 +23,16 @@ namespace aMuse.UI
         {
             if (listPlaylists.SelectedItem != null)
             {
-                Playlist list = (Playlist)(listPlaylists.SelectedItem);
-                PlaylistLibrary.CurrentPlaylist = list;
-                _mainWindow.MainFrame.Content = new PlaylistPage(_mainWindow);
+                if (listPlaylists.SelectedIndex != 0)
+                {
+                    Playlist list = (Playlist)(listPlaylists.SelectedItem);
+                    PlaylistLibrary.CurrentPlaylist = list;
+                    _mainWindow.MainFrame.Content = new PlaylistPage(_mainWindow);
+                }
+                else
+                {
+                    // popup window
+                }
             }
         }
     }

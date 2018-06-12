@@ -6,7 +6,7 @@ namespace aMuse.Core.Library
 {
     public class PlaylistLibrary
     {
-        public static HashSet<Playlist> Playlists { get; set; } = new HashSet<Playlist>(){new Playlist("lolList")};
+        public static HashSet<Playlist> Playlists { get; set; } = new HashSet<Playlist>(){new Playlist("Add new playlist..."), new Playlist("lol")};
 
         public static Playlist CurrentPlaylist { get; set; }
 
