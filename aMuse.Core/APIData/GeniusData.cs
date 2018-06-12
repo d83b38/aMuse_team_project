@@ -88,8 +88,9 @@ namespace aMuse.Core.APIData {
             var client = webClient.DownloadString(TrackData.LyricsUrl);
             var html = CQ.Create(client);
             var uncleanedLyrics = html.Find(".lyrics").Text();
-            var reg = new Regex(@"(\s{2,}.+\s{2,})|(\[.+\])| {2,}|");
-            return reg.Replace(uncleanedLyrics, "");
+            var reg = new Regex(@"(\s{2,}.+\s{2,})|(\[.+\])| {2,}");
+            var regLineBreaks = new Regex(@"\s{3,}");
+            return regLineBreaks.Replace(reg.Replace(uncleanedLyrics, "\n"), "\n\n");
         }
 
         public async Task<byte[][]> GetAlbumCoversTaskAsync() {
