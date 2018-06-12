@@ -19,9 +19,9 @@ namespace aMuse.UI
             //CurrentLibrary = new Library("C:\\Users\\Даниил\\Desktop\\testedLib" ); //my folder yopta
             //CurrentLibrary = new Library("C:\\Users\\heathen\\Downloads\\1"); //nope, my!
             CurrentLibrary = new Library("C:\\Users\\Илья\\Desktop\\music"); //gtfo beaches))))0
-            CurrentLibrary.SearchAudioFiles();
+            //CurrentLibrary.SearchAudioFiles();
             InitializeComponent();
-            ListTracks.ItemsSource = CurrentLibrary.Files;
+            ListTracks.ItemsSource = Library.Files;
         }
 
         private void ListTracks_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

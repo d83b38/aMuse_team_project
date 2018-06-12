@@ -32,7 +32,7 @@ namespace aMuse.Core.Utils
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
     }

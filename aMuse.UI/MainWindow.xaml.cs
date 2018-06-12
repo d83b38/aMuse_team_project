@@ -49,18 +49,23 @@ namespace aMuse.UI
         public async void SetAudio(AudioFileTrack audio)
         {
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
-
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
             _currentAudio = audio;
             _currentAudio.NowPlaying = true;
             TrackBar.IsEnabled = true;
-            var artist = await _currentAudio.SetArtistAsync();
-            var titles = await _currentAudio.SetTitlesAsync();
+            try {
+                var artist = await _currentAudio.SetArtistAsync();
+                var titles = await _currentAudio.SetTitlesAsync();
+                var cov = await _currentAudio.SetCoversAsync();
+                infoBoxArtist.Text = artist;
+                infoBoxTrackName.Text = titles[0];
+                Thumbnail.Source = cov[1];
+            }
+            catch (Exception ex) {
+                System.Windows.MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
+                    "You won't be getting any data without it", ex.Message);
+            }
             Player.MediaPlayer.Play();
-            var cov = await _currentAudio.SetCoversAsync();
-            infoBoxArtist.Text = artist;
-            infoBoxTrackName.Text = titles[0];
-            Thumbnail.Source = cov[1];
             StartTimers();
             //Thread.Sleep(300);
             SettingMaximun?.Invoke();
@@ -212,19 +217,20 @@ namespace aMuse.UI
             }
         }
 
-        private void StopButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void StopButton_Click(object sender, RoutedEventArgs e) {
+            StopTimers();
             Player.MediaPlayer.Stop();
+            TrackBar.Value = 0;
+            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
         }
 
-        private void Favorite_Add(object sender, MouseButtonEventArgs e)
-        {
-
+        private void Button_ClickToPlaylists(object sender, RoutedEventArgs e) {
+            //сори, я криво смерджил, некоторая часть кода пропала
         }
 
-        private void Button_ClickToPlaylists(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Content = new PlaylistsPage(this);
+        private void Favorite_Add(object sender, MouseButtonEventArgs e) {
+            //сори, я криво смерджил, некоторая часть кода пропала
+
         }
     }
 }

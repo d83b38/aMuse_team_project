@@ -41,13 +41,20 @@ namespace aMuse.UI
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
-            Lyrics = await _currentAudio.SetLyricsAsync();
-            if (_currentAudio != null && _currentAudio.CoverImages[0] != null)
-            //if track not selected cover=default cover
-            {
-                var covers = await _currentAudio.SetCoversAsync();
-                AlbumCover.Source = covers[0];
+            try {
+                Lyrics = await _currentAudio.SetLyricsAsync();
+                if (_currentAudio != null && _currentAudio.CoverImages[0] != null)
+                //if track not selected cover=default cover
+                {
+                    var covers = await _currentAudio.SetCoversAsync();
+                    AlbumCover.Source = covers[0];
+                }
             }
+            catch (System.Exception ex) {
+               MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
+                    "You won't be getting any data without it", ex.Message);
+            }
+            
         }
     }
 }

@@ -83,7 +83,9 @@ namespace aMuse.Core.APIData {
 
         public async Task<string> GetLyricsTaskAsync() {
             TrackData = await GetTrackTaskAsync();
-            var client = new WebClient().DownloadString(TrackData.LyricsUrl);
+            var webClient = new WebClient();
+            webClient.Encoding = Encoding.UTF8;
+            var client = webClient.DownloadString(TrackData.LyricsUrl);
             var html = CQ.Create(client);
             var uncleanedLyrics = html.Find(".lyrics").Text();
             var reg = new Regex(@"(\s{2,}.+\s{2,})|(\[.+\])| {2,}|");
