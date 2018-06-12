@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace aMuse.Core.Library
 {
     public class PlaylistLibrary
     {
-        public static HashSet<Playlist> Playlists { get; set; } = new HashSet<Playlist>(){new Playlist("Add new playlist..."), new Playlist("lol")};
+        public static PlaylistCollection Playlists { get; set; } = new PlaylistCollection(){new Playlist("Add new playlist..."), new Playlist("lol")};
 
         public static Playlist CurrentPlaylist { get; set; }
 
@@ -33,7 +32,7 @@ namespace aMuse.Core.Library
             {
                 string json = File.ReadAllText(@"..\..\playlists.json");
 
-                Playlists = JsonConvert.DeserializeObject<HashSet<Playlist>>(json);
+                Playlists = JsonConvert.DeserializeObject<PlaylistCollection>(json);
 
                 foreach (Playlist p in Playlists)
                 {

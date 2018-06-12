@@ -31,7 +31,8 @@ namespace aMuse.UI
                 }
                 else
                 {
-                    // popup window
+                    AddPlaylist addPlaylist = new AddPlaylist();
+                    addPlaylist.Show();
                 }
             }
         }

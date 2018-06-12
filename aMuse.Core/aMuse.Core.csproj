@@ -85,6 +85,7 @@
     <Compile Include="Library\AudioFileTrack.cs" />
     <Compile Include="Library\Library.cs" />
     <Compile Include="Library\Playlist.cs" />
+    <Compile Include="Library\PlaylistCollection.cs" />
     <Compile Include="Library\PlaylistLibrary.cs" />
     <Compile Include="Model\Artist.cs" />
     <Compile Include="Model\Track.cs" />
