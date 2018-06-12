@@ -25,8 +25,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button Width="50" Height="50" Click="Button_ClickToLyrics" Grid.Row="1" Grid.RowSpan="2"  Grid.Column="3">
-            <Image x:Name="imageInside" Source="Icons/Lyrics.png"  />
+        <Button Style="{DynamicResource ResourceKey=ClassicWithBorders}" Width="50" Height="50" Click="Button_ClickToLyrics" Grid.Row="1" Grid.RowSpan="2"  Grid.Column="3">
+            <Image  x:Name="imageInside" Source="Icons/Lyrics.png"  />
         </Button>
         <Button Visibility="Hidden" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
         <Image  Width="350" Height="350"  x:Name="AlbumCover"

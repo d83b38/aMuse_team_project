@@ -24,7 +24,7 @@
             <RowDefinition Height="130"/>
         </Grid.RowDefinitions>
         <StackPanel Width="auto" Grid.RowSpan="4" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Background="#FF222222" >
-            <Button Click="Button_ClickToLibrary" Margin="0 0 0 2" Height="40" >
+            <Button  Style="{DynamicResource ResourceKey=ClassicWithBorders}"  Click="Button_ClickToLibrary" Margin="0 0 0 2" Height="40" >
                 <Grid MinWidth="150">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
@@ -34,7 +34,7 @@
                     <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin=" 8 0 8 0"  Text="Music Folder" Foreground="#FFDCFAFA" FontSize="16" FontWeight="Bold"/>
                 </Grid>
             </Button>
-            <Button Click="Button_ClickToPlaylists" Margin="0 0 0 2" Height="40" >
+            <Button Style="{DynamicResource ResourceKey=ClassicWithBorders}" Click="Button_ClickToPlaylists" Margin="0 0 0 2" Height="40" >
                 <Grid MinWidth="150">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
@@ -45,17 +45,9 @@
                     <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin=" 8 0 8 0"  Text="Playlists" Foreground="#FFDCFAFA" FontSize="16" FontWeight="Bold"/>
                 </Grid>
             </Button>
-            <Button   Margin="0 0 0 2"  Height="40" >
-                <Grid MinWidth="150">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Image  Grid.Column="0" Margin="0 0 0 0" HorizontalAlignment="Left" Source="Icons/Plus.png"/>
-                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin=" 0 0 0 0"  Text="Add playlist" Foreground="#FFDCFAFA" FontSize="16" FontWeight="Bold" />
-                </Grid>
+            <Button Style="{DynamicResource ResourceKey=ClassicWithBorders}"  Margin="0 0 0 2"  Height="40" >
             </Button>
-            <Button Margin="0 0 0 2" Height="40" />
+            <Button Style="{DynamicResource ResourceKey=ClassicWithBorders}" Margin="0 0 0 2" Height="40" />
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" >
             <Wpf:VlcControl x:Name="Player" Height="0"></Wpf:VlcControl>
@@ -71,7 +63,7 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-            <Slider Style="{StaticResource Horizontal_Slider}" Margin="20 15 40 0" Height="15" 
+            <Slider  Cursor="Hand" Style="{StaticResource Horizontal_Slider}" Margin="20 15 40 0" Height="15" 
                     Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3"  BorderThickness="0"
                     Name="TrackBar" PreviewMouseLeftButtonDown="TrackBar_PreviewMouseLeftButtonDown"
                     PreviewMouseLeftButtonUp="TrackBar_PreviewMouseLeftButtonUp" IsEnabled="False"/>
@@ -97,20 +89,20 @@
                             Grid.ColumnSpan="3" Width="auto"  >
 
 
-                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" x:Name="StopButton" MinWidth="50" Width="auto" Height="35" HorizontalContentAlignment="Center"  
+                <Button Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" HorizontalAlignment="Left" x:Name="StopButton" MinWidth="50" Width="auto" Height="35" HorizontalContentAlignment="Center"  
                      Click="StopButton_Click" Margin="5 0 0 0">
                     <Image  Source="Icons/Stop.png"  />
                 </Button>
-                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" x:Name="Previous" MinWidth="50"  Height="35" 
+                <Button  Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" HorizontalAlignment="Left" x:Name="Previous" MinWidth="50"  Height="35" 
                      Click="Previous_Click" Margin="5 0 0 0" HorizontalContentAlignment="Center"  >
                     <Image Source="Icons/Rewind_52px.png"/>
                 </Button>
-                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" x:Name="PlayPauseButton" MinWidth="50" Width="auto" Height="45" HorizontalContentAlignment="Center"  
-                     Click="PlayPause_Click" Margin="5 0 0 0">
+                <Button Cursor="Hand"  Style="{DynamicResource ResourceKey=FlatWithoutBorders}" HorizontalAlignment="Left" x:Name="PlayPauseButton" MinWidth="50" Width="auto" Height="45" HorizontalContentAlignment="Center"  
+                     Click="PlayPause_Click" Margin="5 0 0 0" Foreground="#00000000" BorderBrush="#00707070" Background="#00DDDDDD">
                     <Image x:Name="imageInside" Source="Icons/Play_52px.png"  />
                 </Button>
 
-                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left"  x:Name="Next" MinWidth="40" Width="40" Height="35" HorizontalContentAlignment="Center"
+                <Button  Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" HorizontalAlignment="Left"  x:Name="Next" MinWidth="40" Width="40" Height="35" HorizontalContentAlignment="Center"
                      Click="Next_Click" Margin="5 0 0 0"  >
                     <Image Margin="3 0 0 0" Height="35" Source="Icons/Fast Forward_52px.png" />
                 </Button>
@@ -118,11 +110,11 @@
                      Click="Mute_Click" Margin="15 0 0 0"  >
                     <Image Source="Icons/Mute_52px.png" />
                 </Button>-->
-                
-                <Image x:Name="volumeChanger"  MouseLeftButtonDown="VolumeChanger_MouseLeftButtonDown"  Margin="15 0 5 0" 
+
+                <Image Cursor="Hand" x:Name="volumeChanger"  MouseLeftButtonDown="VolumeChanger_MouseLeftButtonDown"  Margin="15 0 5 0" 
                        Height="18" Width="18" Source="Icons/Speaker_52px.png" />
                 <!--<TextBlock HorizontalAlignment="Left"  Foreground="White" VerticalAlignment="Center" Margin="5" ><Run Text="Volume"/></TextBlock>-->
-                <Slider HorizontalAlignment="Left"  x:Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
+                <Slider Cursor="Hand"  HorizontalAlignment="Left"  x:Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
                             Minimum="0" Maximum="100" Value="80" Width="70"
                          Style="{StaticResource Horizontal_Slider}"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0 0 0 25">
