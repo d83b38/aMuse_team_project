@@ -40,5 +40,10 @@ namespace aMuse.UI
             AddPlaylist addPlaylist = new AddPlaylist();
             addPlaylist.Show();
         }
+
+        private void AddNewPlaylist(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

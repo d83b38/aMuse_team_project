@@ -45,7 +45,16 @@
                     <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin=" 8 0 8 0"  Text="Playlists" Foreground="#FFDCFAFA" FontSize="16" FontWeight="Bold"/>
                 </Grid>
             </Button>
-            <Button Margin="0 0 0 2" Height="40" />
+            <Button   Margin="0 0 0 2"  Height="40" >
+                <Grid MinWidth="150">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image  Grid.Column="0" Margin="0 0 0 0" HorizontalAlignment="Left" Source="Icons/Plus.png"/>
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin=" 0 0 0 0"  Text="Add playlist" Foreground="#FFDCFAFA" FontSize="16" FontWeight="Bold" />
+                </Grid>
+            </Button>
             <Button Margin="0 0 0 2" Height="40" />
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" >
@@ -87,22 +96,23 @@
                           VerticalAlignment="Stretch" Grid.Column="1" 
                             Grid.ColumnSpan="3" Width="auto"  >
 
-                <Button HorizontalAlignment="Left" x:Name="Previous" MinWidth="50" Width="auto" Height="30" 
-                     Click="Previous_Click" Margin="15 0 0 0" HorizontalContentAlignment="Center"  >
-                    <Image Source="Icons/Rewind_52px.png"/>
-                </Button>
-                <Button HorizontalAlignment="Left" x:Name="StopButton" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"  
-                     Click="StopButton_Click" Margin="15 0 0 0">
+
+                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" x:Name="StopButton" MinWidth="50" Width="auto" Height="35" HorizontalContentAlignment="Center"  
+                     Click="StopButton_Click" Margin="5 0 0 0">
                     <Image  Source="Icons/Stop.png"  />
                 </Button>
-                <Button HorizontalAlignment="Left" x:Name="PlayPauseButton" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"  
-                     Click="PlayPause_Click" Margin="15 0 0 0">
+                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" x:Name="Previous" MinWidth="50"  Height="35" 
+                     Click="Previous_Click" Margin="5 0 0 0" HorizontalContentAlignment="Center"  >
+                    <Image Source="Icons/Rewind_52px.png"/>
+                </Button>
+                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" x:Name="PlayPauseButton" MinWidth="50" Width="auto" Height="45" HorizontalContentAlignment="Center"  
+                     Click="PlayPause_Click" Margin="5 0 0 0">
                     <Image x:Name="imageInside" Source="Icons/Play_52px.png"  />
                 </Button>
 
-                <Button HorizontalAlignment="Left"  x:Name="Next" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"
-                     Click="Next_Click" Margin="15 0 0 0"  >
-                    <Image Source="Icons/Fast Forward_52px.png" />
+                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left"  x:Name="Next" MinWidth="40" Width="40" Height="35" HorizontalContentAlignment="Center"
+                     Click="Next_Click" Margin="5 0 0 0"  >
+                    <Image Margin="3 0 0 0" Height="35" Source="Icons/Fast Forward_52px.png" />
                 </Button>
                 <!--<Button HorizontalAlignment="Left"  x:Name="MuteButton" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"
                      Click="Mute_Click" Margin="15 0 0 0"  >
