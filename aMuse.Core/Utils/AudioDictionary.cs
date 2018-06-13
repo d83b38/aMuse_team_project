@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace aMuse.Core.Utils
 {
-    class AudioDistionary
+    class AudioDictionary
     {
         private static readonly Dictionary<string, AudioFileTrack> _audios = new Dictionary<string, AudioFileTrack>();
 

@@ -27,7 +27,7 @@ namespace aMuse.Core.Library
 
             foreach (string path in Paths)
             {
-                Tracks.Add(AudioDistionary.GetAudio(path));
+                Tracks.Add(AudioDictionary.GetAudio(path));
             }
         }
 

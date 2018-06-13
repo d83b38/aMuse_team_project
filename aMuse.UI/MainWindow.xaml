@@ -8,7 +8,6 @@
         xmlns:Forms ="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms"
         xmlns:Wpf1="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms" x:Class="aMuse.UI.MainWindow"
         mc:Ignorable="d"
-
         Title="MainWindow" MinHeight="500" MinWidth="850" Height="550" Width="850" PreviewKeyDown="Window_PreviewKeyDown" Closed="Window_Closed">
     <Grid Background="#FF2C2C2C">
         <Grid.ColumnDefinitions>
@@ -102,12 +101,12 @@
                     <Image  Source="Icons/Stop.png"  />
                 </Button>
                 <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" x:Name="Previous" MinWidth="50"  Height="35" 
-                     Click="Previous_Click" Margin="5 0 0 0" HorizontalContentAlignment="Center"  >
+                     Click="Previous_Click" Margin="5 0 0 0" HorizontalContentAlignment="Center" Cursor="Hand" >
                     <Image Source="Icons/Rewind_52px.png"/>
                 </Button>
-                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" x:Name="PlayPauseButton" MinWidth="50" Width="auto" Height="45" HorizontalContentAlignment="Center"  
-                     Click="PlayPause_Click" Margin="5 0 0 0">
-                    <Image x:Name="imageInside" Source="Icons/Play_52px.png"  />
+                <Button Style="{StaticResource Flat}" HorizontalAlignment="Left" x:Name="PlayPauseButton" MinWidth="50" Width="auto" Height="45" HorizontalContentAlignment="Center"  
+                     Click="PlayPause_Click" Margin="5 0 0 0" Cursor="UpArrow">
+                    <Image x:Name="imageInside" Source="Icons/Play_52px.png" Cursor="Hand" />
                 </Button>
 
                 <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left"  x:Name="Next" MinWidth="40" Width="40" Height="35" HorizontalContentAlignment="Center"

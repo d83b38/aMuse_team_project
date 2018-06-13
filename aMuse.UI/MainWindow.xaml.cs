@@ -61,7 +61,6 @@ namespace aMuse.UI
                     }
                 }
             }
-
             PlaylistLibrary.Deserialize();
         }
 
@@ -71,7 +70,7 @@ namespace aMuse.UI
             PlaylistLibrary.Serialize();
         }
 
-        public async void SetAudio(AudioFileTrack audio)
+        public void SetAudio(AudioFileTrack audio)
         {
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
@@ -90,18 +89,15 @@ namespace aMuse.UI
                     addToFavs.IsChecked = false;
                 }
             }
-            try {
-                var artist = await _currentAudio.SetArtistAsync();
-                var titles = await _currentAudio.SetTitlesAsync();
-                var cov = await _currentAudio.SetCoversAsync();
-                infoBoxArtist.Text = artist;
-                infoBoxTrackName.Text = titles[0];
-                Thumbnail.Source = cov[1];
-            }
-            catch (Exception ex) {
-                System.Windows.MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
-                    "You won't be getting any data without it", ex.Message);
-            }
+            
+            infoBoxArtist.Text = _currentAudio.Artist;
+            infoBoxTrackName.Text = _currentAudio.Titles[0];
+            Thumbnail.Source = _currentAudio.CoverImages[1];
+            //}
+            //catch (Exception ex) {
+            //    System.Windows.MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
+            //        "You won't be getting any data without it", ex.Message);
+            //}
             StartTimers();
             SettingMaximun?.Invoke();
         }
@@ -161,6 +157,7 @@ namespace aMuse.UI
             Player.MediaPlayer.Time = (long)TrackBar.Value;
         }
 
+
         private void EnableTimer()
         {
             PlayerTimer.Tick += DispatcherTimer_Tick;
@@ -200,10 +197,6 @@ namespace aMuse.UI
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             TrackBar.Value = Player.MediaPlayer.Time;
-            //if ((Player.MediaPlayer.Time / 1000) == ((int)_currentAudio.Duration.TotalSeconds)) {
-            //    Player.MediaPlayer.Stop();
-            //    imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
-            //}
             if (!Player.MediaPlayer.IsPlaying &&
                 (Player.MediaPlayer.Time / 1000) >= ((int)_currentAudio.Duration.TotalSeconds - 2)) {
                 Player.MediaPlayer.Stop();
@@ -214,6 +207,7 @@ namespace aMuse.UI
 
         private void OnSettingMaximum() {
             TrackBar.Maximum = _currentAudio.Duration.TotalMilliseconds;
+            var titles = _currentAudio.Lyrics;
             double minutes = _currentAudio.Duration.Minutes;
             double seconds = _currentAudio.Duration.Seconds;
             if (minutes < 10 && seconds < 10)
@@ -224,6 +218,7 @@ namespace aMuse.UI
                 textBlockDuration.Text = $"0{minutes}:{seconds}";
             else
                 textBlockDuration.Text = $"{minutes}:{seconds}";
+           
         }
 
         private void ToolTipArtist_Opened(object sender, RoutedEventArgs e)

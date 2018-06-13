@@ -7,7 +7,7 @@ namespace aMuse.Core.Interfaces
         bool IsParsingSuccessful { get; }
         Task<string> GetArtistTaskAsync();
         Task<string[]> GetTitleTaskAsync();
+        Task<string[]> GetLyricsAndAlbumTaskAsync();
         Task<byte[][]> GetAlbumCoversTaskAsync();
-        Task<string> GetLyricsTaskAsync();
     }
 }
