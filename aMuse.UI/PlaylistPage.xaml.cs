@@ -1,5 +1,5 @@
 ﻿using aMuse.Core.Library;
-using System.Windows;
+using aMuse.Core.Utils;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -21,14 +21,18 @@ namespace aMuse.UI
 
         private void ClickDeleteFromFavorites(object sender, MouseButtonEventArgs e)
         {
-            PlaylistLibrary.CurrentPlaylist.RemoveTrack((AudioFileTrack)(ListTracks.SelectedItem));
+            if (ListTracks.SelectedItem != null)
+            {
+                _mainWindow.SetProperFavState((AudioFileTrack)(ListTracks.SelectedItem));
+                PlaylistLibrary.CurrentPlaylist.RemoveTrack((AudioFileTrack)(ListTracks.SelectedItem));
+            }
         }
 
         private void ListTracks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (ListTracks.SelectedItem != null)
             {
-                _mainWindow.SetAudio((AudioFileTrack)(ListTracks.SelectedItem));
+                _mainWindow.SetAudio((AudioFileTrack)(ListTracks.SelectedItem), PlaylistLibrary.CurrentPlaylist.Tracks);
             }
         }
     }

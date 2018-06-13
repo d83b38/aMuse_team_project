@@ -1,20 +1,12 @@
 ﻿using System.IO;
 using System.Linq;
-using System.Collections.Generic;
 using aMuse.Core.Utils;
 
 namespace aMuse.Core.Library
 {
     public class Library
     {
-        private static List<AudioFileTrack> _files;
-        public static List<AudioFileTrack> Files
-        {
-            get
-            {
-                return _files;
-            }
-        }
+        public static ObservableList<AudioFileTrack> Files { get; private set; }
 
         public Library(string Path) {
             Update(Path);
@@ -22,7 +14,7 @@ namespace aMuse.Core.Library
 
         private static void SearchAudioFiles()
         {
-            _files = new List<AudioFileTrack>();
+            Files = new ObservableList<AudioFileTrack>();
             var audios = Directory.EnumerateFiles((SystemState.Instance.LibraryPath), "*.*", SearchOption.AllDirectories)
             .Where(s => s.EndsWith(".mp3") || s.EndsWith(".flac") || s.EndsWith(".wav"));
 
@@ -30,7 +22,6 @@ namespace aMuse.Core.Library
             {
                 Files.Add(AudioDictionary.GetAudio(f));
             }
-            System.Console.WriteLine("lol" + Files.Count);
         }
 
         public static void Update(string path)

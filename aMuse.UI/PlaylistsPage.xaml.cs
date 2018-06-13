@@ -1,6 +1,4 @@
 ﻿using aMuse.Core.Library;
-using aMuse.Core.Model;
-using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace aMuse.UI
@@ -32,18 +30,18 @@ namespace aMuse.UI
 
         private void DeletePlaylist(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            PlaylistLibrary.RemoveList((Playlist)(listPlaylists.SelectedItem));
+            if (listPlaylists.SelectedItem != null)
+            {
+                Playlist p = (Playlist)(listPlaylists.SelectedItem);
+                _mainWindow.SetProperFavState(p);
+                PlaylistLibrary.RemoveList(p);
+            }
         }
 
         private void AddNewPlaylist(object sender, System.Windows.RoutedEventArgs e)
         {
             AddPlaylist addPlaylist = new AddPlaylist();
             addPlaylist.Show();
-        }
-
-        private void AddNewPlaylist(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
         }
     }
 }

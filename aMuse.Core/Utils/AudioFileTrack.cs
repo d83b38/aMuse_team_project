@@ -6,7 +6,7 @@ using aMuse.Core.APIData;
 using TagLib;
 using System.Threading.Tasks;
 
-namespace aMuse.Core.Library
+namespace aMuse.Core.Utils
 {
     
     public class AudioFileTrack : IAudio
@@ -38,7 +38,7 @@ namespace aMuse.Core.Library
             }
         }
        
-        public AudioFileTrack(string path) {
+        internal AudioFileTrack(string path) {
             _path = path;
             Covers = new byte[2][];
             CoverImages = new BitmapImage[2];

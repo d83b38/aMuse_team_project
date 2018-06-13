@@ -1,6 +1,6 @@
 ﻿using aMuse.Core.Library;
 using System.Windows.Controls;
-using System.Linq;
+using aMuse.Core.Utils;
 
 namespace aMuse.UI
 {

@@ -1,4 +1,4 @@
-﻿using aMuse.Core.Library;
+﻿using aMuse.Core.Utils;
 using System.Windows;
 using System.Windows.Controls;
 

@@ -86,25 +86,11 @@
         </Setter>
     </Style>
 
-    <Style x:Name="Flat"  x:Key="Flat">
-        <Setter Property="Control.Background" Value="{x:Null}" />
-        <Setter Property="Control.BorderBrush" Value="{x:Null}" />
-        <Style.Triggers>
-            <Trigger Property="Control.IsMouseOver" Value="True">
-                <Setter Property="Control.Background" Value="{x:Null}" />
-                <Setter Property="Control.BorderBrush" Value="{x:Null}" />
-                <Setter Property="Control.FontWeight" Value="Bold" />
-            </Trigger>
-            <Trigger Property="Control.IsFocused" Value="True">
-                <Setter Property="Control.FontWeight" Value="Bold" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-    
-    
-    
-    
-    
+
+
+
+
+
 
     <LinearGradientBrush x:Key="NormalBackground" EndPoint="0,1" StartPoint="0,0">
         <GradientStop Color="#727272" Offset="0"/>
@@ -126,7 +112,102 @@
     </LinearGradientBrush>
     <SolidColorBrush x:Key="OuterBorderDisabled" Color="#cfcfcf"/>
     <SolidColorBrush x:Key="InnerBorderDisabled" Color="#b8b8b8"/>
-    <Style TargetType="{x:Type Button}">
+
+    <Style x:Name="Flat"  x:Key="Flat">
+        <Setter Property="Control.Background" Value="{x:Null}" />
+        <Setter Property="Control.BorderBrush" Value="{x:Null}" />
+        <Style.Triggers>
+            <Trigger Property="Control.IsMouseOver" Value="True">
+                <Setter Property="Control.Background" Value="{x:Null}" />
+                <Setter Property="Control.BorderBrush" Value="{x:Null}" />
+                <Setter Property="Control.FontWeight" Value="Bold" />
+            </Trigger>
+            <Trigger Property="Control.IsFocused" Value="True">
+                <Setter Property="Control.FontWeight" Value="Bold" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="FlatWithoutBorders"  TargetType="{x:Type Button}">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="{x:Null}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Height" Value="23"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Border x:Name="OuterBd" CornerRadius="3" BorderBrush="{x:Null}" BorderThickness="1" Background="{x:Null}">
+                            <Border x:Name="InnerBd" CornerRadius="2" BorderBrush="{x:Null}" BorderThickness="1">
+                                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+                            </Border>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="OuterBd" Property="Background" Value="{x:Null}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="OuterBd" Property="Background" Value="{x:Null}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="InnerBd" Property="BorderBrush" Value="{x:Null}"/>
+                            <Setter TargetName="OuterBd" Property="BorderBrush" Value="{x:Null}"/>
+                            <Setter TargetName="OuterBd" Property="Background" Value="{x:Null}"/>
+                            <Setter Property="Foreground" Value="{x:Null}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="FlatWithBorders"  TargetType="{x:Type Button}">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Height" Value="23"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Border x:Name="OuterBd" CornerRadius="0" BorderBrush="{DynamicResource GlassBrush}" BorderThickness="2" Background="{DynamicResource GlassBrush}">
+                            <Border x:Name="InnerBd" CornerRadius="0" BorderBrush="{x:Null}" BorderThickness="0">
+                                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+                            </Border>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="OuterBd" Property="Background" Value="{StaticResource OverBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="OuterBd" Property="Background" Value="{StaticResource ClickBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="InnerBd" Property="BorderBrush" Value="{StaticResource InnerBorderDisabled}"/>
+                            <Setter TargetName="OuterBd" Property="BorderBrush" Value="{StaticResource OuterBorderDisabled}"/>
+                            <Setter TargetName="OuterBd" Property="Background" Value="{StaticResource DisabledBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource InnerBorderDisabled}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <Style x:Key="ClassicWithBorders"  TargetType="{x:Type Button}">
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -222,7 +303,7 @@
             </Track>
         </Grid>
     </ControlTemplate>
-    
+
     <Style x:Key="Horizontal_Slider" TargetType="Slider">
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -363,7 +444,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
     <Style x:Name="customListBox" x:Key="{x:Type ListBox}"
        TargetType="ListBox">
         <Setter Property="SnapsToDevicePixels"
@@ -648,7 +729,7 @@
                             </Border>
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Grid>
-                       
+
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">

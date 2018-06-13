@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
+using aMuse.Core.Utils;
 using Newtonsoft.Json;
 
 namespace aMuse.Core.Library
 {
     public class PlaylistLibrary
     {
-        public static PlaylistCollection Playlists { get; set; }
+        public static ObservableList<Playlist> Playlists { get; private set; }
 
         public static Playlist CurrentPlaylist { get; set; }
 
@@ -18,6 +19,10 @@ namespace aMuse.Core.Library
         public static void RemoveList(Playlist playlist)
         {
             Playlists.Remove(playlist);
+            if (playlist == CurrentPlaylist)
+            {
+                CurrentPlaylist = null;
+            }
         }
 
         public static void Serialize()
@@ -32,7 +37,7 @@ namespace aMuse.Core.Library
             {
                 string json = File.ReadAllText(@"..\..\playlists.json");
 
-                Playlists = JsonConvert.DeserializeObject<PlaylistCollection>(json);
+                Playlists = JsonConvert.DeserializeObject<ObservableList<Playlist>>(json);
 
                 foreach (Playlist p in Playlists)
                 {

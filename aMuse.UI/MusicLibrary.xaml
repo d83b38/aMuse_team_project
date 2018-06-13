@@ -31,7 +31,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </ScrollViewer>
-        <Button Grid.Row="1" HorizontalAlignment="Stretch" Click="OpenNewDirectory" Margin="0 0 0 2"  Height="30" >
+        <Button Style="{DynamicResource ResourceKey=ClassicWithBorders}" Grid.Row="1" HorizontalAlignment="Stretch" Click="OpenNewDirectory" Margin="0 0 0 2"  Height="30" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40"/>
