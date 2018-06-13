@@ -32,7 +32,7 @@ namespace aMuse.UI
         {
             if (ListTracks.SelectedItem != null)
             {
-                _mainWindow.SetAudio((AudioFileTrack)(ListTracks.SelectedItem), PlaylistLibrary.CurrentPlaylist.Tracks);
+                //_mainWindow.SetAudio((AudioFileTrack)(ListTracks.SelectedItem), PlaylistLibrary.CurrentPlaylist.Tracks);
             }
         }
     }

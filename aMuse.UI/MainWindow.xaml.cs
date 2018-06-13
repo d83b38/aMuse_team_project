@@ -8,6 +8,8 @@ using aMuse.Core.Library;
 using System.Windows.Threading;
 using System.Windows.Forms;
 using aMuse.Core.Utils;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace aMuse.UI
 {
@@ -22,7 +24,7 @@ namespace aMuse.UI
         DispatcherTimer TrackTimeTimer = new DispatcherTimer();
         AudioFileTrack _currentAudio;
         public Action SettingMaximun;
-
+        
         private ObservableList<AudioFileTrack> _tracks;
 
         public MainWindow()
@@ -88,9 +90,10 @@ namespace aMuse.UI
             PlaylistLibrary.Serialize();
         }
 
-        public void SetAudio(AudioFileTrack audio)
+        public void SetAudio(AudioFileTrack audio, ObservableList<AudioFileTrack> tracks)
         {
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
+
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
             _tracks = tracks;
             _currentAudio = audio;
@@ -99,7 +102,7 @@ namespace aMuse.UI
             Player.MediaPlayer.Play();
             if (PlaylistLibrary.CurrentPlaylist != null)
             {
-                if (PlaylistLibrary.CurrentPlaylist.Tracks.Contains(audio))
+                if (PlaylistLibrary.CurrentPlaylist.Tracks.Contains(_currentAudio))
                 {
                     addToFavs.IsChecked = true;
                 }

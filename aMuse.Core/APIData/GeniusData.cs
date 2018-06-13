@@ -106,8 +106,8 @@ namespace aMuse.Core.APIData {
             {
                 var FullCoverStream =  client.GetByteArrayAsync(TrackData.AlbumCoverUrl).Result;
                 var ThumbnailStream =  client.GetByteArrayAsync(TrackData.AlbumCoverThumbnailUrl).Result;
-                covers[0] = FullCoverStream;
-                covers[1] = ThumbnailStream;
+                covers[0] = ThumbnailStream;
+                covers[1] = FullCoverStream;
             }
             return covers;
         }

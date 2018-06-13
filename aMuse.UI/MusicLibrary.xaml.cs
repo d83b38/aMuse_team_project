@@ -24,7 +24,8 @@ namespace aMuse.UI
             {
                 var selectedAudio = (AudioFileTrack)(ListTracks.SelectedItem);
                 var pupulatedAudio = await selectedAudio.PopulateTrack();
-                _mainWindow.SetAudio(pupulatedAudio);
+                var tracks = new ObservableList<AudioFileTrack>();
+                _mainWindow.SetAudio(pupulatedAudio, tracks);
             }
         }
 
