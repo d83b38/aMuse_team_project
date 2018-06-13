@@ -51,5 +51,10 @@ namespace aMuse.UI
             }
             
         }
+
+        private void Button_ClickToInfo(object sender, RoutedEventArgs e)
+        {
+            _mainWindow.MainFrame.Content = new MoreInfoPage(_mainWindow);
+        }
     }
 }
