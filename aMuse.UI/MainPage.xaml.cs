@@ -1,6 +1,9 @@
 ﻿using aMuse.Core.Utils;
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace aMuse.UI
 {
@@ -29,7 +32,7 @@ namespace aMuse.UI
         
         private void Button_ClickToLyrics(object sender, RoutedEventArgs e)
         {
-            if (_currentAudio != null && _currentAudio.IsParsingSuccessful() && !string.IsNullOrWhiteSpace(Lyrics))
+            if (_currentAudio != null && Lyrics != null && !string.IsNullOrWhiteSpace(Lyrics))
             {
                 MainWindow.GetInstance().MainFrame.Content = LyricsPage.GetInstance(Lyrics);
             }
@@ -39,17 +42,15 @@ namespace aMuse.UI
             }
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Lyrics = await _currentAudio.SetLyricsAsync();
-                if (_currentAudio != null && _currentAudio.CoverImages[0] != null)
-                //if track not selected cover=default cover
-                {
-                    var covers = await _currentAudio.SetCoversAsync();
-                    AlbumCover.Source = covers[0];
+        private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            try {
+                if (_currentAudio != null)
+                    AlbumCover.Source = await _currentAudio.GetAlbumCoverTaskAsync(_currentAudio.TrackData.AlbumCoverUrl);
+                else {
+                    //set defaullt cover or this will catch an exception
+                    //AlbumCover.Source = new BitmapImage(new Uri("../../Icons/music-record-big.png", UriKind.Relative));
                 }
+                Lyrics = await _currentAudio.GetLyricsTaskAsync(_currentAudio.TrackData.LyricsUrl);
             }
             catch (System.Exception ex)
             {
@@ -57,6 +58,11 @@ namespace aMuse.UI
                     "You won't be getting any data without it", ex.Message);
             }
             
+        }
+
+        private void Button_ClickToInfo(object sender, RoutedEventArgs e)
+        {
+            _mainWindow.MainFrame.Content = new MoreInfoPage(_mainWindow);
         }
     }
 }

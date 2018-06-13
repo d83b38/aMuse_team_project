@@ -1,0 +1,30 @@
+﻿<Page x:Class="aMuse.UI.MoreInfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:aMuse.UI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="700"
+      Title="MoreInfoPage">
+
+    <Grid Background="#FF363636" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="0 20 0 0" MaxWidth="400" Text="Name" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FFDCFAFA" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Margin="10 10 0 0" MaxWidth="400" Text="Biography :" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFDCFAFA" FontSize="20" FontWeight="Bold"/>
+        <TextBlock  Margin="10 10 0 0" TextWrapping="Wrap"  MaxWidth="400" Text="infa4237854357345345873457347534534845743573457345834587" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFDCFAFA" FontSize="20" />
+        <Image Margin="20 40 0 0" VerticalAlignment="Top" Grid.RowSpan="3" Source="Icons/music-record-big.png" Height="250" Width="200" Grid.Column="0" Grid.Row="0"/>
+        <Button Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" Width="50" Height="40" Click="Button_ClickBackToMainPage" Grid.Row="0"   Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top">
+            <Image x:Name="imageInside" Source="Icons/Back.png"  />
+        </Button>
+    </Grid>
+</Page>

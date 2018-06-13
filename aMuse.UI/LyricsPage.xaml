@@ -25,8 +25,8 @@
         <ScrollViewer Template="{StaticResource ScrollViewerControlTemplate}"  Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" FontSize="16" FontWeight="Bold" >
             <TextBlock  Margin="0 30 0 15" TextAlignment="Center"  x:Name="lyricsBox" Text="" Background="#FF363636" Foreground="#FFDCFAFA" />
         </ScrollViewer>
-        <Button Style="{DynamicResource ResourceKey=ClassicWithBorders}" Width="50" Height="30" Click="Button_ClickBack" Grid.Row="0"   Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top">
-            <Image x:Name="imageInside" Source="Icons/Undo_52px.png"  />
+        <Button Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" Width="50" Height="40" Click="Button_ClickBack" Grid.Row="0"   Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top">
+            <Image x:Name="imageInside" Source="Icons/Back.png"  />
         </Button>
     </Grid>
 </Page>
