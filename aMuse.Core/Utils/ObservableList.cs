@@ -18,11 +18,6 @@ namespace aMuse.Core.Utils
             }
         }
 
-        /// <summary>
-        /// Gets the next item in the collection
-        /// </summary>
-        /// <param name="item">item to get the following item for</param>
-        /// <returns>the next item</returns>
         public T GetNext(T item)
         {
             SetIndex(item);
@@ -37,11 +32,6 @@ namespace aMuse.Core.Utils
             }
         }
 
-        /// <summary>
-        /// Gets the previous item in the collection
-        /// </summary>
-        /// <param name="item">item to get the previous item for</param>
-        /// <returns>the previous item</returns>
         public T GetPrev(T item)
         {
             SetIndex(item);
@@ -56,11 +46,6 @@ namespace aMuse.Core.Utils
             }
         }
 
-        /// <summary>
-        /// Gets index in the collection of the specified item
-        /// </summary>
-        /// <param name="item">the item to get index of</param>
-        /// <returns>the index of the item in the collection</returns>
         public int GetIndex(T item)
         {
             return Items.IndexOf(item);

@@ -8,30 +8,21 @@ namespace aMuse.UI
     /// </summary>
     public partial class LyricsPage : Page
     {
-        private static LyricsPage instance;
-
-        private LyricsPage()
+        MainWindow _mainWindow;
+        public LyricsPage(MainWindow mainWindow, string lyrics)
         {
+            _mainWindow= mainWindow;
             InitializeComponent();
+            lyricsBox.Text = lyrics;
             /* if smth wrong use this to test lyrics
            TagLib.File tagFile = TagLib.File.Create("track.mp3");
            var lyrics = tagFile.Tag.Lyrics;
            liricsBox.Text = lyrics;*/
         }
 
-        public static LyricsPage GetInstance(string lyrics)
-        {
-            if (instance == null)
-            {
-                instance = new LyricsPage();
-            }
-            instance.lyricsBox.Text = lyrics;
-            return instance;
-        }
-
         private void Button_ClickBack(object sender, RoutedEventArgs e)
         {
-            MainWindow.GetInstance().MainFrame.GoBack();
+            _mainWindow.MainFrame.GoBack();
         }
     }
 }

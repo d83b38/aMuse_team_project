@@ -6,17 +6,15 @@ namespace aMuse.Core.Library
 {
     public class Library
     {
-        /// <summary>
-        /// Set of audiofiles in library folder
-        /// </summary>
-        public static ObservableList<MusicFile> Files { get; private set; }
+        public static ObservableList<AudioFileTrack> Files { get; private set; }
 
-        /// <summary>
-        /// Searches for the audiofiles in the chosen folder
-        /// </summary>
+        public Library(string Path) {
+            Update(Path);
+        }
+
         private static void SearchAudioFiles()
         {
-            Files = new ObservableList<MusicFile>();
+            Files = new ObservableList<AudioFileTrack>();
             var audios = Directory.EnumerateFiles((SystemState.Instance.LibraryPath), "*.*", SearchOption.AllDirectories)
             .Where(s => s.EndsWith(".mp3") || s.EndsWith(".flac") || s.EndsWith(".wav"));
 
@@ -26,10 +24,6 @@ namespace aMuse.Core.Library
             }
         }
 
-        /// <summary>
-        /// Updates music library path and fills the list of files
-        /// </summary>
-        /// <param name="path">new music library path</param>
         public static void Update(string path)
         {
             SystemState.Instance.LibraryPath = path;

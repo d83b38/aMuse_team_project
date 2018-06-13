@@ -79,8 +79,9 @@
     <Compile Include="DTO\TrackInfo.cs" />
     <Compile Include="DTO\Data.cs" />
     <Compile Include="Interfaces\IAudio.cs" />
+    <Compile Include="Interfaces\IFileManagement.cs" />
     <Compile Include="Interfaces\ITrackDataParsing.cs" />
-    <Compile Include="Utils\MusicFile.cs" />
+    <Compile Include="Utils\AudioFileTrack.cs" />
     <Compile Include="Library\Library.cs" />
     <Compile Include="Library\Playlist.cs" />
     <Compile Include="Library\PlaylistLibrary.cs" />

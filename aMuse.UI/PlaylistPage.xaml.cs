@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace aMuse.UI
 {
+    /// <summary>
+    /// Логика взаимодействия для PlaylistPage.xaml
+    /// </summary>
     public partial class PlaylistPage : Page
     {
         private static PlaylistPage instance;
@@ -24,11 +27,16 @@ namespace aMuse.UI
             return instance;
         }
 
+        private void ClickDeleteFromFavorites(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
         private void ListTracks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (ListTracks.SelectedItem != null)
             {
-                MainWindow.GetInstance().SetAudio((MusicFile)(ListTracks.SelectedItem), PlaylistLibrary.CurrentPlaylist.Tracks);
+                MainWindow.GetInstance().SetAudio((AudioFileTrack)(ListTracks.SelectedItem), PlaylistLibrary.CurrentPlaylist.Tracks);
             }
         }
 
@@ -41,8 +49,8 @@ namespace aMuse.UI
         {
             if (ListTracks.SelectedItem != null)
             {
-                MainWindow.GetInstance().SetProperFavState((MusicFile)(ListTracks.SelectedItem));
-                PlaylistLibrary.CurrentPlaylist.RemoveTrack((MusicFile)(ListTracks.SelectedItem));
+                MainWindow.GetInstance().SetProperFavState((AudioFileTrack)(ListTracks.SelectedItem));
+                PlaylistLibrary.CurrentPlaylist.RemoveTrack((AudioFileTrack)(ListTracks.SelectedItem));
             }
         } 
     }

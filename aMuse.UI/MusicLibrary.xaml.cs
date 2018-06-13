@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace aMuse.UI
 {
+    /// <summary>
+    /// Логика взаимодействия для MusicLibrary.xaml
+    /// </summary>
     public partial class MusicLibrary : Page
     {
         private static MusicLibrary instance;
@@ -33,7 +36,7 @@ namespace aMuse.UI
         {
             if (ListTracks.SelectedItem != null)
             {
-                MainWindow.GetInstance().SetAudio((MusicFile)(ListTracks.SelectedItem), Library.Files);
+                MainWindow.GetInstance().SetAudio((AudioFileTrack)(ListTracks.SelectedItem), Library.Files);
             }
         }
 

@@ -7,38 +7,31 @@ using System.Windows.Media.Imaging;
 
 namespace aMuse.UI
 {
+    /// <summary>
+    /// Логика взаимодействия для MainPage.xaml
+    /// </summary>
     public partial class MainPage : Page
     {
-        private static MainPage instance;
-
-        private MusicFile _currentAudio;
-        private string Lyrics { get; set; }
-
-        private MainPage()
+        AudioFileTrack _currentAudio;
+        MainWindow _mainWindow;
+        string Lyrics { get; set; }
+        public MainPage(MainWindow mainWindow, AudioFileTrack currentAudio)
         {
+            _currentAudio = currentAudio;
+
+            _mainWindow = mainWindow;
             InitializeComponent();
-        }
-
-        public static MainPage GetInstance(MusicFile audio)
-        {
-            if (instance == null)
-            {
-                instance = new MainPage();
-            }
-            instance._currentAudio = audio;
-
-            return instance;
         }
         
         private void Button_ClickToLyrics(object sender, RoutedEventArgs e)
         {
             if (_currentAudio != null && Lyrics != null && !string.IsNullOrWhiteSpace(Lyrics))
             {
-                MainWindow.GetInstance().MainFrame.Content = LyricsPage.GetInstance(Lyrics);
+                _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, Lyrics);
             }
             else
             {
-                MainWindow.GetInstance().MainFrame.Content = LyricsPage.GetInstance("Couldn't find lyrics for this song.");
+                _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, "Couldn't find lyrics for this song.");
             }
         }
 
@@ -52,8 +45,7 @@ namespace aMuse.UI
                 }
                 Lyrics = await _currentAudio.GetLyricsTaskAsync(_currentAudio.TrackData.LyricsUrl);
             }
-            catch (System.Exception ex)
-            {
+            catch (System.Exception ex) {
                MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
                     "You won't be getting any data without it", ex.Message);
             }

@@ -2,23 +2,15 @@
 
 namespace aMuse.Core.Utils
 {
-    /// <summary>
-    /// Dictionary created to store <code>MusicFile</code> with unique paths
-    /// </summary>
     public class AudioDictionary
     {
-        private static readonly Dictionary<string, MusicFile> _audios = new Dictionary<string, MusicFile>();
+        private static readonly Dictionary<string, AudioFileTrack> _audios = new Dictionary<string, AudioFileTrack>();
 
-        /// <summary>
-        /// Get audio file by it's path
-        /// </summary>
-        /// <param name="path">path of the audio file</param>
-        /// <returns><code>MusicFile</code></returns>
-        public static MusicFile GetAudio(string path)
+        public static AudioFileTrack GetAudio(string path)
         {
             if (!_audios.ContainsKey(path))
             {
-                _audios.Add(path, new MusicFile(path));
+                _audios.Add(path, new AudioFileTrack(path));
             }
 
             return _audios[path];
