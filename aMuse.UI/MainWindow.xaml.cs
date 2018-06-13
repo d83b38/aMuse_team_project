@@ -32,7 +32,7 @@ namespace aMuse.UI
             InitializeComponent();
 
             InitializeSystem();
-            //MainFrame.Content = new MainPage(this,null);
+            MainFrame.Content = new MainPage(this,null);
             Player.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             Player.MediaPlayer.EndInit();
             SettingMaximun += OnSettingMaximum;

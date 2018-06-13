@@ -23,6 +23,7 @@ namespace aMuse.UI
              //я ничего лучше не придумал пока что -Илья
              //   надеюсь, мы не забудем это удалить
              // Лёль ребят, одна я не переписываюсь в комментах. - heathen
+             //ыыыыыыыЫЫыыыЫыЫааАыыыАыыыыыааыыЫы - Дуниил Бабеч
             _currentAudio = currentAudio;
 
             _mainWindow = mainWindow;
@@ -56,6 +57,11 @@ namespace aMuse.UI
                     "You won't be getting any data without it", ex.Message);
             }
             
+        }
+
+        private void Button_ClickToInfo(object sender, RoutedEventArgs e)
+        {
+            _mainWindow.MainFrame.Content = new MoreInfoPage(_mainWindow);
         }
     }
 }
