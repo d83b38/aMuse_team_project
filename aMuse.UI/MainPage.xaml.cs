@@ -1,4 +1,5 @@
-﻿using aMuse.Core.Utils;
+﻿using aMuse.Core.Library;
+using aMuse.Core.Utils;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -42,12 +43,12 @@ namespace aMuse.UI
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
             try {
-                Lyrics = await _currentAudio.SetLyricsAsync();
+                Lyrics = _currentAudio.Lyrics;//await _currentAudio.SetLyricsAsync();
                 if (_currentAudio != null && _currentAudio.CoverImages[0] != null)
                 //if track not selected cover=default cover
                 {
-                    var covers = await _currentAudio.SetCoversAsync();
-                    AlbumCover.Source = covers[0];
+                    //var covers = await _currentAudio.SetCoversAsync();
+                    //AlbumCover.Source = covers[0];
                 }
             }
             catch (System.Exception ex) {

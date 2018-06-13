@@ -5,6 +5,7 @@
         public string TitleWithFeatured { get; set; }
         public string LyricsUrl { get; set; }
         public Artist Artist { get; set; }
+        public string Album { get; set; }
         public string AlbumCoverUrl { get; set; }
         public string AlbumCoverThumbnailUrl{ get; set; }
     }
