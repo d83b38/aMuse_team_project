@@ -8,14 +8,14 @@ namespace aMuse.Core.Interfaces {
         TimeSpan Duration { get; set; }
         string Artist { get; set; }
         string Track { get; set; }
-        string Album { get; set; }
         string Lyrics { get; set; }
         byte[][] Covers { get; set; }
-        //BitmapImage[] CoverImages { get; set; }
-        //Task<string> SetArtistAsync();
-        //Task<string> SetLyricsAsync();
-        //Task<BitmapImage[]> SetCoversAsync();
-        //Task<string[]> SetTitlesAsync();
+
+        BitmapImage[] CoverImages { get; set; }
+        Task<string> SetArtistAsync();
+        Task<string> SetLyricsAsync();
+        Task<BitmapImage[]> SetCoversAsync();
+        Task<string[]> SetTitlesAsync();
 
     }
 }

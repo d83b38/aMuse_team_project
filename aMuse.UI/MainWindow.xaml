@@ -8,6 +8,7 @@
         xmlns:Forms ="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms"
         xmlns:Wpf1="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms" x:Class="aMuse.UI.MainWindow"
         mc:Ignorable="d"
+
         Title="MainWindow" MinHeight="500" MinWidth="850" Height="550" Width="850" PreviewKeyDown="Window_PreviewKeyDown" Closed="Window_Closed">
     <Grid Background="#FF2C2C2C">
         <Grid.ColumnDefinitions>

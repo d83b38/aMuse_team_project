@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace aMuse.Core.Utils
 {
-    
     public class AudioFileTrack : IAudio
     {
         public readonly string _path;
+
         public TimeSpan Duration { get; set; }
         public BitmapImage[] CoverImages { get; set; }
         public string Artist { get; set; }
@@ -20,8 +20,6 @@ namespace aMuse.Core.Utils
         public byte[][] Covers { get; set; }
         public string[] Titles { get; set; }
         private TagLib.File File { get; set; }
-        private bool HasBasicTags { get; set; }
-        public string Album { get; set; }
 
         ITrackDataParsing DataParsing;
 
@@ -31,7 +29,9 @@ namespace aMuse.Core.Utils
         {
             if (!hasInfo)
             {
-                if (DataParsing.IsParsingSuccessful) {
+                DataParsing = new GeniusData(Artist, Track);
+                if (DataParsing.IsParsingSuccessful)
+                {
                     GetInfo();
                 }
                 hasInfo = true;
@@ -45,22 +45,26 @@ namespace aMuse.Core.Utils
             Titles = new string[2];
             GetFile();
         }
-         
-        private void GetFile()
-        {
+
+       private void Save() {
+            File.Save();
+       }
+
+       private void GetFile()
+       {
             File = TagLib.File.Create(_path);
             Duration = File.Properties.Duration;
 
-            HasBasicTags = true;
             // try getting artist and title from file tags
-            //HasBasicTags = true;
+            bool hasTags = true;
+
             if (File.Tag.Performers.Length > 0 && !String.IsNullOrWhiteSpace(File.Tag.Performers[0]))
             {
                 Artist = CleanText(File.Tag.Performers[0]);
             }
             else
             {
-                HasBasicTags = false;
+                hasTags = false;
             }
 
             if (!String.IsNullOrWhiteSpace(File.Tag.Title))
@@ -69,11 +73,11 @@ namespace aMuse.Core.Utils
             }
             else
             {
-                HasBasicTags = false;
+                hasTags = false;
             }
-            
-                // if no artist or title tag is present, then set them based on file name
-            if (!HasBasicTags)
+
+            // if no artist or title tag is present, then set them based on file name
+            if (!hasTags)
             {
                 string[] info = (Path.GetFileNameWithoutExtension(_path)).Split('-');
 
@@ -85,17 +89,23 @@ namespace aMuse.Core.Utils
                     Track = info[1].Trim();
                     File.Tag.Title = info[1];
                 }
-                File.Save();
+                Save();
             }
         }
 
-        public async Task<AudioFileTrack> PopulateTrack() {
-            DataParsing = new GeniusData(Artist, Track);
-            Artist = await DataParsing.GetArtistTaskAsync();
-            Titles = await DataParsing.GetTitleTaskAsync();
-            var lyrAndAl = await DataParsing.GetLyricsAndAlbumTaskAsync();
-            Lyrics = lyrAndAl[0];
-            Album = lyrAndAl[1];
+        public async Task<string> SetArtistAsync() {
+            string artist = await DataParsing.GetArtistTaskAsync();
+            Artist = artist;
+            return artist;
+        }
+
+        public async Task<string> SetLyricsAsync() {
+            string lyrics = await DataParsing.GetLyricsTaskAsync();
+            Lyrics = lyrics;
+            return lyrics;
+        }
+
+        public async Task<BitmapImage[]> SetCoversAsync() {
             Covers = await DataParsing.GetAlbumCoversTaskAsync();
             if (Covers[0] != null) {
                 CoverImages[0] = ToImage(Covers[0]);
@@ -103,7 +113,13 @@ namespace aMuse.Core.Utils
             if (Covers[1] != null) {
                 CoverImages[1] = ToImage(Covers[1]);
             }
-            return this;
+            return CoverImages;
+        }
+
+        public async Task<string[]> SetTitlesAsync() {
+            var titles = await DataParsing.GetTitleTaskAsync();
+            Titles = titles;
+            return titles;
         }
 
         private void GetInfo()
@@ -117,19 +133,11 @@ namespace aMuse.Core.Utils
                 File.Tag.Title = Titles[0];
                 tagsChanged = true;
             }
-
-            if ((File.Tag.Lyrics != null && !File.Tag.Lyrics.Equals(Lyrics)) || File.Tag.Lyrics == null) {
+            if (!File.Tag.Lyrics.Equals(Lyrics)) {
                 File.Tag.Lyrics = Lyrics;
                 tagsChanged = true;
             }
-
-            if((File.Tag.Album != null && !File.Tag.Album.Equals(Album)) || File.Tag.Album == null) {
-                File.Tag.Album = Album;
-                tagsChanged = true;
-            }
-            
-
-            if (Covers[0] != null && Covers[1] != null) { //TODO: check if both pictures are not null -- done (?)
+            if(Covers[0] != null && Covers[1] != null) { //TODO: check if both pictures are not null -- done (?)
                 if (File.Tag.Pictures == new IPicture[2] { new Picture(new ByteVector(Covers[0])),
                                                   new Picture(new ByteVector(Covers[1]))}) {
                     return;
@@ -140,40 +148,27 @@ namespace aMuse.Core.Utils
                     tagsChanged = true;
                 }
             }
-
-            if (tagsChanged == true) {
+            if(tagsChanged == true) {
                 File.Save();
             }
+
+            //if (Artist != DataParsing.GetArtist(TrackInfo))
+            //{
+            //   Artist = DataParsing.GetArtist(TrackInfo);
+            //}
+            //if (Track != DataParsing.GetTitle(TrackInfo)[0] && Track !=  DataParsing.GetTitle(TrackInfo)[1]) {
+            //    Track =  DataParsing.GetTitle(TrackInfo)[0];
+            //}
+            //Lyrics =  DataParsing.GetLyrics(TrackInfo);
+            //Covers =  DataParsing.GetAlbumCovers(TrackInfo);
+
+            //if (Covers[0] != null) {
+            //    CoverImages[0] = ToImage(Covers[0]);
+            //}
+            //if (Covers[1] != null) {
+            //    CoverImages[1] = ToImage(Covers[1]);
+            //}
         }
-
-        //public async Task<string> SetArtistAsync() {
-        //    string artist = await DataParsing.GetArtistTaskAsync();
-        //    Artist = artist;
-        //    return artist;
-        //}
-
-        //public async Task<string> SetLyricsAsync() {
-        //    string lyrics = await DataParsing.GetLyricsTaskAsync();
-        //    Lyrics = lyrics;
-        //    return lyrics;
-        //}
-
-        //public async Task<BitmapImage[]> SetCoversAsync() {
-        //    Covers = await DataParsing.GetAlbumCoversTaskAsync();
-        //    if (Covers[0] != null) {
-        //        CoverImages[0] = ToImage(Covers[0]);
-        //    }
-        //    if (Covers[1] != null) {
-        //        CoverImages[1] = ToImage(Covers[1]);
-        //    }
-        //    return CoverImages;
-        //}
-
-        //public async Task<string[]> SetTitlesAsync() {
-        //    var titles = await DataParsing.GetTitleTaskAsync();
-        //    Titles = titles;
-        //    return titles;
-        //}
 
         private BitmapImage ToImage(byte[] array) {
             using (var ms = new System.IO.MemoryStream(array)) {

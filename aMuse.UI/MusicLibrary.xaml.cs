@@ -19,14 +19,11 @@ namespace aMuse.UI
             ListTracks.ItemsSource = Library.Files;
         }
 
-        private async void ListTracks_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ListTracks_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (ListTracks.SelectedItem != null)
             {
-                var selectedAudio = (AudioFileTrack)(ListTracks.SelectedItem);
-                var pupulatedAudio = await selectedAudio.PopulateTrack();
-                var tracks = new ObservableList<AudioFileTrack>();
-                _mainWindow.SetAudio(pupulatedAudio, tracks);
+                _mainWindow.SetAudio((AudioFileTrack)(ListTracks.SelectedItem), Library.Files);
             }
         }
 

@@ -81,21 +81,16 @@ namespace aMuse.Core.APIData {
             }
         }
 
-        public async Task<string[]> GetLyricsAndAlbumTaskAsync() {
+        public async Task<string> GetLyricsTaskAsync() {
             TrackData = await GetTrackTaskAsync();
-            var data = new string[2];
             var webClient = new WebClient();
             webClient.Encoding = Encoding.UTF8;
             var client = webClient.DownloadString(TrackData.LyricsUrl);
             var html = CQ.Create(client);
             var uncleanedLyrics = html.Find(".lyrics").Text();
-            var uncleanedAlbum = html.Find(".song_album-info-title").Text();
             var reg = new Regex(@"(\s{2,}.+\s{2,})|(\[.+\])| {2,}");
-            var regAlbum = new Regex(@"\s{2,}");
             var regLineBreaks = new Regex(@"\s{3,}");
-            data[0] = regLineBreaks.Replace(reg.Replace(uncleanedLyrics, "\n"), "\n\n");
-            data[1] = regAlbum.Replace(uncleanedAlbum, "");
-            return data;
+            return regLineBreaks.Replace(reg.Replace(uncleanedLyrics, "\n"), "\n\n");
         }
 
         public async Task<byte[][]> GetAlbumCoversTaskAsync() {
@@ -106,8 +101,8 @@ namespace aMuse.Core.APIData {
             {
                 var FullCoverStream =  client.GetByteArrayAsync(TrackData.AlbumCoverUrl).Result;
                 var ThumbnailStream =  client.GetByteArrayAsync(TrackData.AlbumCoverThumbnailUrl).Result;
-                covers[0] = ThumbnailStream;
-                covers[1] = FullCoverStream;
+                covers[0] = FullCoverStream;
+                covers[1] = ThumbnailStream;
             }
             return covers;
         }
