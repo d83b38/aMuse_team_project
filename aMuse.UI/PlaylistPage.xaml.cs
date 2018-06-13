@@ -35,5 +35,10 @@ namespace aMuse.UI
                 _mainWindow.SetAudio((AudioFileTrack)(ListTracks.SelectedItem), PlaylistLibrary.CurrentPlaylist.Tracks);
             }
         }
+
+        private void DeleteTrackFromPlaylist(object sender, MouseButtonEventArgs e)
+        {
+
+        } 
     }
 }

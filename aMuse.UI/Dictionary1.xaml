@@ -85,13 +85,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
-
-
-
-
-
+    
     <LinearGradientBrush x:Key="NormalBackground" EndPoint="0,1" StartPoint="0,0">
         <GradientStop Color="#727272" Offset="0"/>
         <GradientStop Color="#4c4c4c" Offset="1"/>
@@ -127,7 +121,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
 
     <Style x:Key="FlatWithoutBorders"  TargetType="{x:Type Button}">
         <Setter Property="BorderThickness" Value="1"/>
@@ -204,8 +197,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
 
     <Style x:Key="ClassicWithBorders"  TargetType="{x:Type Button}">
         <Setter Property="BorderThickness" Value="1"/>
@@ -326,7 +317,7 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Rectangle x:Name="Corner" Grid.Column="1" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
+            <Rectangle x:Name="Corner" Grid.Column="1" Fill="#00BFBFBF" Grid.Row="1"/>
             <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.RowSpan="2" Margin="{TemplateBinding Padding}" Grid.ColumnSpan="2"/>
             <ScrollBar x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}" Width="8" Background="#FFDCFAFA" BorderBrush="#FFDCFAFA"/>
             <ScrollBar x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}" Height="8" Background="#FFDCFAFA" BorderBrush="#FFDCFAFA"/>

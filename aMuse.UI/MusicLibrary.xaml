@@ -13,7 +13,7 @@
             <RowDefinition/>
             <RowDefinition  Height="auto"/>
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll = "True" Margin="0 0 0 0" Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll = "True" Margin="0 0 0 0" Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
             <ListBox   Margin="0 0 9 -1" x:Name="ListTracks" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
