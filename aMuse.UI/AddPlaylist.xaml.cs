@@ -2,9 +2,6 @@
 
 namespace aMuse.UI
 {
-    /// <summary>
-    /// Логика взаимодействия для AddPlaylist.xaml
-    /// </summary>
     public partial class AddPlaylist : Window
     {
         public AddPlaylist()
@@ -12,6 +9,9 @@ namespace aMuse.UI
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Creates playlist
+        /// </summary>
         private void Button_OK_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(this.textBoxName.Text))

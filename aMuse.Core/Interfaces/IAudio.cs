@@ -2,7 +2,8 @@
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace aMuse.Core.Interfaces {
+namespace aMuse.Core.Interfaces
+{
     public interface IAudio
     {
         TimeSpan Duration { get; set; }
@@ -16,6 +17,5 @@ namespace aMuse.Core.Interfaces {
         Task<string> SetLyricsAsync();
         Task<BitmapImage[]> SetCoversAsync();
         Task<string[]> SetTitlesAsync();
-
     }
 }

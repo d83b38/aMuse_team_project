@@ -5,30 +5,31 @@ namespace aMuse.Core.Utils
 {
     public sealed class SystemState
     {
-        private static SystemState _instance = new SystemState();
+        public static SystemState Instance { get; private set; } = new SystemState();
 
+        /// <summary>
+        /// Current chosen path to library
+        /// </summary>
         public string LibraryPath { get; set; }
 
-        public static SystemState Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
-
+        /// <summary>
+        /// Serialize options
+        /// </summary>
         public static void Serialize()
         {
-            string json = JsonConvert.SerializeObject(_instance);
+            string json = JsonConvert.SerializeObject(Instance);
             System.IO.File.WriteAllText(@"..\..\options.json", json);
         }
 
+        /// <summary>
+        /// Deserialize options
+        /// </summary>
         public static void Deserialize()
         {
             try
             {
                 string json = System.IO.File.ReadAllText(@"..\..\options.json");
-                _instance = JsonConvert.DeserializeObject<SystemState>(json);
+                Instance = JsonConvert.DeserializeObject<SystemState>(json);
             }
             catch (Exception ex)
             {

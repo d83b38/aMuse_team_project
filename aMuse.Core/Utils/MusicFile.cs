@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace aMuse.Core.Utils
 {
-    public class AudioFileTrack : IAudio
+    public class MusicFile : IAudio
     {
-        public readonly string _path;
+        public readonly string path;
 
         public TimeSpan Duration { get; set; }
         public BitmapImage[] CoverImages { get; set; }
@@ -23,8 +23,22 @@ namespace aMuse.Core.Utils
 
         ITrackDataParsing DataParsing;
 
+        /// <summary>
+        /// Determines if the genius data has been got for this file
+        /// </summary>
         private bool hasInfo;
 
+        internal MusicFile(string path) {
+            this.path = path;
+            Covers = new byte[2][];
+            CoverImages = new BitmapImage[2];
+            Titles = new string[2];
+            GetFile();
+        }
+
+        /// <summary>
+        /// Get genuis information about the audio
+        /// </summary>
         public void GetData()
         {
             if (!hasInfo)
@@ -37,22 +51,15 @@ namespace aMuse.Core.Utils
                 hasInfo = true;
             }
         }
-       
-        internal AudioFileTrack(string path) {
-            _path = path;
-            Covers = new byte[2][];
-            CoverImages = new BitmapImage[2];
-            Titles = new string[2];
-            GetFile();
-        }
 
-       private void Save() {
+
+        private void Save() {
             File.Save();
        }
 
        private void GetFile()
        {
-            File = TagLib.File.Create(_path);
+            File = TagLib.File.Create(path);
             Duration = File.Properties.Duration;
 
             // try getting artist and title from file tags
@@ -79,7 +86,7 @@ namespace aMuse.Core.Utils
             // if no artist or title tag is present, then set them based on file name
             if (!hasTags)
             {
-                string[] info = (Path.GetFileNameWithoutExtension(_path)).Split('-');
+                string[] info = (Path.GetFileNameWithoutExtension(path)).Split('-');
 
                 Artist = info[0].Trim();
                 File.Tag.Performers = new string[1] { info[0] };

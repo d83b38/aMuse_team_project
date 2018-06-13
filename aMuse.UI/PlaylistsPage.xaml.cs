@@ -3,9 +3,6 @@ using System.Windows.Controls;
 
 namespace aMuse.UI
 {
-    /// <summary>
-    /// Логика взаимодействия для PlaylistsPage.xaml
-    /// </summary>
     public partial class PlaylistsPage : Page
     {
         private static PlaylistsPage instance;
@@ -35,7 +32,6 @@ namespace aMuse.UI
                 MainWindow.GetInstance().MainFrame.Content = PlaylistPage.GetInstance();
             }
         }
-
 
         private void DeletePlaylist(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
