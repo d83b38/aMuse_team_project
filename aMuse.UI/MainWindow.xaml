@@ -70,12 +70,12 @@
             <StackPanel Margin="15 10 0 0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" MaxWidth="200" MinWidth="100">
                 <TextBlock Name="textBlockTime" Text="00:00" FontSize="15" Foreground="#FFDCFAFA"/>
                 <TextBlock TextTrimming="WordEllipsis" Grid.Column="1" Grid.Row="0" x:Name="infoBoxTrackName" 
-                           TextWrapping="Wrap" Text="Song44444444444" Height="23" MaxWidth="110" Width="auto" FontSize="14" FontWeight="Bold" Foreground="#FFDCFAFA" >
+                           TextWrapping="Wrap" Text="Title" Height="23" MaxWidth="110" Width="auto" FontSize="14" FontWeight="Bold" Foreground="#FFDCFAFA" >
                     <TextBlock.ToolTip>
                         <ToolTip x:Name="toolTipTrack" ToolTip.Opened="ToolTipTrack_Opened" Background="#FF767676" Foreground="#FFDCFAFA" HasDropShadow="False" FontWeight="Bold" FontSize="14" Placement="Relative" HorizontalOffset="25" VerticalOffset="10" BorderBrush="{x:Null}" />
                     </TextBlock.ToolTip>
                 </TextBlock>
-                <TextBlock TextTrimming="WordEllipsis" Grid.Column="1" Grid.Row="0" x:Name="infoBoxArtist" TextWrapping="Wrap" Text="Artist4444444444444" Height="23" MaxWidth="110"  Width="auto" FontSize="14"  Foreground="#FFDCFAFA">
+                <TextBlock TextTrimming="WordEllipsis" Grid.Column="1" Grid.Row="0" x:Name="infoBoxArtist" TextWrapping="Wrap" Text="Artist" Height="23" MaxWidth="110"  Width="auto" FontSize="14"  Foreground="#FFDCFAFA">
                     <TextBlock.ToolTip>
                         <ToolTip x:Name="toolTipArtist" ToolTip.Opened="ToolTipArtist_Opened" Background="#FF767676" Foreground="#FFDCFAFA" HasDropShadow="False"  FontSize="14" Placement="Relative" HorizontalOffset="25" VerticalOffset="10" BorderBrush="{x:Null}" />
                     </TextBlock.ToolTip>

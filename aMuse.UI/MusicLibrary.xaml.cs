@@ -1,6 +1,7 @@
 ﻿using aMuse.Core.Library;
 using System.Windows.Controls;
 using aMuse.Core.Utils;
+using System.Windows.Forms;
 
 namespace aMuse.UI
 {
@@ -37,7 +38,16 @@ namespace aMuse.UI
 
         private void OpenNewDirectory(object sender, System.Windows.RoutedEventArgs e)
         {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                fbd.ShowDialog();
 
+                if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    Library.Update(fbd.SelectedPath);
+                    ListTracks.ItemsSource = Library.Files;
+                }
+            }
         }
     }
 }
