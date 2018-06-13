@@ -45,5 +45,10 @@ namespace aMuse.Core.Utils
                 return default(T);
             }
         }
+
+        public int GetIndex(T item)
+        {
+            return Items.IndexOf(item);
+        }
     }
 }

@@ -26,5 +26,10 @@ namespace aMuse.UI
         {
             this.Close();
         }
+
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
+            PlaylistsPage.GetInstance().PlaylistAddClosed();
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace aMuse.UI
     public partial class PlaylistsPage : Page
     {
         private static PlaylistsPage instance;
+        private AddPlaylist addPlaylist = null;
 
         private PlaylistsPage()
         {
@@ -31,7 +32,7 @@ namespace aMuse.UI
             {
                 Playlist list = (Playlist)(listPlaylists.SelectedItem);
                 PlaylistLibrary.CurrentPlaylist = list;
-                MainWindow.GetInstance().MainFrame.Content = new PlaylistPage(MainWindow.GetInstance());
+                MainWindow.GetInstance().MainFrame.Content = PlaylistPage.GetInstance();
             }
         }
 
@@ -53,8 +54,24 @@ namespace aMuse.UI
                 PlaylistLibrary.Playlists = new Core.Utils.ObservableList<Playlist>();
                 listPlaylists.ItemsSource = PlaylistLibrary.Playlists;
             }
-            AddPlaylist addPlaylist = new AddPlaylist();
-            addPlaylist.Show();
+            if (addPlaylist == null)
+            {
+                addPlaylist = new AddPlaylist();
+                addPlaylist.Show();
+            }
+        }
+
+        public void PlaylistAddClosed()
+        {
+            addPlaylist = null;
+        }
+
+        public void ClosePlaylistAdd()
+        {
+            if (addPlaylist != null)
+            {
+                addPlaylist.Close();
+            }
         }
     }
 }

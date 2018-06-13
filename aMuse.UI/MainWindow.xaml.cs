@@ -74,15 +74,15 @@ namespace aMuse.UI
         private void InitializeSystem()
         {
             SystemState.Deserialize();
-            string path = SystemState.Instance.LibraryPath;
-            
+            Library.Update(SystemState.Instance.LibraryPath);
 
             PlaylistLibrary.Deserialize();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Core.Utils.SystemState.Serialize();
+            PlaylistsPage.GetInstance().ClosePlaylistAdd();
+            SystemState.Serialize();
             PlaylistLibrary.Serialize();
         }
 
@@ -153,6 +153,15 @@ namespace aMuse.UI
                 AudioFileTrack audio = _tracks.GetNext(_currentAudio);
                 if (audio != null)
                 {
+                    int index = _tracks.GetIndex(audio);
+                    if (_tracks == Library.Files)
+                    {
+                        MusicLibrary.GetInstance().SetSelection(index);
+                    }
+                    else
+                    {
+                        PlaylistPage.GetInstance().SetSelection(index);
+                    }
                     SetAudio(audio, _tracks);
                 }
             }
@@ -165,6 +174,15 @@ namespace aMuse.UI
                 AudioFileTrack audio = _tracks.GetPrev(_currentAudio);
                 if (audio != null)
                 {
+                    int index = _tracks.GetIndex(audio);
+                    if (_tracks == Library.Files)
+                    {
+                        MusicLibrary.GetInstance().SetSelection(index);
+                    }
+                    else
+                    {
+                        PlaylistPage.GetInstance().SetSelection(index);
+                    }
                     SetAudio(audio, _tracks);
                 }
             }

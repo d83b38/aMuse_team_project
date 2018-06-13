@@ -40,6 +40,11 @@ namespace aMuse.UI
             }
         }
 
+        public void SetSelection(int index)
+        {
+            ListTracks.SelectedIndex = index;
+        }
+
         //private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
         //    var newSelectedItem = e.AddedItems.FirstOrDefault();

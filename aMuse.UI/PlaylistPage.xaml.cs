@@ -10,35 +10,48 @@ namespace aMuse.UI
     /// </summary>
     public partial class PlaylistPage : Page
     {
-        private MainWindow _mainWindow;
+        private static PlaylistPage instance;
 
-        public PlaylistPage(MainWindow mainWindow)
+        private PlaylistPage()
         {
             InitializeComponent();
-            this._mainWindow = mainWindow;
-            ListTracks.ItemsSource = PlaylistLibrary.CurrentPlaylist.Tracks;
+        }
+
+        public static PlaylistPage GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new PlaylistPage();
+            }
+            instance.ListTracks.ItemsSource = PlaylistLibrary.CurrentPlaylist.Tracks;
+            return instance;
         }
 
         private void ClickDeleteFromFavorites(object sender, MouseButtonEventArgs e)
         {
-            if (ListTracks.SelectedItem != null)
-            {
-                _mainWindow.SetProperFavState((AudioFileTrack)(ListTracks.SelectedItem));
-                PlaylistLibrary.CurrentPlaylist.RemoveTrack((AudioFileTrack)(ListTracks.SelectedItem));
-            }
+            
         }
 
         private void ListTracks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (ListTracks.SelectedItem != null)
             {
-                _mainWindow.SetAudio((AudioFileTrack)(ListTracks.SelectedItem), PlaylistLibrary.CurrentPlaylist.Tracks);
+                MainWindow.GetInstance().SetAudio((AudioFileTrack)(ListTracks.SelectedItem), PlaylistLibrary.CurrentPlaylist.Tracks);
             }
+        }
+
+        public void SetSelection(int index)
+        {
+            ListTracks.SelectedIndex = index;
         }
 
         private void DeleteTrackFromPlaylist(object sender, MouseButtonEventArgs e)
         {
-
+            if (ListTracks.SelectedItem != null)
+            {
+                MainWindow.GetInstance().SetProperFavState((AudioFileTrack)(ListTracks.SelectedItem));
+                PlaylistLibrary.CurrentPlaylist.RemoveTrack((AudioFileTrack)(ListTracks.SelectedItem));
+            }
         } 
     }
 }
