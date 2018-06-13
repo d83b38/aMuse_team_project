@@ -10,12 +10,25 @@ namespace aMuse.UI
     /// </summary>
     public partial class MusicLibrary : Page
     {
-        private MainWindow _mainWindow;
+        private static MusicLibrary instance;
 
-        public MusicLibrary(MainWindow mainWindow)
+        private MusicLibrary()
         {
-            this._mainWindow = mainWindow;
             InitializeComponent();
+            UpdateFiles();
+        }
+
+        public static MusicLibrary GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new MusicLibrary();
+            }
+            return instance;
+        }
+
+        public void UpdateFiles()
+        {
             ListTracks.ItemsSource = Library.Files;
         }
 
@@ -23,7 +36,7 @@ namespace aMuse.UI
         {
             if (ListTracks.SelectedItem != null)
             {
-                _mainWindow.SetAudio((AudioFileTrack)(ListTracks.SelectedItem), Library.Files);
+                MainWindow.GetInstance().SetAudio((AudioFileTrack)(ListTracks.SelectedItem), Library.Files);
             }
         }
 
@@ -45,6 +58,7 @@ namespace aMuse.UI
                 if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     Library.Update(fbd.SelectedPath);
+                    MainWindow.GetInstance().SetLibraryEmpty();
                     ListTracks.ItemsSource = Library.Files;
                 }
             }

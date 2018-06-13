@@ -22,6 +22,7 @@ namespace aMuse.UI
              */
              //я ничего лучше не придумал пока что -Илья
              //   надеюсь, мы не забудем это удалить
+             // Лёль ребят, одна я не переписываюсь в комментах. - heathen
             _currentAudio = currentAudio;
 
             _mainWindow = mainWindow;
@@ -30,7 +31,7 @@ namespace aMuse.UI
         
         private void Button_ClickToLyrics(object sender, RoutedEventArgs e)
         {
-            if (_currentAudio.IsParsingSuccessful() && !string.IsNullOrWhiteSpace(Lyrics))
+            if (_currentAudio != null && _currentAudio.IsParsingSuccessful() && !string.IsNullOrWhiteSpace(Lyrics))
             {
                 _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, Lyrics);
             }

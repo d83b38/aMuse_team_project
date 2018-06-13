@@ -8,13 +8,21 @@ namespace aMuse.UI
     /// </summary>
     public partial class PlaylistsPage : Page
     {
-        private MainWindow _mainWindow;
+        private static PlaylistsPage instance;
 
-        public PlaylistsPage(MainWindow mainWindow)
+        private PlaylistsPage()
         {
-            _mainWindow = mainWindow;
             InitializeComponent();
             listPlaylists.ItemsSource = PlaylistLibrary.Playlists;
+        }
+
+        public static PlaylistsPage GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new PlaylistsPage();
+            }
+            return instance;
         }
 
         private void ListTracks_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -23,7 +31,7 @@ namespace aMuse.UI
             {
                 Playlist list = (Playlist)(listPlaylists.SelectedItem);
                 PlaylistLibrary.CurrentPlaylist = list;
-                _mainWindow.MainFrame.Content = new PlaylistPage(_mainWindow);
+                MainWindow.GetInstance().MainFrame.Content = new PlaylistPage(MainWindow.GetInstance());
             }
         }
 
@@ -33,13 +41,18 @@ namespace aMuse.UI
             if (listPlaylists.SelectedItem != null)
             {
                 Playlist p = (Playlist)(listPlaylists.SelectedItem);
-                _mainWindow.SetProperFavState(p);
+                MainWindow.GetInstance().SetProperFavState(p);
                 PlaylistLibrary.RemoveList(p);
             }
         }
 
         private void AddNewPlaylist(object sender, System.Windows.RoutedEventArgs e)
         {
+            if (PlaylistLibrary.Playlists == null)
+            {
+                PlaylistLibrary.Playlists = new Core.Utils.ObservableList<Playlist>();
+                listPlaylists.ItemsSource = PlaylistLibrary.Playlists;
+            }
             AddPlaylist addPlaylist = new AddPlaylist();
             addPlaylist.Show();
         }

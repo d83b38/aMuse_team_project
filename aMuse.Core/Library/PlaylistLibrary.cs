@@ -7,7 +7,7 @@ namespace aMuse.Core.Library
 {
     public class PlaylistLibrary
     {
-        public static ObservableList<Playlist> Playlists { get; private set; }
+        public static ObservableList<Playlist> Playlists { get; set; }
 
         public static Playlist CurrentPlaylist { get; set; }
 

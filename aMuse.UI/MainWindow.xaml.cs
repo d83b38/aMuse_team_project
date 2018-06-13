@@ -17,6 +17,8 @@ namespace aMuse.UI
     /// 
     public partial class MainWindow : Window
     {
+        private static MainWindow instance;
+
         List<BitmapImage> Covers { get; set; }
         DispatcherTimer PlayerTimer = new DispatcherTimer();
         DispatcherTimer TrackTimeTimer = new DispatcherTimer();
@@ -25,7 +27,7 @@ namespace aMuse.UI
 
         private ObservableList<AudioFileTrack> _tracks;
 
-        public MainWindow()
+        private MainWindow()
         {
             InitializeComponent();
 
@@ -35,6 +37,15 @@ namespace aMuse.UI
             Player.MediaPlayer.EndInit();
             SettingMaximun += OnSettingMaximum;
             EnableTimer();
+        }
+
+        public static MainWindow GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new MainWindow();
+            }
+            return instance;
         }
 
         internal void SetProperFavState(AudioFileTrack removedTrack)
@@ -55,30 +66,16 @@ namespace aMuse.UI
             }
         }
 
+        internal void SetLibraryEmpty()
+        {
+            _tracks = null;
+        }
+
         private void InitializeSystem()
         {
             SystemState.Deserialize();
             string path = SystemState.Instance.LibraryPath;
-            if (!string.IsNullOrWhiteSpace(path))
-            {
-                Library.Update(SystemState.Instance.LibraryPath);
-            }
-            else
-            {
-                using (var fbd = new FolderBrowserDialog())
-                {
-                    fbd.ShowDialog();
-
-                    if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                    {
-                        Library.Update(fbd.SelectedPath);
-                    }
-                    else
-                    {
-                        Close();
-                    }
-                }
-            }
+            
 
             PlaylistLibrary.Deserialize();
         }
@@ -292,7 +289,25 @@ namespace aMuse.UI
 
         private void Button_ClickToLibrary(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new MusicLibrary(this);
+            // no library path chosen
+            if (string.IsNullOrWhiteSpace(SystemState.Instance.LibraryPath))
+            {
+                using (var fbd = new FolderBrowserDialog())
+                {
+                    fbd.ShowDialog();
+
+                    // user has chosen the library
+                    if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                    {
+                        Library.Update(fbd.SelectedPath);
+                        MainFrame.Content = MusicLibrary.GetInstance();
+                    }
+                }
+            }
+            else
+            {
+                MainFrame.Content = MusicLibrary.GetInstance();
+            }
         }
 
         private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e) {
@@ -311,7 +326,7 @@ namespace aMuse.UI
 
         private void Button_ClickToPlaylists(object sender, RoutedEventArgs e)
         {
-            MainFrame.Content = new PlaylistsPage(this);
+            MainFrame.Content = PlaylistsPage.GetInstance();
         }
 
         private void AddToFavs_Click(object sender, RoutedEventArgs e)
