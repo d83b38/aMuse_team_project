@@ -8,6 +8,8 @@ using aMuse.Core.Library;
 using System.Windows.Threading;
 using System.Windows.Forms;
 using aMuse.Core.Utils;
+using System.Threading.Tasks;
+using aMuse.Core.Interfaces;
 
 namespace aMuse.UI
 {
@@ -23,8 +25,6 @@ namespace aMuse.UI
         DispatcherTimer PlayerTimer = new DispatcherTimer();
         DispatcherTimer TrackTimeTimer = new DispatcherTimer();
         AudioFileTrack _currentAudio;
-        public Action SettingMaximun;
-
         private ObservableList<AudioFileTrack> _tracks;
 
         private MainWindow()
@@ -32,10 +32,8 @@ namespace aMuse.UI
             InitializeComponent();
 
             InitializeSystem();
-            //MainFrame.Content = new MainPage(this,null);
             Player.MediaPlayer.VlcLibDirectory = new DirectoryInfo("libvlc/win-x86");
             Player.MediaPlayer.EndInit();
-            SettingMaximun += OnSettingMaximum;
             EnableTimer();
         }
 
@@ -92,8 +90,8 @@ namespace aMuse.UI
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
             _tracks = tracks;
             _currentAudio = audio;
-            _currentAudio.GetData();
             TrackBar.IsEnabled = true;
+            _currentAudio.GetData();
             Player.MediaPlayer.Play();
             if (PlaylistLibrary.CurrentPlaylist != null)
             {
@@ -106,20 +104,20 @@ namespace aMuse.UI
                     addToFavs.IsChecked = false;
                 }
             }
+            StartTimers();
+            SettingMaximum();
+            Title = "Getting useful data...";
             try {
-                var artist = await _currentAudio.SetArtistAsync();
-                var titles = await _currentAudio.SetTitlesAsync();
-                var cov = await _currentAudio.SetCoversAsync();
-                infoBoxArtist.Text = artist;
-                infoBoxTrackName.Text = titles[0];
-                Thumbnail.Source = cov[1];
+                var TrackData = await audio.GetTrackTaskAsync();
+                infoBoxArtist.Text = TrackData.Artist.Name;
+                infoBoxTrackName.Text = TrackData.Title;
+                Thumbnail.Source = await _currentAudio.GetAlbumCoverThumbnailTaskAsync(TrackData.AlbumCoverThumbnailUrl);
             }
             catch (Exception ex) {
                 System.Windows.MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
                     "You won't be getting any data without it", ex.Message);
             }
-            StartTimers();
-            SettingMaximun?.Invoke();
+            Title = "aMuse";
         }
 
         private void PlayPause_Click(object sender, RoutedEventArgs e)
@@ -260,7 +258,7 @@ namespace aMuse.UI
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private void OnSettingMaximum() {
+        private void SettingMaximum() {
             TrackBar.Maximum = _currentAudio.Duration.TotalMilliseconds;
             double minutes = _currentAudio.Duration.Minutes;
             double seconds = _currentAudio.Duration.Seconds;

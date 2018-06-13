@@ -1,6 +1,9 @@
 ﻿using aMuse.Core.Utils;
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace aMuse.UI
 {
@@ -14,15 +17,6 @@ namespace aMuse.UI
         string Lyrics { get; set; }
         public MainPage(MainWindow mainWindow, AudioFileTrack currentAudio)
         {
-            /*(мне лень писать на англ.) 
-             * так вот, мб придумаете способ получше "знать о текущем треке"
-             * чем передавать его как связку поле-параметр 
-             * пока так, я гуист я так вижу.
-             * (мне надо чтоб работало прост, иначе беда)
-             */
-             //я ничего лучше не придумал пока что -Илья
-             //   надеюсь, мы не забудем это удалить
-             // Лёль ребят, одна я не переписываюсь в комментах. - heathen
             _currentAudio = currentAudio;
 
             _mainWindow = mainWindow;
@@ -31,7 +25,7 @@ namespace aMuse.UI
         
         private void Button_ClickToLyrics(object sender, RoutedEventArgs e)
         {
-            if (_currentAudio != null && _currentAudio.IsParsingSuccessful() && !string.IsNullOrWhiteSpace(Lyrics))
+            if (_currentAudio != null && Lyrics != null && !string.IsNullOrWhiteSpace(Lyrics))
             {
                 _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, Lyrics);
             }
@@ -43,13 +37,13 @@ namespace aMuse.UI
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
             try {
-                Lyrics = await _currentAudio.SetLyricsAsync();
-                if (_currentAudio != null && _currentAudio.CoverImages[0] != null)
-                //if track not selected cover=default cover
-                {
-                    var covers = await _currentAudio.SetCoversAsync();
-                    AlbumCover.Source = covers[0];
+                if (_currentAudio != null)
+                    AlbumCover.Source = await _currentAudio.GetAlbumCoverTaskAsync(_currentAudio.TrackData.AlbumCoverUrl);
+                else {
+                    //set defaullt cover or this will catch an exception
+                    //AlbumCover.Source = new BitmapImage(new Uri("../../Icons/music-record-big.png", UriKind.Relative));
                 }
+                Lyrics = await _currentAudio.GetLyricsTaskAsync(_currentAudio.TrackData.LyricsUrl);
             }
             catch (System.Exception ex) {
                MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
