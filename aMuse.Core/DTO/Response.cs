@@ -5,5 +5,7 @@ namespace aMuse.Core.DTO {
     class Response {
         [JsonProperty("hits")]
         public List<Hit> Hits { get; set; }
+        [JsonProperty("artist")]
+        public ArtistInfo ArtistDesctiption { get; set; }
     }
 }

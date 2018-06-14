@@ -98,7 +98,7 @@ namespace aMuse.Core.Utils
 
         public async Task<BitmapImage> GetAlbumCoverTaskAsync(string url) {
             if (!HasCover)
-                return await DataParsing.GetAlbumCoverTaskAsync(url);
+                return await DataParsing.GetImageTaskAsync(url);
             else {
                 MemoryStream ms = new MemoryStream(File.Tag.Pictures[0].Data.Data);
                 var bitmap = new BitmapImage();
@@ -111,8 +111,12 @@ namespace aMuse.Core.Utils
             }
         }
 
-        public async Task<BitmapImage> GetAlbumCoverThumbnailTaskAsync(string url) {
-            return await DataParsing.GetAlbumCoverThumbnailTaskAsync(url);
+        public async Task<BitmapImage> GetImageTaskAsync(string url) {
+            return await DataParsing.GetImageTaskAsync(url);
+        }
+
+        public async Task<Artist> GetArtistAsync(string Id) {
+            return await DataParsing.GetArtistAsync(Id);
         }
 
         private void GetInfo()

@@ -37,24 +37,21 @@ namespace aMuse.UI
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {
             try {
-                if (_currentAudio != null)
+                if (_currentAudio != null && _currentAudio.TrackData != null)
                     AlbumCover.Source = await _currentAudio.GetAlbumCoverTaskAsync(_currentAudio.TrackData.AlbumCoverUrl);
                 else {
-                    //set defaullt cover or this will catch an exception
-                    //AlbumCover.Source = new BitmapImage(new Uri("../../Icons/music-record-big.png", UriKind.Relative));
+                    return;
                 }
                 Lyrics = await _currentAudio.GetLyricsTaskAsync(_currentAudio.TrackData.LyricsUrl);
             }
             catch (System.Exception ex) {
-               MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
-                    "You won't be getting any data without it", ex.Message);
+               MessageBox.Show("Something went wrong.\nCheck your internet\n" + ex.Message);
             }
-            
         }
 
         private void Button_ClickToInfo(object sender, RoutedEventArgs e)
         {
-            _mainWindow.MainFrame.Content = new MoreInfoPage(_mainWindow);
+            _mainWindow.MainFrame.Content = new MoreInfoPage(_mainWindow, _currentAudio);
         }
     }
 }

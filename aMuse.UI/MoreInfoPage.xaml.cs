@@ -1,4 +1,6 @@
-﻿using System;
+﻿using aMuse.Core.Interfaces;
+using aMuse.Core.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,8 +23,10 @@ namespace aMuse.UI
     public partial class MoreInfoPage : Page
     {
         MainWindow _mainWindow;
-        public MoreInfoPage(MainWindow mainWindow)
+        AudioFileTrack _currentAudio;
+        public MoreInfoPage(MainWindow mainWindow, AudioFileTrack currentAudio)
         {
+            _currentAudio = currentAudio;
             _mainWindow = mainWindow;
             InitializeComponent();
         }
@@ -30,6 +34,19 @@ namespace aMuse.UI
         private void Button_ClickBackToMainPage(object sender, RoutedEventArgs e)
         {
             _mainWindow.MainFrame.GoBack();
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e) {
+            if (_currentAudio != null && _currentAudio.TrackData != null) {
+                string Id = _currentAudio.TrackData.Artist.Id;
+                _currentAudio.TrackData.Artist = await _currentAudio.GetArtistAsync(Id);
+                Description.Text = _currentAudio.TrackData.Artist.Description;
+                Name.Text = _currentAudio.Artist;
+                var imageUrl = _currentAudio.TrackData.Artist.ImageUrl;
+                ArtistImage.Source = await _currentAudio.GetImageTaskAsync(imageUrl);
+            }
+            else
+                return;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace aMuse.Core.APIData {
         private string Track { get; set; }
         private Track TrackData { get; set; }
 
-        static string BuildUrl(string baseUrl, IDictionary<string, string> parameters)
+        static string BuildSearchUrl(string baseUrl, IDictionary<string, string> parameters)
         {
             var sb = new StringBuilder(baseUrl);
             if (parameters?.Count > 0) {
@@ -39,34 +39,66 @@ namespace aMuse.Core.APIData {
             return sb.ToString();
         }
 
+        static string BuildArtistUrl(string baseUrl, string artistId, string Token) {
+            var sb = new StringBuilder(baseUrl);
+            sb.Append('/');
+            sb.Append(artistId);
+            sb.Append('?');
+            sb.Append("access_token=");
+            sb.Append(Token);
+            sb.Append("&text_format=plain");
+            return sb.ToString();
+        }
+
         public GeniusData(string Artist, string Track)
         {
             this.Artist = Artist;
             this.Track = Track;
         }
 
+        public async Task<Artist> GetArtistAsync(string Id) {
+            var url = BuildArtistUrl("https://api.genius.com/artists", Id, AccessToken);
+            using (var client = new HttpClient()) {
+                var strResult = await client.GetStringAsync(url);
+                Data result = JsonConvert.DeserializeObject<Data>(strResult);
+                return new Artist {
+                    Id = Id,
+                    Name = result.Response.ArtistDesctiption.Name,
+                    Description = result.Response.ArtistDesctiption.Description.Text,
+                    ImageUrl = result.Response.ArtistDesctiption.ArtistDescriptionImageUrl,
+                    GenuisPageUrl = result.Response.ArtistDesctiption.ArtistDescriptionGeniusUrl
+                };
+            }
+        }
+
         public async Task<Track> GetTrackTaskAsync() {
-            var url = BuildUrl("https://api.genius.com/search",
+            var url = BuildSearchUrl("https://api.genius.com/search",
                                 new Dictionary<string, string>()
                                 {
                                     {"access_token", AccessToken },
                                     {"q", Artist + " " + Track},
                                 });
             using (var client = new HttpClient()) {
-                    var strResult = await client.GetStringAsync(url);
-                    Data result = JsonConvert.DeserializeObject<Data>(strResult);
-                        return await Task.Run(() => new Track {
+                var strResult = await client.GetStringAsync(url);
+                Data result = JsonConvert.DeserializeObject<Data>(strResult);
+                try {
+                        return new Track {
                             Title = result.Response.Hits[0].TrackInfo.TrackTitle,
                             TitleWithFeatured = result.Response.Hits[0].TrackInfo.TrackTitleWithFeatured,
                             LyricsUrl = result.Response.Hits[0].TrackInfo.FullLyricsUrl,
                             Artist = new Artist() {
+                                Id = result.Response.Hits[0].TrackInfo.ArtistInfo.Id,
                                 Name = result.Response.Hits[0].TrackInfo.ArtistInfo.Name,
                             },
                             AlbumCoverUrl = result.Response.Hits[0].TrackInfo.AlbumImageUrl,
                             AlbumCoverThumbnailUrl = result.Response.Hits[0].TrackInfo.AlbumSmallImageUrl
-                        });
+                        };
+                }
+                catch (Exception) {
+                    return null;
                 }
             }
+        }
 
         public async Task<string> GetLyricsTaskAsync(string Url) {
             var webClient = new WebClient();
@@ -89,7 +121,7 @@ namespace aMuse.Core.APIData {
             return regAlbum.Replace(uncleanedAlbum, "");
         }
 
-        public async Task<BitmapImage> GetAlbumCoverThumbnailTaskAsync(string url) {
+        public async Task<BitmapImage> GetImageTaskAsync(string url) {
             using (var client = new HttpClient()) {
                 byte[] data = await client.GetByteArrayAsync(url);
                 return BytesToImage(data);

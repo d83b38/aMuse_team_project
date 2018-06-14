@@ -109,13 +109,18 @@ namespace aMuse.UI
             Title = "Getting useful data...";
             try {
                 var TrackData = await audio.GetTrackTaskAsync();
-                infoBoxArtist.Text = TrackData.Artist.Name;
-                infoBoxTrackName.Text = TrackData.Title;
-                Thumbnail.Source = await _currentAudio.GetAlbumCoverThumbnailTaskAsync(TrackData.AlbumCoverThumbnailUrl);
+                if(TrackData != null) {
+                    infoBoxArtist.Text = TrackData.Artist.Name;
+                    infoBoxTrackName.Text = TrackData.Title;
+                    Thumbnail.Source = await _currentAudio.GetImageTaskAsync(TrackData.AlbumCoverThumbnailUrl);
+                }
+                else {
+                    Title = "No Info Found";
+                    return;
+                }
             }
-            catch (Exception ex) {
-                System.Windows.MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
-                    "You won't be getting any data without it", ex.Message);
+            catch (Exception) {
+                System.Windows.MessageBox.Show("Something went wrong.\nCheck your internet.");
             }
             Title = "aMuse";
         }
