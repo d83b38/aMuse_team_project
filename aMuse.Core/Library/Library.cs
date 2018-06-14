@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using aMuse.Core.Interfaces;
 using aMuse.Core.Utils;
 
 namespace aMuse.Core.Library
@@ -9,14 +10,14 @@ namespace aMuse.Core.Library
         /// <summary>
         /// Set of audiofiles in library folder
         /// </summary>
-        public static ObservableList<AudioFileTrack> Files { get; private set; }
+        public static ObservableList<IAudio> Files { get; private set; }
 
         /// <summary>
         /// Searches for the audiofiles in the chosen folder
         /// </summary>
         private static void SearchAudioFiles()
         {
-            Files = new ObservableList<AudioFileTrack>();
+            Files = new ObservableList<IAudio>();
 
             if (SystemState.Instance.LibraryPath != null)
             {

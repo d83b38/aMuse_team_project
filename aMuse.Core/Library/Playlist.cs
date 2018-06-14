@@ -1,4 +1,5 @@
-﻿using aMuse.Core.Utils;
+﻿using aMuse.Core.Interfaces;
+using aMuse.Core.Utils;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +17,7 @@ namespace aMuse.Core.Library
         /// List of tracks in the playlist
         /// </summary>
         [JsonIgnore]
-        public ObservableList<AudioFileTrack> Tracks { get; private set; }
+        public ObservableList<IAudio> Tracks { get; private set; }
 
         /// <summary>
         /// List of paths for tracks in the playlist
@@ -26,7 +27,7 @@ namespace aMuse.Core.Library
         public Playlist(string name)
         {
             Name = name;
-            Tracks = new ObservableList<AudioFileTrack>();
+            Tracks = new ObservableList<IAudio>();
             Paths = new List<string>();
         }
 
@@ -47,20 +48,20 @@ namespace aMuse.Core.Library
         /// Adds track to the list
         /// </summary>
         /// <param name="track">track to add</param>
-        public void AddTrack(AudioFileTrack track)
+        public void AddTrack(IAudio track)
         {
             Tracks.Add(track);
-            Paths.Add(track._path);
+            Paths.Add(track.FilePath);
         }
 
         /// <summary>
         /// Removes track from the list
         /// </summary>
         /// <param name="track">track to remove</param>
-        public void RemoveTrack(AudioFileTrack track)
+        public void RemoveTrack(IAudio track)
         {
             Tracks.Remove(track);
-            Paths.Remove(track._path);
+            Paths.Remove(track.FilePath);
         }
     }
 }

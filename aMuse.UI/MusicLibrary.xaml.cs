@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using aMuse.Core.Utils;
 using System.Windows.Forms;
+using aMuse.Core.Interfaces;
 
 namespace aMuse.UI
 {
@@ -33,7 +34,7 @@ namespace aMuse.UI
         {
             if (ListTracks.SelectedItem != null)
             {
-                MainWindow.GetInstance().SetAudio((AudioFileTrack)(ListTracks.SelectedItem), Library.Files);
+                MainWindow.GetInstance().SetAudio((IAudio)(ListTracks.SelectedItem), Library.Files);
             }
         }
 

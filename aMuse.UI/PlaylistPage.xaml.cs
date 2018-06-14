@@ -1,4 +1,5 @@
-﻿using aMuse.Core.Library;
+﻿using aMuse.Core.Interfaces;
+using aMuse.Core.Library;
 using aMuse.Core.Utils;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -28,7 +29,7 @@ namespace aMuse.UI
         {
             if (ListTracks.SelectedItem != null)
             {
-                MainWindow.GetInstance().SetAudio((AudioFileTrack)(ListTracks.SelectedItem), PlaylistLibrary.CurrentPlaylist.Tracks);
+                MainWindow.GetInstance().SetAudio((IAudio)(ListTracks.SelectedItem), PlaylistLibrary.CurrentPlaylist.Tracks);
             }
         }
 
@@ -41,8 +42,8 @@ namespace aMuse.UI
         {
             if (ListTracks.SelectedItem != null)
             {
-                MainWindow.GetInstance().SetProperFavState((AudioFileTrack)(ListTracks.SelectedItem));
-                PlaylistLibrary.CurrentPlaylist.RemoveTrack((AudioFileTrack)(ListTracks.SelectedItem));
+                MainWindow.GetInstance().SetProperFavState((IAudio)(ListTracks.SelectedItem));
+                PlaylistLibrary.CurrentPlaylist.RemoveTrack((IAudio)(ListTracks.SelectedItem));
             }
         } 
     }

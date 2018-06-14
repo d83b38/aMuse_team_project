@@ -14,7 +14,7 @@ namespace aMuse.UI
     {
         private static MoreInfoPage instance = new MoreInfoPage();
 
-        private AudioFileTrack _currentAudio;
+        private IAudio _currentAudio;
 
         private MoreInfoPage()
         {
@@ -31,7 +31,7 @@ namespace aMuse.UI
             MainWindow.GetInstance().MainFrame.GoBack();
         }
 
-        public async void Update(AudioFileTrack audio)
+        public async void Update(IAudio audio)
         {
             _currentAudio = audio;
 

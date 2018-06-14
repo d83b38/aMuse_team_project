@@ -1,4 +1,5 @@
-﻿using aMuse.Core.Utils;
+﻿using aMuse.Core.Interfaces;
+using aMuse.Core.Utils;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -8,7 +9,7 @@ namespace aMuse.UI
     {
         private static MainPage instance = new MainPage();
 
-        private AudioFileTrack _currentAudio;
+        private IAudio _currentAudio;
         string Lyrics { get; set; }
 
         private MainPage()
@@ -26,7 +27,7 @@ namespace aMuse.UI
             MainWindow.GetInstance().MainFrame.Content = LyricsPage.GetInstance();
         }
 
-        public async void Update(AudioFileTrack audio)
+        public async void Update(IAudio audio)
         {
             _currentAudio = audio;
 

@@ -8,7 +8,7 @@ using aMuse.Core.Library;
 using System.Windows.Threading;
 using System.Windows.Forms;
 using aMuse.Core.Utils;
-
+using aMuse.Core.Interfaces;
 
 namespace aMuse.UI
 {
@@ -19,8 +19,8 @@ namespace aMuse.UI
         private List<BitmapImage> Covers { get; set; }
         private DispatcherTimer playerTimer = new DispatcherTimer();
         private DispatcherTimer trackTimeTimer = new DispatcherTimer();
-        private AudioFileTrack _currentAudio;
-        private ObservableList<AudioFileTrack> _tracks;
+        private IAudio _currentAudio;
+        private ObservableList<IAudio> _tracks;
 
         private bool geniusInfoAvailable = false;
 
@@ -46,7 +46,7 @@ namespace aMuse.UI
         /// <summary>
         /// Sets proper state for "add to playlist" button for current playing audio after track removal
         /// </summary>
-        internal void SetProperFavState(AudioFileTrack removedTrack)
+        internal void SetProperFavState(IAudio removedTrack)
         {
             if (removedTrack == _currentAudio)
             {
@@ -91,10 +91,10 @@ namespace aMuse.UI
         /// Plays the audio file chosen by user
         /// </summary>
         /// <param name="tracks">the list containing the audio file (e. g. playlist or library)</param>
-        public async void SetAudio(AudioFileTrack audio, ObservableList<AudioFileTrack> tracks)
+        public async void SetAudio(IAudio audio, ObservableList<IAudio> tracks)
         {
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
-            Player.MediaPlayer.SetMedia(new Uri(audio._path));
+            Player.MediaPlayer.SetMedia(new Uri(audio.FilePath));
             _tracks = tracks;
             _currentAudio = audio;
             TrackBar.IsEnabled = true;
@@ -185,7 +185,7 @@ namespace aMuse.UI
         {
             if (_tracks != null)
             {
-                AudioFileTrack audio = _tracks.GetNext(_currentAudio);
+                IAudio audio = _tracks.GetNext(_currentAudio);
                 if (audio != null)
                 {
                     int index = _tracks.GetIndex(audio);
@@ -209,7 +209,7 @@ namespace aMuse.UI
         {
             if (_tracks != null)
             {
-                AudioFileTrack audio = _tracks.GetPrev(_currentAudio);
+                IAudio audio = _tracks.GetPrev(_currentAudio);
                 if (audio != null)
                 {
                     int index = _tracks.GetIndex(audio);
@@ -379,6 +379,7 @@ namespace aMuse.UI
         private void StopButton_Click(object sender, RoutedEventArgs e) {
             StopTimers();
             Player.MediaPlayer.Stop();
+            textBlockTime.Text = "00:00";
             TrackBar.Value = 0;
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
         }

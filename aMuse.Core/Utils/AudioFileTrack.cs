@@ -10,7 +10,8 @@ using aMuse.Core.Model;
 namespace aMuse.Core.Utils
 {
     public class AudioFileTrack : IAudio {
-        public readonly string _path;
+        //public readonly string _path;
+        public string FilePath { get; }
         public string Album { get; private set; }
         public TimeSpan Duration { get; set; }
         public string Artist { get; set; }
@@ -39,9 +40,9 @@ namespace aMuse.Core.Utils
             }
         }
        
-        internal AudioFileTrack(string path)
+        internal AudioFileTrack(string Path)
         {
-            _path = path;
+            FilePath = Path;
             GetMainInfo();
             SetupParsing();
         }
@@ -56,7 +57,7 @@ namespace aMuse.Core.Utils
         /// </summary>
         private void GetMainInfo()
         {
-            File = TagLib.File.Create(_path);
+            File = TagLib.File.Create(FilePath);
             Duration = File.Properties.Duration;
 
             Album = File.Tag.Album;
@@ -85,7 +86,7 @@ namespace aMuse.Core.Utils
             // if no artist or title tag is present, then set them based on file name
             if (!hasTags)
             {
-                string[] info = (Path.GetFileNameWithoutExtension(_path)).Split('-');
+                string[] info = (Path.GetFileNameWithoutExtension(FilePath)).Split('-');
 
                 Artist = info[0].Trim();
                 File.Tag.Performers = new string[1] { info[0] };
