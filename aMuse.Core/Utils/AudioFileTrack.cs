@@ -20,7 +20,15 @@ namespace aMuse.Core.Utils
         ITrackDataParsing DataParsing;
 
         private bool HasCover;
+
+        /// <summary>
+        /// Determines if the genius data has been got for this file
+        /// </summary>
         private bool hasInfo;
+
+        /// <summary>
+        /// Get genuis information about the audio
+        /// </summary>
         public void GetData()
         {
             if (!hasInfo)
@@ -30,17 +38,22 @@ namespace aMuse.Core.Utils
             }
         }
        
-        internal AudioFileTrack(string path) {
+        internal AudioFileTrack(string path)
+        {
             _path = path;
-            GetFile();
+            GetMainInfo();
             SetupParsing();
         }
 
-        private void SetupParsing() {
+        private void SetupParsing()
+        {
             DataParsing = new GeniusData(Artist, Track);
         }
 
-        private void GetFile()
+        /// <summary>
+        /// Gets title and artist from tags on file name
+        /// </summary>
+        private void GetMainInfo()
         {
             File = TagLib.File.Create(_path);
             Duration = File.Properties.Duration;
@@ -83,23 +96,28 @@ namespace aMuse.Core.Utils
             }
         }
 
-        public async Task<Track> GetTrackTaskAsync() {
+        public async Task<Track> GetTrackTaskAsync()
+        {
             TrackData = await DataParsing.GetTrackTaskAsync();
             return TrackData;
         }
 
-        public async Task<string> GetLyricsTaskAsync(string url) {
+        public async Task<string> GetLyricsTaskAsync(string url)
+        {
             return await DataParsing.GetLyricsTaskAsync(url);
         }
 
-        public async Task<string> GetAlbumTaskAsync(string url) {
+        public async Task<string> GetAlbumTaskAsync(string url)
+        {
             return await DataParsing.GetAlbumTaskAsync(url);
         }
 
-        public async Task<BitmapImage> GetAlbumCoverTaskAsync(string url) {
+        public async Task<BitmapImage> GetAlbumCoverTaskAsync(string url)
+        {
             if (!HasCover)
                 return await DataParsing.GetAlbumCoverTaskAsync(url);
-            else {
+            else
+            {
                 MemoryStream ms = new MemoryStream(File.Tag.Pictures[0].Data.Data);
                 var bitmap = new BitmapImage();
                 bitmap.BeginInit();
@@ -111,7 +129,8 @@ namespace aMuse.Core.Utils
             }
         }
 
-        public async Task<BitmapImage> GetAlbumCoverThumbnailTaskAsync(string url) {
+        public async Task<BitmapImage> GetAlbumCoverThumbnailTaskAsync(string url)
+        {
             return await DataParsing.GetAlbumCoverThumbnailTaskAsync(url);
         }
 
@@ -122,7 +141,11 @@ namespace aMuse.Core.Utils
                 HasCover = true;
         }
 
-        private string CleanText(string uncleaned) {
+        /// <summary>
+        /// Removes unnecessary parts of the track title
+        /// </summary>
+        private string CleanText(string uncleaned)
+        {
             string eraseAfter = "";
             if (uncleaned.Contains("ft"))
             {

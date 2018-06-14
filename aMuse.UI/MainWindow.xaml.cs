@@ -8,23 +8,18 @@ using aMuse.Core.Library;
 using System.Windows.Threading;
 using System.Windows.Forms;
 using aMuse.Core.Utils;
-using System.Threading.Tasks;
-using aMuse.Core.Interfaces;
+
 
 namespace aMuse.UI
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
-    /// 
     public partial class MainWindow : Window
     {
         private static MainWindow instance;
 
-        List<BitmapImage> Covers { get; set; }
-        DispatcherTimer PlayerTimer = new DispatcherTimer();
-        DispatcherTimer TrackTimeTimer = new DispatcherTimer();
-        AudioFileTrack _currentAudio;
+        private List<BitmapImage> Covers { get; set; }
+        private DispatcherTimer playerTimer = new DispatcherTimer();
+        private DispatcherTimer trackTimeTimer = new DispatcherTimer();
+        private AudioFileTrack _currentAudio;
         private ObservableList<AudioFileTrack> _tracks;
 
         private MainWindow()
@@ -46,6 +41,9 @@ namespace aMuse.UI
             return instance;
         }
 
+        /// <summary>
+        /// Sets proper state for "add to playlist" button for current playing audio after track removal
+        /// </summary>
         internal void SetProperFavState(AudioFileTrack removedTrack)
         {
             if (removedTrack == _currentAudio)
@@ -55,6 +53,9 @@ namespace aMuse.UI
             }
         }
 
+        /// <summary>
+        /// Sets proper state for "add to playlist" button for current playing audio after playlist removal
+        /// </summary>
         internal void SetProperFavState(Playlist removedPlaylist)
         {
             if (removedPlaylist.Tracks.Contains(_currentAudio))
@@ -84,15 +85,23 @@ namespace aMuse.UI
             PlaylistLibrary.Serialize();
         }
 
+        /// <summary>
+        /// Plays the audio file chosen by user
+        /// </summary>
+        /// <param name="tracks">the list containing the audio file (e. g. playlist or library)</param>
         public async void SetAudio(AudioFileTrack audio, ObservableList<AudioFileTrack> tracks)
         {
             imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
             Player.MediaPlayer.SetMedia(new Uri(audio._path));
+
             _tracks = tracks;
             _currentAudio = audio;
+
             TrackBar.IsEnabled = true;
             _currentAudio.GetData();
+
             Player.MediaPlayer.Play();
+
             if (PlaylistLibrary.CurrentPlaylist != null)
             {
                 if (PlaylistLibrary.CurrentPlaylist.Tracks.Contains(audio))
@@ -104,19 +113,25 @@ namespace aMuse.UI
                     addToFavs.IsChecked = false;
                 }
             }
+
             StartTimers();
             SettingMaximum();
+
             Title = "Getting useful data...";
-            try {
+
+            try
+            {
                 var TrackData = await audio.GetTrackTaskAsync();
                 infoBoxArtist.Text = TrackData.Artist.Name;
                 infoBoxTrackName.Text = TrackData.Title;
                 Thumbnail.Source = await _currentAudio.GetAlbumCoverThumbnailTaskAsync(TrackData.AlbumCoverThumbnailUrl);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 System.Windows.MessageBox.Show("Oops... Something went wrong.\nCheck your internet\n" +
                     "You won't be getting any data without it", ex.Message);
             }
+
             Title = "aMuse";
         }
 
@@ -124,7 +139,8 @@ namespace aMuse.UI
         {
             if (!Player.MediaPlayer.IsPlaying)
             {
-                if (_currentAudio != null) {
+                if (_currentAudio != null)
+                {
                     Player.MediaPlayer.Play();
                     imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
                     TrackBar.IsEnabled = true;
@@ -141,9 +157,12 @@ namespace aMuse.UI
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MainFrame.Content = new MainPage(this, _currentAudio);
+            MainFrame.Content = MainPage.GetInstance(_currentAudio);
         }
 
+        /// <summary>
+        /// Plays next track in the list
+        /// </summary>
         private void Next_Click(object sender, RoutedEventArgs e)
         {
             if (_tracks != null)
@@ -165,6 +184,9 @@ namespace aMuse.UI
             }
         }
 
+        /// <summary>
+        /// Plays previous track in the list
+        /// </summary>
         private void Previous_Click(object sender, RoutedEventArgs e)
         {
             if (_tracks != null)
@@ -191,28 +213,31 @@ namespace aMuse.UI
             Player.MediaPlayer.Audio.ToggleMute();
         }
 
-        private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e) {
+        private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
             if (Player.MediaPlayer.Audio != null)
             {
                 Player.MediaPlayer.Audio.Volume = (int)volumeSlider.Value;
             }
         }
  
-        private void TrackBar_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            PlayerTimer.Stop();
+        private void TrackBar_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            playerTimer.Stop();
         }
 
-        private void TrackBar_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
-            PlayerTimer.Start();
+        private void TrackBar_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            playerTimer.Start();
             Player.MediaPlayer.Time = (long)TrackBar.Value;
         }
 
         private void EnableTimer()
         {
-            PlayerTimer.Tick += DispatcherTimer_Tick;
-            PlayerTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            TrackTimeTimer.Tick += TrackTimeTimer_Tick;
-            TrackTimeTimer.Interval = new TimeSpan(0, 0, 1);
+            playerTimer.Tick += DispatcherTimer_Tick;
+            playerTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            trackTimeTimer.Tick += TrackTimeTimer_Tick;
+            trackTimeTimer.Interval = new TimeSpan(0, 0, 1);
         }
 
         private void TrackTimeTimer_Tick(object sender, EventArgs e)
@@ -233,14 +258,14 @@ namespace aMuse.UI
 
         private void StartTimers()
         {
-            PlayerTimer.Start();
-            TrackTimeTimer.Start();
+            playerTimer.Start();
+            trackTimeTimer.Start();
         }
 
         private void StopTimers()
         {
-            PlayerTimer.Stop();
-            TrackTimeTimer.Stop();
+            playerTimer.Stop();
+            trackTimeTimer.Stop();
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
@@ -258,7 +283,8 @@ namespace aMuse.UI
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private void SettingMaximum() {
+        private void SettingMaximum()
+        {
             TrackBar.Maximum = _currentAudio.Duration.TotalMilliseconds;
             double minutes = _currentAudio.Duration.Minutes;
             double seconds = _currentAudio.Duration.Seconds;
@@ -362,11 +388,6 @@ namespace aMuse.UI
                     PlaylistLibrary.CurrentPlaylist.AddTrack(_currentAudio);
                 }
             }
-        }
-
-        private void AddToFavs_Checked(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
