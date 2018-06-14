@@ -54,7 +54,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="130"/>
                 <ColumnDefinition Width="40*" />
-                <ColumnDefinition Width="40*" />
+                <ColumnDefinition Width="60*" />
                 <ColumnDefinition Width="30*"/>
                 <ColumnDefinition Width="30*" />
             </Grid.ColumnDefinitions>
@@ -81,9 +81,31 @@
                     </TextBlock.ToolTip>
                 </TextBlock>
             </StackPanel>
-            <StackPanel Name="PlayingControls" Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
+            <StackPanel Name="PlayingControls"  Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
                         HorizontalAlignment="Center"  Height="100" VerticalAlignment="Bottom">
 
+                <ToggleButton x:Name="tog1" Click ="ClickRepeat" Margin="0 0 0 0" Height="20" Width="20" Content="I'm " Foreground="Black">
+                    <ToggleButton.Template>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image>
+                                    <Image.Style>
+                                        <Style>
+                                            <Setter Property="Image.Source" Value="Icons/RepeatOFF.png" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                                                    Value="True">
+                                                    <Setter Property="Image.Source" Value="Icons/RepeatON.png" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <ContentPresenter Content="{TemplateBinding Content}" />
+                            </StackPanel>
+                        </ControlTemplate>
+                    </ToggleButton.Template>
+                </ToggleButton>
                 <Button  Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}"  x:Name="Previous" MinWidth="50"  Height="40" 
                     Click="Previous_Click" Margin="0 0 0 0">
                     <Image Source="Icons/Prev.png"/>
@@ -96,6 +118,28 @@
                     Click="Next_Click" Margin="5 0 0 0"  >
                     <Image  Source="Icons/Next.png" />
                 </Button>
+                <ToggleButton x:Name="tog2" Click ="ClickShuffle" Margin="5 0 0 0" Height="20" Width="20" Content="I'm " Foreground="Black">
+                    <ToggleButton.Template>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image>
+                                    <Image.Style>
+                                        <Style>
+                                            <Setter Property="Image.Source" Value="Icons/ShuffleOFF.png" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                                                    Value="True">
+                                                    <Setter Property="Image.Source" Value="Icons/ShuffleON.png" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <ContentPresenter Content="{TemplateBinding Content}" />
+                            </StackPanel>
+                        </ControlTemplate>
+                    </ToggleButton.Template>
+                </ToggleButton>
             </StackPanel>
             <Image Margin="0 0 0 0"  Height="130"  Width="130"  VerticalAlignment="Bottom"
                 Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"   
