@@ -1,4 +1,5 @@
-﻿using aMuse.Core.Utils;
+﻿using aMuse.Core.Interfaces;
+using aMuse.Core.Utils;
 using System;
 using System.Diagnostics;
 using System.Windows;

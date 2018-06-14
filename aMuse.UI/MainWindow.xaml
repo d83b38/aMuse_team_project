@@ -54,18 +54,19 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto" />
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="106*" />
+                <ColumnDefinition Width="105*"/>
+                <ColumnDefinition Width="211*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
             <Slider  Cursor="Hand" Style="{StaticResource Horizontal_Slider}" Margin="20 15 40 0" Height="15" 
-                    Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3"  BorderThickness="0"
+                    Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="4"  BorderThickness="0"
                     Name="TrackBar" PreviewMouseLeftButtonDown="TrackBar_PreviewMouseLeftButtonDown"
                     PreviewMouseLeftButtonUp="TrackBar_PreviewMouseLeftButtonUp" IsEnabled="False"/>
-            <StackPanel Margin="15 10 0 0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" MaxWidth="250" MinWidth="100">
+            <StackPanel Margin="15 10 0 0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" MaxWidth="250" MinWidth="100" Width="120">
                 <TextBlock Name="textBlockTime" Text="00:00" FontSize="15" Foreground="#FFDCFAFA"/>
                 <TextBlock TextTrimming="WordEllipsis" Grid.Column="1" Grid.Row="0" x:Name="infoBoxTrackName" 
                            TextWrapping="Wrap" Text="Title" Height="23"  Width="130" FontSize="14" FontWeight="Bold" Foreground="#FFDCFAFA" >
@@ -80,44 +81,41 @@
                     </TextBlock.ToolTip>
                 </TextBlock>
             </StackPanel>
-            <Image Margin="0 0 0 0"  Height="130"  Width="130"  VerticalAlignment="Bottom"
-                Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"   
-                Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"  Source="Icons/music-record-small.png" x:Name="Thumbnail"/>
-            <StackPanel   Margin="70 0 0 0" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" 
-                          VerticalAlignment="Stretch" Grid.Column="1" 
-                            Grid.ColumnSpan="3" Width="auto"  >
-
-
-                <Button Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" HorizontalAlignment="Left" x:Name="StopButton" MinWidth="50" Width="auto" Height="35" HorizontalContentAlignment="Center"  
-                     Click="StopButton_Click" Margin="5 0 0 0">
+            <StackPanel Name="PlayingControls" Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
+                        HorizontalAlignment="Right" Grid.ColumnSpan="3" Height="100" VerticalAlignment="Bottom">
+                <Button Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" HorizontalAlignment="Left" x:Name="StopButton" MinWidth="50" Width="auto" Height="Auto" HorizontalContentAlignment="Center"  
+                    Click="StopButton_Click" Margin="0,34">
                     <Image  Source="Icons/Stop.png"  />
                 </Button>
-                <Button  Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" HorizontalAlignment="Left" x:Name="Previous" MinWidth="50"  Height="35" 
-                     Click="Previous_Click" Margin="5 0 0 0" HorizontalContentAlignment="Center"  >
+                <Button  Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" HorizontalAlignment="Left" x:Name="Previous" MinWidth="50"  Height="32" 
+                    Click="Previous_Click" HorizontalContentAlignment="Center"  >
                     <Image Source="Icons/Rewind_52px.png"/>
                 </Button>
-                <Button Cursor="Hand"  Style="{DynamicResource ResourceKey=FlatWithoutBorders}" HorizontalAlignment="Left" x:Name="PlayPauseButton" MinWidth="50" Width="auto" Height="45" HorizontalContentAlignment="Center"  
-                     Click="PlayPause_Click" Margin="5 0 0 0" Foreground="#00000000" BorderBrush="#00707070" Background="#00DDDDDD">
+                <Button Cursor="Hand"  Style="{DynamicResource ResourceKey=FlatWithoutBorders}" HorizontalAlignment="Left" x:Name="PlayPauseButton" MinWidth="50" Width="auto" Height="60" HorizontalContentAlignment="Center"  
+                    Click="PlayPause_Click" Margin="5 0 0 0" Foreground="#00000000" BorderBrush="#00707070" Background="#00DDDDDD">
                     <Image x:Name="imageInside" Source="Icons/Play_52px.png"  />
                 </Button>
 
                 <Button  Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" HorizontalAlignment="Left"  x:Name="Next" MinWidth="40" Width="40" Height="35" HorizontalContentAlignment="Center"
-                     Click="Next_Click" Margin="5 0 0 0"  >
-                    <Image Margin="3 0 0 0" Height="35" Source="Icons/Fast Forward_52px.png" />
+                    Click="Next_Click" Margin="5 0 0 0"  >
+                    <Image Margin="3 0 0 0" Height="32" Source="Icons/Fast Forward_52px.png" />
                 </Button>
-                <!--<Button HorizontalAlignment="Left"  x:Name="MuteButton" MinWidth="50" Width="auto" Height="30" HorizontalContentAlignment="Center"
-                     Click="Mute_Click" Margin="15 0 0 0"  >
-                    <Image Source="Icons/Mute_52px.png" />
-                </Button>-->
+            </StackPanel>
+
+            <Image Margin="0 0 0 0"  Height="130"  Width="130"  VerticalAlignment="Bottom"
+                Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"   
+                Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"  Source="Icons/music-record-small.png" x:Name="Thumbnail"/>
+            <StackPanel   Margin="0,0,40,0" Orientation="Horizontal" Grid.Row="1" 
+                          VerticalAlignment="Stretch" Grid.Column="4" HorizontalAlignment="Right" Width="146">
+
 
                 <Image Cursor="Hand" x:Name="volumeChanger"  MouseLeftButtonDown="VolumeChanger_MouseLeftButtonDown"  Margin="15 0 5 0" 
-                       Height="18" Width="18" Source="Icons/Speaker_52px.png" />
-                <!--<TextBlock HorizontalAlignment="Left"  Foreground="White" VerticalAlignment="Center" Margin="5" ><Run Text="Volume"/></TextBlock>-->
+                    Height="18" Width="18" Source="Icons/Speaker_52px.png" />
                 <Slider Cursor="Hand"  HorizontalAlignment="Left"  x:Name="volumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume" 
-                            Minimum="0" Maximum="100" Value="80" Width="70"
-                         Style="{StaticResource Horizontal_Slider}"/>
+                        Minimum="0" Maximum="100" Value="80" Width="70"
+                        Style="{StaticResource Horizontal_Slider}"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0 0 0 25">
-                    <TextBlock Name="textBlockDuration" Text="00:00" FontSize="15" Foreground="#FFDCFAFA" Margin="0 0 0 7"/>
+                    <TextBlock Name="textBlockDuration" Text="00:00" FontSize="15" Foreground="#FFDCFAFA" Margin="2 0 0 7"/>
                     <ToggleButton x:Name="addToFavs" Click ="AddToFavs_Click" Margin="5 0 0 0" Height="26" Width="26" Content="I'm " Foreground="Black">
                         <ToggleButton.Template>
                             <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -125,21 +123,17 @@
                                     <Image>
                                         <Image.Style>
                                             <Style>
-                                                <Setter Property="Image.Source" 
-                                Value="Icons/Heart_52px.png" />
+                                                <Setter Property="Image.Source" Value="Icons/Heart_52px.png" />
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsChecked, 
-                                    RelativeSource={RelativeSource AncestorType=
-                                    {x:Type ToggleButton}}}" Value="True">
-                                                        <Setter Property="Image.Source" 
-                                        Value="Icons/Heart Outline_52px.png" />
+                                                    <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                                                    Value="True">
+                                                        <Setter Property="Image.Source" Value="Icons/Heart Outline_52px.png" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Image.Style>
                                     </Image>
-                                    <ContentPresenter Content="{TemplateBinding Content}" 
-                     />
+                                    <ContentPresenter Content="{TemplateBinding Content}" />
                                 </StackPanel>
                             </ControlTemplate>
                         </ToggleButton.Template>

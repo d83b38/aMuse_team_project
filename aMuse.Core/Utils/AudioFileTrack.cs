@@ -6,6 +6,7 @@ using aMuse.Core.APIData;
 using TagLib;
 using System.Threading.Tasks;
 using aMuse.Core.Model;
+using System.Text;
 
 namespace aMuse.Core.Utils
 {
@@ -61,6 +62,10 @@ namespace aMuse.Core.Utils
             Duration = File.Properties.Duration;
 
             Album = File.Tag.Album;
+            if (Album != null) {
+                byte[] bytes = Encoding.GetEncoding("iso-8859-1").GetBytes(Album);
+                Album = Encoding.GetEncoding("windows-1251").GetString(bytes);
+            }
 
             // try getting artist and title from file tags
             bool hasTags = true;
