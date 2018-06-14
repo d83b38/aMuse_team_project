@@ -10,8 +10,10 @@
 
     <Grid Background="#FF363636" >
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition />
+            <ColumnDefinition Width="40"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition  Height="auto"/>
@@ -19,11 +21,25 @@
             <RowDefinition />
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Margin="0 20 0 0" MaxWidth="400" Name="Name" Text="" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FFDCFAFA" FontSize="20" FontWeight="Bold"/>
-        <TextBlock Margin="10 10 0 0" MaxWidth="400" Text="Biography :" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFDCFAFA" FontSize="20" FontWeight="Bold"/>
-        <TextBlock  Margin="10 10 0 0" Name="Description" TextWrapping="Wrap"  MaxWidth="400" Text="" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFDCFAFA" FontSize="20" />
-        <Image Margin="20 40 0 0" VerticalAlignment="Top" Name="ArtistImage" Grid.RowSpan="3" Source="Icons/music-record-big.png" Height="250" Width="200" Grid.Column="0" Grid.Row="0"/>
-        <Button Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" Width="50" Height="40" Click="Button_ClickBackToMainPage" Grid.Row="0"   Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top">
+        <StackPanel Grid.RowSpan="4" Orientation="Vertical" Grid.Column="1" Grid.Row="0" >
+            <Image  Name="ArtistImage"  Source="Icons/music-record-big.png" Height="250" Width="200" />
+            <Button   Style="{DynamicResource ResourceKey=ClassicWithBorders}" Margin="0 0 0 0"  Height="30"  Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" >
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Margin="0 0 0 0" HorizontalAlignment="Left" Source="Icons/Web.png"/>
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin=" 8 0 8 0"  Text="See more" Foreground="#FFDCFAFA" FontSize="16" FontWeight="Bold"/>
+                </Grid>
+            </Button>
+        </StackPanel>
+        <TextBlock Margin="20 40 0 0"  Name="Name" Text="" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFDCFAFA" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Margin="20 10 0 0"  Text="Biography :" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFDCFAFA" FontSize="20" FontWeight="Bold"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="20 10 15 50"  Grid.Column="2" Grid.Row="2" Grid.RowSpan="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <TextBlock   Name="Description" TextWrapping="Wrap"   Text="" Foreground="#FFDCFAFA" FontSize="20" />
+        </ScrollViewer>
+        <Button Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" Width="50" Height="40" Click="Button_ClickToBrowser" Grid.Row="0"   Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top">
             <Image x:Name="imageInside" Source="Icons/Back.png"  />
         </Button>
     </Grid>

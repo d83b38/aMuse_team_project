@@ -29,6 +29,7 @@ namespace aMuse.UI
             {
                 Playlist list = (Playlist)(listPlaylists.SelectedItem);
                 PlaylistLibrary.CurrentPlaylist = list;
+                MainWindow.GetInstance().SetFavsState();
                 MainWindow.GetInstance().MainFrame.Content = PlaylistPage.GetInstance();
             }
         }
