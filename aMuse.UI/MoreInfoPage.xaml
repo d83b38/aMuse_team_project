@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:aMuse.UI"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="700"
-      Title="MoreInfoPage" Loaded="Page_Loaded">
+      Title="Artist information">
 
     <Grid Background="#FF363636" >
         <Grid.ColumnDefinitions>
@@ -19,9 +19,9 @@
             <RowDefinition />
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Margin="0 20 0 0" MaxWidth="400" Name="Name" Text="Name" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FFDCFAFA" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Margin="0 20 0 0" MaxWidth="400" Name="Name" Text="" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FFDCFAFA" FontSize="20" FontWeight="Bold"/>
         <TextBlock Margin="10 10 0 0" MaxWidth="400" Text="Biography :" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFDCFAFA" FontSize="20" FontWeight="Bold"/>
-        <TextBlock  Margin="10 10 0 0" Name="Description" TextWrapping="Wrap"  MaxWidth="400" Text="infa4237854357345345873457347534534845743573457345834587" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFDCFAFA" FontSize="20" />
+        <TextBlock  Margin="10 10 0 0" Name="Description" TextWrapping="Wrap"  MaxWidth="400" Text="" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="#FFDCFAFA" FontSize="20" />
         <Image Margin="20 40 0 0" VerticalAlignment="Top" Name="ArtistImage" Grid.RowSpan="3" Source="Icons/music-record-big.png" Height="250" Width="200" Grid.Column="0" Grid.Row="0"/>
         <Button Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" Width="50" Height="40" Click="Button_ClickBackToMainPage" Grid.Row="0"   Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top">
             <Image x:Name="imageInside" Source="Icons/Back.png"  />

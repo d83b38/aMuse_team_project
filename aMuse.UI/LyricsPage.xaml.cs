@@ -5,7 +5,8 @@ namespace aMuse.UI
 {
     public partial class LyricsPage : Page
     {
-        private static LyricsPage instance;
+        private static LyricsPage instance = new LyricsPage();
+
         private LyricsPage()
         {
             InitializeComponent();
@@ -15,14 +16,14 @@ namespace aMuse.UI
            liricsBox.Text = lyrics;*/
         }
 
-        public static LyricsPage GetInstance(string lyrics)
+        public static LyricsPage GetInstance()
         {
-            if (instance == null)
-            {
-                instance = new LyricsPage();
-            }
-            instance.lyricsBox.Text = lyrics;
             return instance;
+        }
+
+        public static void Update(string lyrics)
+        {
+            instance.lyricsBox.Text = lyrics;
         }
 
         private void Button_ClickBack(object sender, RoutedEventArgs e)

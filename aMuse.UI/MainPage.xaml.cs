@@ -6,7 +6,7 @@ namespace aMuse.UI
 {
     public partial class MainPage : Page
     {
-        private static MainPage instance;
+        private static MainPage instance = new MainPage();
 
         private AudioFileTrack _currentAudio;
         string Lyrics { get; set; }
@@ -16,47 +16,50 @@ namespace aMuse.UI
             InitializeComponent();
         }
 
-        public static MainPage GetInstance(AudioFileTrack audio)
+        public static MainPage GetInstance()
         {
-            if (instance == null)
-            {
-                instance = new MainPage();
-            }
-            instance._currentAudio = audio;
-
             return instance;
         }
 
         private void Button_ClickToLyrics(object sender, RoutedEventArgs e)
         {
-            if (_currentAudio != null && Lyrics != null && !string.IsNullOrWhiteSpace(Lyrics))
-            {
-                MainWindow.GetInstance().MainFrame.Content = LyricsPage.GetInstance(Lyrics);
-            }
-            else
-            {
-                MainWindow.GetInstance().MainFrame.Content = LyricsPage.GetInstance("Couldn't find lyrics for this song.");
-            }
+            MainWindow.GetInstance().MainFrame.Content = LyricsPage.GetInstance();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        public async void Update(AudioFileTrack audio)
         {
-            try {
+            _currentAudio = audio;
+
+            try
+            {
                 if (_currentAudio != null && _currentAudio.TrackData != null)
                     AlbumCover.Source = await _currentAudio.GetAlbumCoverTaskAsync(_currentAudio.TrackData.AlbumCoverUrl);
-                else {
+                else
+                {
                     return;
                 }
                 Lyrics = await _currentAudio.GetLyricsTaskAsync(_currentAudio.TrackData.LyricsUrl);
             }
-            catch (System.Exception ex) {
-               MessageBox.Show("Something went wrong.\nCheck your internet\n" + ex.Message);
+            catch (System.Exception ex)
+            {
+                //MessageBox.Show("Something went wrong.\nCheck your internet\n" + ex.Message);
             }
+
+            if (_currentAudio != null && Lyrics != null && !string.IsNullOrWhiteSpace(Lyrics))
+            {
+                LyricsPage.Update(Lyrics);
+            }
+            else
+            {
+                LyricsPage.Update("Couldn't find lyrics.");
+            }
+
+            MoreInfoPage.GetInstance().Update(_currentAudio);
         }
 
         private void Button_ClickToInfo(object sender, RoutedEventArgs e)
         {
-            MainWindow.GetInstance().MainFrame.Content = MoreInfoPage.GetInstance(_currentAudio);
+            MainWindow.GetInstance().MainFrame.Content = MoreInfoPage.GetInstance();
         }
     }
 }

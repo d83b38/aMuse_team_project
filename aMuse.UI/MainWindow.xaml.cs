@@ -22,6 +22,8 @@ namespace aMuse.UI
         private AudioFileTrack _currentAudio;
         private ObservableList<AudioFileTrack> _tracks;
 
+        private bool geniusInfoAvailable = false;
+
         private MainWindow()
         {
             InitializeComponent();
@@ -98,6 +100,7 @@ namespace aMuse.UI
             TrackBar.IsEnabled = true;
             _currentAudio.GetData();
             Player.MediaPlayer.Play();
+
             if (PlaylistLibrary.CurrentPlaylist != null)
             {
                 if (PlaylistLibrary.CurrentPlaylist.Tracks.Contains(audio))
@@ -109,27 +112,43 @@ namespace aMuse.UI
                     addToFavs.IsChecked = false;
                 }
             }
+
             StartTimers();
             SettingMaximum();
-            Title = "Getting useful data...";
+            //Title = "Getting useful data...";
 
             try
             {
                 var TrackData = await audio.GetTrackTaskAsync();
-                if(TrackData != null) {
+
+                if(TrackData != null)
+                {
+                    geniusInfoAvailable = true;
                     infoBoxArtist.Text = TrackData.Artist.Name;
                     infoBoxTrackName.Text = TrackData.Title;
                     Thumbnail.Source = await _currentAudio.GetImageTaskAsync(TrackData.AlbumCoverThumbnailUrl);
+                    MainPage.GetInstance().Update(_currentAudio);
                 }
-                else {
-                    Title = "No Info Found";
-                    return;
+                else
+                {
+                    geniusInfoAvailable = false;
+                    if (_tracks == Library.Files)
+                    {
+                        MainFrame.Content = MusicLibrary.GetInstance();
+                    }
+                    else
+                    {
+                        MainFrame.Content = PlaylistPage.GetInstance();
+                    }
+
+                    infoBoxArtist.Text = _currentAudio.Artist;
+                    infoBoxTrackName.Text = _currentAudio.Track;
+                    //Thumbnail.Source = new BitmapImage(new Uri("Icons/music-record-small.png"));
                 }
             }
             catch (Exception) {
-                System.Windows.MessageBox.Show("Something went wrong.\nCheck your internet.");
+                //System.Windows.MessageBox.Show("Something went wrong.\nCheck your internet.");
             }
-            Title = "aMuse";
         }
 
         private void PlayPause_Click(object sender, RoutedEventArgs e)
@@ -154,7 +173,10 @@ namespace aMuse.UI
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MainFrame.Content = MainPage.GetInstance(_currentAudio);
+            if (geniusInfoAvailable)
+            {
+                MainFrame.Content = MainPage.GetInstance();
+            }
         }
 
         /// <summary>

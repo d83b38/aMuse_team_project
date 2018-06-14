@@ -12,7 +12,7 @@ namespace aMuse.UI
 {
     public partial class MoreInfoPage : Page
     {
-        private static MoreInfoPage instance;
+        private static MoreInfoPage instance = new MoreInfoPage();
 
         private AudioFileTrack _currentAudio;
 
@@ -21,14 +21,8 @@ namespace aMuse.UI
             InitializeComponent();
         }
 
-        public static MoreInfoPage GetInstance(AudioFileTrack audio)
+        public static MoreInfoPage GetInstance()
         {
-            if (instance == null)
-            {
-                instance = new MoreInfoPage();
-            }
-            instance._currentAudio = audio;
-
             return instance;
         }
 
@@ -37,8 +31,12 @@ namespace aMuse.UI
             MainWindow.GetInstance().MainFrame.GoBack();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e) {
-            if (_currentAudio != null && _currentAudio.TrackData != null) {
+        public async void Update(AudioFileTrack audio)
+        {
+            _currentAudio = audio;
+
+            if (_currentAudio != null && _currentAudio.TrackData != null)
+            {
                 string Id = _currentAudio.TrackData.Artist.Id;
                 _currentAudio.TrackData.Artist = await _currentAudio.GetArtistAsync(Id);
                 Description.Text = _currentAudio.TrackData.Artist.Description;

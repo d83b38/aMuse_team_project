@@ -17,8 +17,6 @@ namespace aMuse.Core.APIData {
     internal class GeniusData : ITrackDataParsing {
         readonly string AccessToken = "ht8qQUrmTslR1YPPGMM_d-EnKOx9Byf4IYtsg8hssPLP8Xb2b5ck7K0hRKIKmP4C";
 
-        public bool IsParsingSuccessful { get; private set; }
-
         private string Artist { get; set; }
         private string Track { get; set; }
         private Track TrackData { get; set; }
