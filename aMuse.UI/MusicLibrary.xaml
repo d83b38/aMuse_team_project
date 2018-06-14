@@ -19,13 +19,14 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"  SharedSizeGroup="Column1"/>
-                                <ColumnDefinition Width="Auto"  SharedSizeGroup="Column2"/>
-                                <ColumnDefinition Width="Auto"  SharedSizeGroup="Column3"/>
+                                <ColumnDefinition Width="1*"  />
+                                <ColumnDefinition Width="1*"  SharedSizeGroup="Column2"/>
+                                <ColumnDefinition Width="1*" SharedSizeGroup="Column3" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock MaxWidth="350"  TextTrimming="WordEllipsis" Margin="0 0 10 0" Grid.Column="0" Text="{Binding Track}" FontSize="20" Foreground="#FFDCFAFA"/>
-                            <TextBlock MaxWidth="400" Margin="0 0 10 0" Grid.Column="2" Text="Album must be here" FontSize="20" Foreground="#FFDCFAFA"/>
-                            <TextBlock  MaxWidth="400" Margin="0 0 10 0" Grid.Column="1" Text="{Binding Artist}" FontSize="20" Foreground="#FFDCFAFA"/>
+                            <TextBlock  TextTrimming="WordEllipsis" Margin="0 0 10 0" Grid.Column="0" Text="{Binding Track}" FontSize="20" Foreground="#FFDCFAFA"/>
+                            <TextBlock   Margin="0 0 40 0" Grid.Column="1" Text="{Binding Artist}" FontSize="20" Foreground="#FFDCFAFA"/>
+                            <TextBlock  Margin="0 0 10 0" Grid.Column="2" Text="Album must be here" FontSize="20" Foreground="#FFDCFAFA"/>
+                         
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

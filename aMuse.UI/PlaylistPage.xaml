@@ -15,16 +15,16 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"  SharedSizeGroup="Column1"/>
-                                <ColumnDefinition Width="Auto"  SharedSizeGroup="Column2"/>
-                                <ColumnDefinition Width="Auto"  SharedSizeGroup="Column3"/>
-                                <ColumnDefinition   />
+                                <ColumnDefinition Width="1*"  SharedSizeGroup="Column1"/>
+                                <ColumnDefinition Width="1*"  SharedSizeGroup="Column2"/>
+                                <ColumnDefinition Width="1*"  />
+                                <ColumnDefinition Width="1*"  SharedSizeGroup="Column4" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock MaxWidth="350"  TextTrimming="WordEllipsis" Margin="0 0 10 0" Grid.Column="0" Text="{Binding Track}" FontSize="20" Foreground="#FFDCFAFA"/>
-                            <TextBlock MaxWidth="400" Margin="0 0 10 0" Grid.Column="2" Text="Album must be here" FontSize="20" Foreground="#FFDCFAFA"/>
-                            <TextBlock  MaxWidth="400" Margin="0 0 10 0" Grid.Column="1" Text="{Binding Artist}" FontSize="20" Foreground="#FFDCFAFA"/>
-                            <Image Margin="10 0 0 0"  Height="20" VerticalAlignment="Center"  Width="20" 
-                                       HorizontalAlignment="Right"  MouseLeftButtonDown="DeleteTrackFromPlaylist" Grid.Column="3" Source="Icons/Cross_52px.png" x:Name="deleteIcon"/>
+                            <TextBlock   TextTrimming="WordEllipsis" Margin="0 0 20 0" Grid.Column="0" Text="{Binding Track}" FontSize="20" Foreground="#FFDCFAFA"/>
+                            <TextBlock  Margin="0 0 20 0" Grid.Column="1" Text="{Binding Artist}" FontSize="20" Foreground="#FFDCFAFA"/>
+                            <TextBlock  Margin="0 0 20 0" Grid.Column="2" Text="Album must be here" FontSize="20" Foreground="#FFDCFAFA"/>
+                            <Image Margin="0 0 0 0"  Height="20" VerticalAlignment="Center"  Width="20" 
+                                         MouseLeftButtonDown="DeleteTrackFromPlaylist" Grid.Column="3" Source="Icons/Cross_52px.png" x:Name="deleteIcon"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
