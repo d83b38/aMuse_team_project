@@ -143,10 +143,11 @@ namespace aMuse.UI
 
                     infoBoxArtist.Text = _currentAudio.Artist;
                     infoBoxTrackName.Text = _currentAudio.Track;
-                    //Thumbnail.Source = new BitmapImage(new Uri("Icons/music-record-small.png"));
+                    Thumbnail.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/music-record-small.png"));
                 }
             }
             catch (Exception) {
+                return;
                 //System.Windows.MessageBox.Show("Something went wrong.\nCheck your internet.");
             }
         }
@@ -296,8 +297,7 @@ namespace aMuse.UI
             //}
             if (!Player.MediaPlayer.IsPlaying &&
                 (Player.MediaPlayer.Time / 1000) >= ((int)_currentAudio.Duration.TotalSeconds - 2)) {
-                Player.MediaPlayer.Stop();
-                imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
+                Next_Click(sender, e as RoutedEventArgs);
             }
             CommandManager.InvalidateRequerySuggested();
         }
