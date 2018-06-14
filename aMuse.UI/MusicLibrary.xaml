@@ -13,25 +13,25 @@
             <RowDefinition/>
             <RowDefinition  Height="auto"/>
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll = "True" Margin="0 0 0 0" Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
-            <ListBox   Margin="0 0 9 -1" x:Name="ListTracks" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"  />
-                                <ColumnDefinition Width="1*"  SharedSizeGroup="Column2"/>
-                                <ColumnDefinition Width="1*" SharedSizeGroup="Column3" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock  TextTrimming="WordEllipsis" Margin="0 0 10 0" Grid.Column="0" Text="{Binding Track}" FontSize="20" Foreground="#FFDCFAFA"/>
-                            <TextBlock   Margin="0 0 40 0" Grid.Column="1" Text="{Binding Artist}" FontSize="20" Foreground="#FFDCFAFA"/>
-                            <TextBlock  Margin="0 0 10 0" Grid.Column="2" Text="{Binding Album}" FontSize="20" Foreground="#FFDCFAFA"/>
-                         
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ScrollViewer>
+        <ListBox  Grid.Row="0"  Margin="0 0 9 -1" x:Name="ListTracks" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"  SharedSizeGroup="Column1" />
+                            <ColumnDefinition Width="1*" SharedSizeGroup="Column2" />
+                            <ColumnDefinition Width="1*"  SharedSizeGroup="Column3"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  TextTrimming="WordEllipsis" Margin="0 0 10 0" Grid.Column="0" Text="{Binding Track}" FontSize="20" Foreground="#FFDCFAFA"/>
+                        <TextBlock   Margin="0 0 40 0" Grid.Column="1" Text="{Binding Artist}" FontSize="20" Foreground="#FFDCFAFA"/>
+                        <TextBlock  Margin="0 0 10 0" Grid.Column="2" Text="{Binding Album}" FontSize="20" Foreground="#FFDCFAFA"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <!--<ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll = "True" Margin="0 0 0 0" Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
+            
+        </ScrollViewer>-->
         <Button Style="{DynamicResource ResourceKey=ClassicWithBorders}" Grid.Row="1" HorizontalAlignment="Stretch" Click="OpenNewDirectory" Margin="0 0 0 2"  Height="30" >
             <Grid>
                 <Grid.ColumnDefinitions>

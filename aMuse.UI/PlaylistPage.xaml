@@ -9,26 +9,24 @@
       Title="PlaylistPage" Background="#FF363636">
 
     <Grid  Background="#FF363636">
-        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll = "True" Margin="0 0 0 0" Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
-            <ListBox   Margin="0 0 9 -1" x:Name="ListTracks" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
+            <ListBox  Grid.Row="0"  Margin="0 0 0 0"  x:Name="ListTracks" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"  SharedSizeGroup="Column1"/>
                                 <ColumnDefinition Width="1*"  SharedSizeGroup="Column2"/>
-                                <ColumnDefinition Width="1*"  />
-                                <ColumnDefinition Width="1*"  SharedSizeGroup="Column4" />
+                                <ColumnDefinition Width="1*"  SharedSizeGroup="Column3"/>
+                                <ColumnDefinition Width="0.25*"   />
                             </Grid.ColumnDefinitions>
                             <TextBlock   TextTrimming="WordEllipsis" Margin="0 0 20 0" Grid.Column="0" Text="{Binding Track}" FontSize="20" Foreground="#FFDCFAFA"/>
                             <TextBlock  Margin="0 0 20 0" Grid.Column="1" Text="{Binding Artist}" FontSize="20" Foreground="#FFDCFAFA"/>
                             <TextBlock  Margin="0 0 20 0" Grid.Column="2" Text="{Binding Album}" FontSize="20" Foreground="#FFDCFAFA"/>
-                            <Image Margin="0 0 0 0"  Height="20" VerticalAlignment="Center"  Width="20" 
+                            <Image HorizontalAlignment="Right" Margin="0 0 0 0"  Height="20" VerticalAlignment="Center"  Width="20" 
                                          MouseLeftButtonDown="DeleteTrackFromPlaylist" Grid.Column="3" Source="Icons/Cross_52px.png" x:Name="deleteIcon"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </ScrollViewer>
     </Grid>
 </Page>
