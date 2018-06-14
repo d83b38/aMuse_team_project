@@ -101,17 +101,7 @@ namespace aMuse.UI
             _currentAudio.GetData();
             Player.MediaPlayer.Play();
 
-            if (PlaylistLibrary.CurrentPlaylist != null)
-            {
-                if (PlaylistLibrary.CurrentPlaylist.Tracks.Contains(audio))
-                {
-                    addToFavs.IsChecked = true;
-                }
-                else
-                {
-                    addToFavs.IsChecked = false;
-                }
-            }
+            SetFavsState();
 
             StartTimers();
             SettingMaximum();
@@ -148,6 +138,14 @@ namespace aMuse.UI
             }
             catch (Exception) {
                 //System.Windows.MessageBox.Show("Something went wrong.\nCheck your internet.");
+            }
+        }
+
+        public void SetFavsState()
+        {
+            if (_currentAudio != null && PlaylistLibrary.CurrentPlaylist != null)
+            {
+                addToFavs.IsChecked = PlaylistLibrary.CurrentPlaylist.Tracks.Contains(_currentAudio);
             }
         }
 
@@ -392,12 +390,17 @@ namespace aMuse.UI
 
         private void AddToFavs_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentAudio == null || PlaylistLibrary.CurrentPlaylist == null)
+            if (_currentAudio == null)
             {
                 addToFavs.IsChecked = false;
             }
-            else
+            else if (PlaylistLibrary.CurrentPlaylist == null)
             {
+                addToFavs.IsChecked = false;
+                MainFrame.Content = PlaylistsPage.GetInstance();
+            }
+            else
+            { 
                 if (addToFavs.IsChecked == false)
                 {
                     PlaylistLibrary.CurrentPlaylist.RemoveTrack(_currentAudio);
