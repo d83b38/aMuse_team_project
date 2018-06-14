@@ -41,7 +41,6 @@
                         <ColumnDefinition Width="40"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-
                     <Image Grid.Column="0" Margin="0 0 0 0" HorizontalAlignment="Left" Source="Icons/Playlist_96px.png"/>
                     <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin=" 8 0 8 0"  Text="Playlists" Foreground="#FFDCFAFA" FontSize="16" FontWeight="Bold"/>
                 </Grid>
@@ -83,7 +82,6 @@
             </StackPanel>
             <StackPanel Name="PlayingControls" Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
                         HorizontalAlignment="Center"  Height="100" VerticalAlignment="Bottom">
-
                 <Button  Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}"  x:Name="Previous" MinWidth="50"  Height="40" 
                     Click="Previous_Click" Margin="0 0 0 0">
                     <Image Source="Icons/Prev.png"/>

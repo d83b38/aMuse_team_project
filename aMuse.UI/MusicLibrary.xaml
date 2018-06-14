@@ -29,9 +29,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <!--<ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll = "True" Margin="0 0 0 0" Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
-            
-        </ScrollViewer>-->
         <Button Style="{DynamicResource ResourceKey=ClassicWithBorders}" Grid.Row="1" HorizontalAlignment="Stretch" Click="OpenNewDirectory" Margin="0 0 0 2"  Height="30" >
             <Grid>
                 <Grid.ColumnDefinitions>
