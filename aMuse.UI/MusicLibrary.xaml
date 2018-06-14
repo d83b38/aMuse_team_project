@@ -13,7 +13,7 @@
             <RowDefinition/>
             <RowDefinition  Height="auto"/>
         </Grid.RowDefinitions>
-        <ListBox  Grid.Row="0"  Margin="0 0 9 -1" x:Name="ListTracks" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
+        <ListBox  Grid.Row="0"   x:Name="ListTracks" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

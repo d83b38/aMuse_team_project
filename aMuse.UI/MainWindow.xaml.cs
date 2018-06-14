@@ -376,13 +376,6 @@ namespace aMuse.UI
             }
         }
 
-        private void StopButton_Click(object sender, RoutedEventArgs e) {
-            StopTimers();
-            Player.MediaPlayer.Stop();
-            textBlockTime.Text = "00:00";
-            TrackBar.Value = 0;
-            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
-        }
 
         private void Button_ClickToPlaylists(object sender, RoutedEventArgs e)
         {
@@ -411,6 +404,11 @@ namespace aMuse.UI
                     PlaylistLibrary.CurrentPlaylist.AddTrack(_currentAudio);
                 }
             }
+        }
+
+        private void toggle1_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
