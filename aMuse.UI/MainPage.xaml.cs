@@ -12,30 +12,41 @@ namespace aMuse.UI
     /// </summary>
     public partial class MainPage : Page
     {
-        AudioFileTrack _currentAudio;
-        MainWindow _mainWindow;
-        string Lyrics { get; set; }
-        public MainPage(MainWindow mainWindow, AudioFileTrack currentAudio)
-        {
-            _currentAudio = currentAudio;
+        private static MainPage instance;
 
-            _mainWindow = mainWindow;
+        private AudioFileTrack _currentAudio;
+        string Lyrics { get; set; }
+
+        private MainPage()
+        {
             InitializeComponent();
         }
-        
+
+        public static MainPage GetInstance(AudioFileTrack audio)
+        {
+            if (instance == null)
+            {
+                instance = new MainPage();
+            }
+            instance._currentAudio = audio;
+
+            return instance;
+        }
+
         private void Button_ClickToLyrics(object sender, RoutedEventArgs e)
         {
             if (_currentAudio != null && Lyrics != null && !string.IsNullOrWhiteSpace(Lyrics))
             {
-                _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, Lyrics);
+                MainWindow.GetInstance().MainFrame.Content = LyricsPage.GetInstance(Lyrics);
             }
             else
             {
-                _mainWindow.MainFrame.Content = new LyricsPage(_mainWindow, "Couldn't find lyrics for this song.");
+                MainWindow.GetInstance().MainFrame.Content = LyricsPage.GetInstance("Couldn't find lyrics for this song.");
             }
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e) {
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
             try {
                 if (_currentAudio != null && _currentAudio.TrackData != null)
                     AlbumCover.Source = await _currentAudio.GetAlbumCoverTaskAsync(_currentAudio.TrackData.AlbumCoverUrl);
@@ -51,7 +62,7 @@ namespace aMuse.UI
 
         private void Button_ClickToInfo(object sender, RoutedEventArgs e)
         {
-            _mainWindow.MainFrame.Content = new MoreInfoPage(_mainWindow, _currentAudio);
+            MainWindow.GetInstance().MainFrame.Content = MoreInfoPage.GetInstance();
         }
     }
 }

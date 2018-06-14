@@ -5,9 +5,6 @@ using System.Windows.Input;
 
 namespace aMuse.UI
 {
-    /// <summary>
-    /// Логика взаимодействия для PlaylistPage.xaml
-    /// </summary>
     public partial class PlaylistPage : Page
     {
         private static PlaylistPage instance;
@@ -25,11 +22,6 @@ namespace aMuse.UI
             }
             instance.ListTracks.ItemsSource = PlaylistLibrary.CurrentPlaylist.Tracks;
             return instance;
-        }
-
-        private void ClickDeleteFromFavorites(object sender, MouseButtonEventArgs e)
-        {
-            
         }
 
         private void ListTracks_MouseDoubleClick(object sender, MouseButtonEventArgs e)

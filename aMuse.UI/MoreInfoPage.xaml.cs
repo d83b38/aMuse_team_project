@@ -7,33 +7,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace aMuse.UI
 {
-    /// <summary>
-    /// Логика взаимодействия для MoreInfoPage.xaml
-    /// </summary>
     public partial class MoreInfoPage : Page
     {
-        MainWindow _mainWindow;
-        AudioFileTrack _currentAudio;
-        public MoreInfoPage(MainWindow mainWindow, AudioFileTrack currentAudio)
+        private static MoreInfoPage instance;
+
+        private MoreInfoPage()
         {
-            _currentAudio = currentAudio;
-            _mainWindow = mainWindow;
             InitializeComponent();
+        }
+
+        public static MoreInfoPage GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new MoreInfoPage();
+            }
+
+            return instance;
         }
 
         private void Button_ClickBackToMainPage(object sender, RoutedEventArgs e)
         {
-            _mainWindow.MainFrame.GoBack();
+            MainWindow.GetInstance().MainFrame.GoBack();
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e) {

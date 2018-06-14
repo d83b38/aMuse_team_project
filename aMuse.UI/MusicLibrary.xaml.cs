@@ -5,9 +5,6 @@ using System.Windows.Forms;
 
 namespace aMuse.UI
 {
-    /// <summary>
-    /// Логика взаимодействия для MusicLibrary.xaml
-    /// </summary>
     public partial class MusicLibrary : Page
     {
         private static MusicLibrary instance;
