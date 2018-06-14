@@ -22,8 +22,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Grid.RowSpan="4" Orientation="Vertical" Grid.Column="1" Grid.Row="0" >
-            <Image  Name="ArtistImage"  Source="Icons/music-record-big.png" Height="250" Width="200" />
-            <Button   Style="{DynamicResource ResourceKey=ClassicWithBorders}" Margin="0 0 0 0"  Height="30"  Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" >
+            <Image  Name="ArtistImage"  Source="Icons/music-record-big.png" Height="250" Width="200" HorizontalAlignment="Left"/>
+            <Button   Style="{DynamicResource ResourceKey=ClassicWithBorders}" Click ="Button_ClickToBrowser" Margin="0 0 0 0"  Height="30"  Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" >
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -39,7 +39,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="20 10 15 50"  Grid.Column="2" Grid.Row="2" Grid.RowSpan="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
             <TextBlock   Name="Description" TextWrapping="Wrap"   Text="" Foreground="#FFDCFAFA" FontSize="20" />
         </ScrollViewer>
-        <Button Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" Width="50" Height="40" Click="Button_ClickToBrowser" Grid.Row="0"   Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top">
+        <Button Cursor="Hand" Style="{DynamicResource ResourceKey=FlatWithoutBorders}" Width="50" Height="40" Click="Button_ClickBackToMainPage" Grid.Row="0"   Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top">
             <Image x:Name="imageInside" Source="Icons/Back.png"  />
         </Button>
     </Grid>

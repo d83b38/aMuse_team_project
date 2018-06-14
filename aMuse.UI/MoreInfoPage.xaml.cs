@@ -1,12 +1,9 @@
-﻿using aMuse.Core.Interfaces;
-using aMuse.Core.Utils;
+﻿using aMuse.Core.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace aMuse.UI
 {
@@ -42,7 +39,14 @@ namespace aMuse.UI
                 Description.Text = _currentAudio.TrackData.Artist.Description;
                 Name.Text = _currentAudio.Artist;
                 var imageUrl = _currentAudio.TrackData.Artist.ImageUrl;
-                ArtistImage.Source = await _currentAudio.GetImageTaskAsync(imageUrl);
+                try
+                {
+                    ArtistImage.Source = await _currentAudio.GetImageTaskAsync(imageUrl);
+                }
+                catch (Exception)
+                {
+                    ArtistImage.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/music-record-big.png"));
+                }
             }
             else
                 return;
@@ -50,7 +54,7 @@ namespace aMuse.UI
 
         private void Button_ClickToBrowser(object sender, RoutedEventArgs e)
         {
-
+            Process.Start(_currentAudio.TrackData.Artist.GenuisPageUrl);
         }
     }
 }

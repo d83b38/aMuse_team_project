@@ -13,25 +13,22 @@
             <RowDefinition/>
             <RowDefinition  Height="auto"/>
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" Margin="0 0 0 0" VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" Template="{StaticResource ScrollViewerControlTemplate}"   FontSize="16" FontWeight="Bold" >
-            <ListBox  Margin="0 0 7 -1" x:Name="listPlaylists" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"  SharedSizeGroup="Column1"/>
-                                <ColumnDefinition  />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock TextTrimming="WordEllipsis"  HorizontalAlignment="Left"  Margin="0 0 15 0" Grid.Column="0" VerticalAlignment="Center" 
-                                   FontSize="20" MaxWidth="600" Text="{Binding Name}"  Foreground="#FFDCFAFA"/>
-                            <Image Margin="0 0 0 0"  Height="20" VerticalAlignment="Center"  Width="20" 
-                                       HorizontalAlignment="Right"  MouseLeftButtonDown="DeletePlaylist" Grid.Column="1" Source="Icons/Cross_52px.png" x:Name="deleteIcon"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ScrollViewer>
-
+        <ListBox Grid.Row="0" x:Name="listPlaylists" MouseDoubleClick="ListTracks_MouseDoubleClick"  Grid.IsSharedSizeScope="True" FontWeight="Normal">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"  SharedSizeGroup="Column1"/>
+                            <ColumnDefinition  />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock TextTrimming="WordEllipsis"  HorizontalAlignment="Left"  Margin="0 0 15 0" Grid.Column="0" VerticalAlignment="Center" 
+                               FontSize="20" MaxWidth="600" Text="{Binding Name}"  Foreground="#FFDCFAFA"/>
+                        <Image Margin="0 0 0 0"  Height="20" VerticalAlignment="Center"  Width="20" 
+                                   HorizontalAlignment="Right"  MouseLeftButtonDown="DeletePlaylist" Grid.Column="1" Source="Icons/Cross_52px.png" x:Name="deleteIcon"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Button Style="{DynamicResource ResourceKey=ClassicWithBorders}" Grid.Row="1" HorizontalAlignment="Stretch" Click="AddNewPlaylist" Margin="0 0 0 2"  Height="30" >
             <Grid >
                 <Grid.ColumnDefinitions>
