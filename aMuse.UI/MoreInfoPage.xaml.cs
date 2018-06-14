@@ -47,5 +47,10 @@ namespace aMuse.UI
             else
                 return;
         }
+
+        private void Button_ClickToBrowser(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
