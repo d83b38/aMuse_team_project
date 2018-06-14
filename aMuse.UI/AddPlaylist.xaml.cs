@@ -19,12 +19,12 @@ namespace aMuse.UI
                 Core.Library.PlaylistLibrary.AddList(this.textBoxName.Text);
             }
 
-            this.Close();
+            Close();
         }
 
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void Window_Closed(object sender, System.EventArgs e)

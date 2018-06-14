@@ -22,7 +22,6 @@ namespace aMuse.Core.Utils
                 IAudio audio = new AudioFileTrack(path);
                 _audios.Add(path, audio);
             }
-
             return _audios[path];
         }
     }

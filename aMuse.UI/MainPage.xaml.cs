@@ -41,9 +41,9 @@ namespace aMuse.UI
                 }
                 Lyrics = await _currentAudio.GetLyricsTaskAsync(_currentAudio.TrackData.LyricsUrl);
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
-                //MessageBox.Show("Something went wrong.\nCheck your internet\n" + ex.Message);
+                return;
             }
 
             if (_currentAudio != null && Lyrics != null && !string.IsNullOrWhiteSpace(Lyrics))

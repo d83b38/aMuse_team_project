@@ -76,7 +76,6 @@ namespace aMuse.UI
         {
             SystemState.Deserialize();
             Library.Update(SystemState.Instance.LibraryPath);
-
             PlaylistLibrary.Deserialize();
         }
 
@@ -100,13 +99,9 @@ namespace aMuse.UI
             TrackBar.IsEnabled = true;
             _currentAudio.GetData();
             Player.MediaPlayer.Play();
-
             SetFavsState();
-
             StartTimers();
             SettingMaximum();
-            //Title = "Getting useful data...";
-
             try
             {
                 var TrackData = await audio.GetTrackTaskAsync();
@@ -138,7 +133,6 @@ namespace aMuse.UI
             }
             catch (Exception) {
                 return;
-                //System.Windows.MessageBox.Show("Something went wrong.\nCheck your internet.");
             }
         }
 
@@ -257,7 +251,9 @@ namespace aMuse.UI
             trackTimeTimer.Tick += TrackTimeTimer_Tick;
             trackTimeTimer.Interval = new TimeSpan(0, 0, 1);
         }
-
+        /// <summary>
+        /// Displays correct time/Drives TrackBar during playing
+        /// </summary>
         private void TrackTimeTimer_Tick(object sender, EventArgs e)
         {
             var seconds = (int)Player.MediaPlayer.Time / 1000;
@@ -289,10 +285,6 @@ namespace aMuse.UI
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             TrackBar.Value = Player.MediaPlayer.Time;
-            //if ((Player.MediaPlayer.Time / 1000) == ((int)_currentAudio.Duration.TotalSeconds)) {
-            //    Player.MediaPlayer.Stop();
-            //    imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
-            //}
             if (!Player.MediaPlayer.IsPlaying &&
                 (Player.MediaPlayer.Time / 1000) >= ((int)_currentAudio.Duration.TotalSeconds - 2)) {
                 Next_Click(sender, e as RoutedEventArgs);
@@ -300,6 +292,9 @@ namespace aMuse.UI
             CommandManager.InvalidateRequerySuggested();
         }
 
+        /// <summary>
+        /// Sets TrackBar length and song duration
+        /// </summary>
         private void SettingMaximum()
         {
             TrackBar.Maximum = _currentAudio.Duration.TotalMilliseconds;
@@ -404,11 +399,6 @@ namespace aMuse.UI
                     PlaylistLibrary.CurrentPlaylist.AddTrack(_currentAudio);
                 }
             }
-        }
-
-        private void toggle1_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

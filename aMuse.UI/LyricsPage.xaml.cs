@@ -10,10 +10,6 @@ namespace aMuse.UI
         private LyricsPage()
         {
             InitializeComponent();
-            /* if smth wrong use this to test lyrics
-           TagLib.File tagFile = TagLib.File.Create("track.mp3");
-           var lyrics = tagFile.Tag.Lyrics;
-           liricsBox.Text = lyrics;*/
         }
 
         public static LyricsPage GetInstance()
