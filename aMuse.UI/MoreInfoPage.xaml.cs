@@ -14,17 +14,20 @@ namespace aMuse.UI
     {
         private static MoreInfoPage instance;
 
+        private AudioFileTrack _currentAudio;
+
         private MoreInfoPage()
         {
             InitializeComponent();
         }
 
-        public static MoreInfoPage GetInstance()
+        public static MoreInfoPage GetInstance(AudioFileTrack audio)
         {
             if (instance == null)
             {
                 instance = new MoreInfoPage();
             }
+            instance._currentAudio = audio;
 
             return instance;
         }

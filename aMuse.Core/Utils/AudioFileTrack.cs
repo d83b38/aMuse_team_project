@@ -11,6 +11,7 @@ namespace aMuse.Core.Utils
 {
     public class AudioFileTrack : IAudio {
         public readonly string _path;
+        public string Album { get; private set; }
         public TimeSpan Duration { get; set; }
         public string Artist { get; set; }
         public string Track { get; set; }
@@ -57,6 +58,8 @@ namespace aMuse.Core.Utils
         {
             File = TagLib.File.Create(_path);
             Duration = File.Properties.Duration;
+
+            Album = File.Tag.Album;
 
             // try getting artist and title from file tags
             bool hasTags = true;

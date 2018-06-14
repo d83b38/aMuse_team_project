@@ -1,15 +1,9 @@
 ﻿using aMuse.Core.Utils;
-using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace aMuse.UI
 {
-    /// <summary>
-    /// Логика взаимодействия для MainPage.xaml
-    /// </summary>
     public partial class MainPage : Page
     {
         private static MainPage instance;
@@ -62,7 +56,7 @@ namespace aMuse.UI
 
         private void Button_ClickToInfo(object sender, RoutedEventArgs e)
         {
-            MainWindow.GetInstance().MainFrame.Content = MoreInfoPage.GetInstance();
+            MainWindow.GetInstance().MainFrame.Content = MoreInfoPage.GetInstance(_currentAudio);
         }
     }
 }

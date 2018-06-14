@@ -25,7 +25,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock  TextTrimming="WordEllipsis" Margin="0 0 10 0" Grid.Column="0" Text="{Binding Track}" FontSize="20" Foreground="#FFDCFAFA"/>
                             <TextBlock   Margin="0 0 40 0" Grid.Column="1" Text="{Binding Artist}" FontSize="20" Foreground="#FFDCFAFA"/>
-                            <TextBlock  Margin="0 0 10 0" Grid.Column="2" Text="Album must be here" FontSize="20" Foreground="#FFDCFAFA"/>
+                            <TextBlock  Margin="0 0 10 0" Grid.Column="2" Text="{Binding Album}" FontSize="20" Foreground="#FFDCFAFA"/>
                          
                         </Grid>
                     </DataTemplate>
