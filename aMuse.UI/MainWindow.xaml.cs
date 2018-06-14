@@ -92,7 +92,7 @@ namespace aMuse.UI
         /// <param name="tracks">the list containing the audio file (e. g. playlist or library)</param>
         public async void SetAudio(IAudio audio, ObservableList<IAudio> tracks)
         {
-            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
+            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause.png"));
             Player.MediaPlayer.SetMedia(new Uri(audio.FilePath));
             _tracks = tracks;
             _currentAudio = audio;
@@ -151,7 +151,7 @@ namespace aMuse.UI
                 if (_currentAudio != null)
                 {
                     Player.MediaPlayer.Play();
-                    imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause_52px.png"));
+                    imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Pause.png"));
                     TrackBar.IsEnabled = true;
                     StartTimers();
                     return;
@@ -161,7 +161,7 @@ namespace aMuse.UI
             }
             Player.MediaPlayer.Pause();
             StopTimers();
-            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
+            imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play.png"));
         }
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
