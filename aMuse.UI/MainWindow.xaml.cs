@@ -76,7 +76,6 @@ namespace aMuse.UI
         {
             SystemState.Deserialize();
             Library.Update(SystemState.Instance.LibraryPath);
-
             PlaylistLibrary.Deserialize();
         }
 
@@ -127,13 +126,15 @@ namespace aMuse.UI
                     {
                         MainFrame.Content = PlaylistPage.GetInstance();
                     }
-
                     infoBoxArtist.Text = _currentAudio.Artist;
                     infoBoxTrackName.Text = _currentAudio.Track;
                     Thumbnail.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/music-record-small.png"));
                 }
             }
             catch (Exception) {
+                infoBoxArtist.Text = _currentAudio.Artist;
+                infoBoxTrackName.Text = _currentAudio.Track;
+                Thumbnail.Source = await _currentAudio.GetAlbumCoverTaskAsync(null);
                 return;
             }
         }

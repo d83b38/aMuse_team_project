@@ -43,7 +43,7 @@ namespace aMuse.UI
             }
             catch (System.Exception ex)
             {
-                //MessageBox.Show("Something went wrong.\nCheck your internet\n" + ex.Message);
+                
             }
 
             if (_currentAudio != null && Lyrics != null && !string.IsNullOrWhiteSpace(Lyrics))

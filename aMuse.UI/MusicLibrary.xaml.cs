@@ -43,15 +43,6 @@ namespace aMuse.UI
             ListTracks.SelectedIndex = index;
         }
 
-        //private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    var newSelectedItem = e.AddedItems.FirstOrDefault();
-        //    if (newSelectedItem != null)
-        //    {
-        //        (sender as ListBox).ScrollIntoView(newSelectedItem);
-        //    }
-        //}
-
         private void OpenNewDirectory(object sender, System.Windows.RoutedEventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
