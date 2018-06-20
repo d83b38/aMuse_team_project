@@ -84,7 +84,7 @@
             <StackPanel Name="PlayingControls"  Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
                         HorizontalAlignment="Center"  Height="100" VerticalAlignment="Bottom">
 
-                <ToggleButton x:Name="tog1" Click ="ClickRepeat" Margin="0 0 0 0" Height="20" Width="20" Content="I'm " Foreground="Black">
+                <ToggleButton x:Name="RepeatButton" Margin="0 0 0 0" Height="20" Width="20" Content="I'm " Foreground="Black">
                     <ToggleButton.Template>
                         <ControlTemplate TargetType="{x:Type ToggleButton}">
                             <StackPanel Orientation="Horizontal">
@@ -118,7 +118,7 @@
                     Click="Next_Click" Margin="5 0 0 0"  >
                     <Image  Source="Icons/Next.png" />
                 </Button>
-                <ToggleButton x:Name="tog2" Click ="ClickShuffle" Margin="5 0 0 0" Height="20" Width="20" Content="I'm " Foreground="Black">
+                <ToggleButton x:Name="ShuffleButton" Margin="5 0 0 0" Height="20" Width="20" Content="I'm " Foreground="Black">
                     <ToggleButton.Template>
                         <ControlTemplate TargetType="{x:Type ToggleButton}">
                             <StackPanel Orientation="Horizontal">

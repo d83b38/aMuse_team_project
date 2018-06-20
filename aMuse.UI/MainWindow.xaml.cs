@@ -105,12 +105,9 @@ namespace aMuse.UI
 
             StartTimers();
             SettingMaximum();
-            //Title = "Getting useful data...";
-
             try
             {
                 var TrackData = await audio.GetTrackTaskAsync();
-
                 if(TrackData != null)
                 {
                     geniusInfoAvailable = true;
@@ -138,7 +135,6 @@ namespace aMuse.UI
             }
             catch (Exception) {
                 return;
-                //System.Windows.MessageBox.Show("Something went wrong.\nCheck your internet.");
             }
         }
 
@@ -225,7 +221,7 @@ namespace aMuse.UI
                 }
             }
         }
-         
+        
         private void Mute_Click(object sender, RoutedEventArgs e)
         {
             Player.MediaPlayer.Audio.ToggleMute();
@@ -289,13 +285,12 @@ namespace aMuse.UI
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             TrackBar.Value = Player.MediaPlayer.Time;
-            //if ((Player.MediaPlayer.Time / 1000) == ((int)_currentAudio.Duration.TotalSeconds)) {
-            //    Player.MediaPlayer.Stop();
-            //    imageInside.Source = new BitmapImage(new Uri("pack://application:,,,/Icons/Play_52px.png"));
-            //}
             if (!Player.MediaPlayer.IsPlaying &&
                 (Player.MediaPlayer.Time / 1000) >= ((int)_currentAudio.Duration.TotalSeconds - 2)) {
-                Next_Click(sender, e as RoutedEventArgs);
+                if(RepeatButton.IsChecked == false)
+                    Next_Click(sender, e as RoutedEventArgs);
+                else
+                    SetAudio(_currentAudio, _tracks);
             }
             CommandManager.InvalidateRequerySuggested();
         }
@@ -409,7 +404,7 @@ namespace aMuse.UI
 
         private void ClickRepeat(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void ClickShuffle(object sender, RoutedEventArgs e)
