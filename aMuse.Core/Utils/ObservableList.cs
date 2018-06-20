@@ -1,10 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 
 namespace aMuse.Core.Utils
 {
     public class ObservableList<T> : ObservableCollection<T>
     {
         private int _index = 0;
+
+        private static readonly Random rand = new Random();
 
         private void SetIndex(T item)
         {
@@ -64,6 +67,11 @@ namespace aMuse.Core.Utils
         public int GetIndex(T item)
         {
             return Items.IndexOf(item);
+        }
+
+        public T GetRandom()
+        {
+            return Items[rand.Next(0, Items.Count)];
         }
     }
 }

@@ -182,7 +182,17 @@ namespace aMuse.UI
         {
             if (_tracks != null)
             {
-                IAudio audio = _tracks.GetNext(_currentAudio);
+                IAudio audio = null;
+
+                if (ShuffleButton.IsChecked == true)
+                {
+                    audio = _tracks.GetRandom();
+                }
+                else
+                {
+                    audio = _tracks.GetNext(_currentAudio);
+                }
+
                 if (audio != null)
                 {
                     int index = _tracks.GetIndex(audio);
@@ -206,7 +216,17 @@ namespace aMuse.UI
         {
             if (_tracks != null)
             {
-                IAudio audio = _tracks.GetPrev(_currentAudio);
+                IAudio audio = null;
+
+                if (ShuffleButton.IsChecked == true)
+                {
+                    audio = _tracks.GetRandom();
+                }
+                else
+                {
+                    audio = _tracks.GetPrev(_currentAudio);
+                }
+
                 if (audio != null)
                 {
                     int index = _tracks.GetIndex(audio);
@@ -372,7 +392,6 @@ namespace aMuse.UI
             }
         }
 
-
         private void Button_ClickToPlaylists(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = PlaylistsPage.GetInstance();
@@ -400,17 +419,6 @@ namespace aMuse.UI
                     PlaylistLibrary.CurrentPlaylist.AddTrack(_currentAudio);
                 }
             }
-        }
-
-
-        private void ClickRepeat(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void ClickShuffle(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
